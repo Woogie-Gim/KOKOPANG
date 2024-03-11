@@ -21,7 +21,7 @@
 
   - 커밋 타입 <br />
     **첫 글자만 대문자 Capitalize 방식**
-    ![GitConvention](./ReadMeImage/git.png)
+    ![Alt text](Images/git.png)
 
 ## 코딩 컨벤션
   ### Client
