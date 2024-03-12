@@ -18,7 +18,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User createUser(UserDTO userDTO) {
+    public User signup(UserDTO userDTO) {
         String email = userDTO.getEmail();
         String password = userDTO.getPassword();
 
