@@ -21,7 +21,7 @@ public class UserController {
     @PostMapping("/signup")
     public ResponseEntity<?> signup(@RequestBody UserDTO userDTO) {
 
-        User myUser = userService.createUser(userDTO);
+        User myUser = userService.signup(userDTO);
 
         if (myUser == null) {
             return new ResponseEntity<String>("회원가입 실패", HttpStatus.BAD_REQUEST);
@@ -30,13 +30,6 @@ public class UserController {
 
         return new ResponseEntity<String>("회원가입성공", HttpStatus.OK);
     }
-
-    @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody User user) {
-        return null;
-    }
-
-
 
     @GetMapping("/friends")
     public ResponseEntity<?> getWaitingFriendInfo() throws Exception {

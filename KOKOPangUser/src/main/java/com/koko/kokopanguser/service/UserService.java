@@ -4,5 +4,5 @@ import com.koko.kokopanguser.dto.UserDTO;
 import com.koko.kokopanguser.model.User;
 
 public interface UserService {
-    User createUser(UserDTO userDTO);
+    User signup(UserDTO userDTO);
 }
