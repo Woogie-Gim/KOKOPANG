@@ -3,6 +3,7 @@ package com.koko.kokopanguser.util;
 
 import com.koko.kokopanguser.dto.CustomUserDetails;
 import com.koko.kokopanguser.model.User;
+import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -14,6 +15,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 public class JWTFilter extends OncePerRequestFilter {
 
@@ -45,12 +47,30 @@ public class JWTFilter extends OncePerRequestFilter {
         String token = authorization.split(" ")[1];
 
         //토큰 소멸 시간 검증
-        if (jwtUtil.isExpired(token)) {
+        try {
+            jwtUtil.isExpired(token);
+        } catch (ExpiredJwtException e) {
 
-            System.out.println("token expired");
-            filterChain.doFilter(request, response);
+            //response body0
+            PrintWriter writer = response.getWriter();
+            writer.print("access token expired");
 
-            //조건이 해당되면 메소드 종료 (필수)
+            //response status code
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED); //401 에러
+            return;
+        }
+
+        String category = jwtUtil.getCategory(token);
+
+        // 토큰이 access인지 확인 (발급시 페이로드에 명시)
+        if (!category.equals("access")) {
+
+            //response body
+            PrintWriter writer = response.getWriter();
+            writer.print("invalid access token");
+
+            //response status code
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             return;
         }
 

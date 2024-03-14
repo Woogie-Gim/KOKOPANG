@@ -1,6 +1,5 @@
 package com.koko.kokopanguser.util;
 
-import com.koko.kokopanguser.dto.TokenDTO;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
@@ -17,9 +16,9 @@ public class JWTUtil {
     private Key key;
 
     private static final String BEARER_TYPE = "Bearer";
-    private long accessTokenValidTime = Duration.ofSeconds(20).toMillis(); // 만료 시간 20초
+    private final long accessTokenValidTime = Duration.ofSeconds(20).toMillis(); // 만료 시간 20초
 
-    private long refreshTokenValidTime = Duration.ofDays(7).toMillis(); // 만료 시간 7일
+    private final long refreshTokenValidTime = Duration.ofDays(7).toMillis(); // 만료 시간 7일
 
     public JWTUtil(@Value("${spring.jwt.secret}") String secret) {
 
@@ -37,6 +36,11 @@ public class JWTUtil {
         return Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).getBody().get("role", String.class);
     }
 
+    public String getCategory(String token) {
+
+        return Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).getBody().get("category", String.class);
+    }
+
     public Boolean isExpired(String token) {
         try {
             Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).getBody().getExpiration().before(new Date());
@@ -50,33 +54,27 @@ public class JWTUtil {
 //        return Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).getBody().getExpiration().before(new Date());
     }
 
-    public TokenDTO createJwt(String email, String role) {
+    public String createJwt(String category, String email, String role) {
 
         Claims accessClaims = Jwts.claims();
         accessClaims.put("email", email);
         accessClaims.put("role", role);
 
-        String accessToken = Jwts.builder()
+        if (category.equals("access")) {
+
+            return Jwts.builder()
+                    .setClaims(accessClaims)
+                    .setIssuedAt(new Date(System.currentTimeMillis()))
+                    .setExpiration(new Date(System.currentTimeMillis() + accessTokenValidTime))
+                    .signWith(key, SignatureAlgorithm.HS256)
+                    .compact();
+        }
+
+        return Jwts.builder()
                 .setClaims(accessClaims)
-                .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + accessTokenValidTime))
-                .signWith(key, SignatureAlgorithm.HS256)
-                .compact();
-
-        Claims refreshClaims = Jwts.claims();
-        refreshClaims.put("email", email);
-
-        String refreshToken = Jwts.builder()
-                .setClaims(refreshClaims)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + refreshTokenValidTime))
                 .signWith(key, SignatureAlgorithm.HS256)
                 .compact();
-
-        return TokenDTO.builder()
-                .grantType(BEARER_TYPE)
-                .accessToken(accessToken)
-                .refreshToken(refreshToken)
-                .build();
     }
 }
