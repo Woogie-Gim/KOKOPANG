@@ -6,9 +6,9 @@ public class PlayerController : MonoBehaviour
 {
     // 스피드 조정 변수
     [SerializeField]
-    private float walkSpeed = 10.0f;
+    private float walkSpeed = 5.0f;
     [SerializeField]
-    private float runSpeed = 20.0f;
+    private float runSpeed = 7.0f;
 
     private float applySpeed;
 
@@ -40,6 +40,7 @@ public class PlayerController : MonoBehaviour
         TryJump();
         TryRun();
         Move();
+        RotateToMouseDir();
     }
     private void IsGround()
     {
@@ -91,5 +92,20 @@ public class PlayerController : MonoBehaviour
 
         myRigid.MovePosition(transform.position + _velocity * Time.deltaTime);
     }
+    private void RotateToMouseDir()
+    {
+        // 현재 마우스 포지션에서 정면 방향 * 10d으로 이동한 위치의 월드 좌표 구하기
+        Vector3 mouseWorldPostion = Camera.main.ScreenToWorldPoint(Input.mousePosition + Vector3.forward * 10f);
 
+       // Atan2를 이용하여 높이와 밑변(tan) 으로 라디안(Radian) 구하기
+       // Mathf.Rad2Deg를 곱해서 라디안 (Radian) 값을 도수법(Degree)로 변환
+       float angle = Mathf.Atan2(this.transform.position.y - mouseWorldPostion.y, 
+           this.transform.position.x - mouseWorldPostion.x) * Mathf.Rad2Deg;
+
+        // angle이 0 ~ 180의 각도이기 때문에 보정
+        float final = -(angle + 90f);
+
+        // Y축 회전
+        this.transform.rotation = Quaternion.Euler(new Vector3(0f, final, 0f));
+    }
 }
