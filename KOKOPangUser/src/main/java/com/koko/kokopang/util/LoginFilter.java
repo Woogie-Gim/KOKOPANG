@@ -61,7 +61,7 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
         redisService.saveRefreshToken(username, refreshToken);
 
         response.addHeader("Authorization", "Bearer " + accessToken);
-        response.setHeader("refreshToken", "Bearer " +  refreshToken);
+        response.addHeader("refreshToken", "Bearer " +  refreshToken);
         response.setStatus(HttpStatus.OK.value());
     }
 

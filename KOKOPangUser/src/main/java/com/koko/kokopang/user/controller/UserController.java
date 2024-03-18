@@ -24,7 +24,7 @@ public class UserController {
      */
     @PostMapping("/signup")
     public ResponseEntity<?> signup(@RequestBody UserDTO userDTO) {
-
+        System.out.println(userDTO);
         User myUser = userService.signup(userDTO);
 
         if (myUser == null) {

@@ -59,6 +59,7 @@ public class JWTUtil {
         Claims accessClaims = Jwts.claims();
         accessClaims.put("email", email);
         accessClaims.put("role", role);
+        accessClaims.put("category", category);
 
         if (category.equals("access")) {
 
@@ -77,4 +78,4 @@ public class JWTUtil {
                 .signWith(key, SignatureAlgorithm.HS256)
                 .compact();
     }
-}
+} 

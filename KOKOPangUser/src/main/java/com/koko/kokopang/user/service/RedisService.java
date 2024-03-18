@@ -6,6 +6,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.concurrent.TimeUnit;
+
 @Service
 public class RedisService {
 
@@ -17,7 +19,7 @@ public class RedisService {
 
     public String saveRefreshToken(String key, String refreshToken) {
         ValueOperations<String,String> valueOperations = redisTemplate.opsForValue();
-        valueOperations.set(key, refreshToken);
+        valueOperations.set(key, refreshToken, 7, TimeUnit.DAYS);
 
         return "토큰 저장 성공";
     }
