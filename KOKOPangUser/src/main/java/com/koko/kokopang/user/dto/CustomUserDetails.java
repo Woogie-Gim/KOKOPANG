@@ -1,6 +1,6 @@
-package com.koko.kokopanguser.dto;
+package com.koko.kokopang.user.dto;
 
-import com.koko.kokopanguser.model.User;
+import com.koko.kokopang.user.model.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

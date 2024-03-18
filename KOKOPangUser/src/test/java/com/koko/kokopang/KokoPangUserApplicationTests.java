@@ -1,4 +1,4 @@
-package com.koko.kokopanguser;
+package com.koko.kokopang;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

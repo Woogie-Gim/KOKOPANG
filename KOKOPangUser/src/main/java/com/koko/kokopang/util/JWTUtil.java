@@ -1,4 +1,4 @@
-package com.koko.kokopanguser.util;
+package com.koko.kokopang.util;
 
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
@@ -16,7 +16,7 @@ public class JWTUtil {
     private Key key;
 
     private static final String BEARER_TYPE = "Bearer";
-    private final long accessTokenValidTime = Duration.ofSeconds(20).toMillis(); // 만료 시간 20초
+    private final long accessTokenValidTime = Duration.ofDays(1).toMillis(); // 만료 시간 1일
 
     private final long refreshTokenValidTime = Duration.ofDays(7).toMillis(); // 만료 시간 7일
 

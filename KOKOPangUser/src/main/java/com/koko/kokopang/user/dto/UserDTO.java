@@ -1,4 +1,4 @@
-package com.koko.kokopanguser.dto;
+package com.koko.kokopang.user.dto;
 
 import lombok.Getter;
 import lombok.Setter;

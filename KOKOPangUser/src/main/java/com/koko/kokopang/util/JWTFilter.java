@@ -1,14 +1,13 @@
-package com.koko.kokopanguser.util;
+package com.koko.kokopang.util;
 
 
-import com.koko.kokopanguser.dto.CustomUserDetails;
-import com.koko.kokopanguser.model.User;
+import com.koko.kokopang.user.dto.CustomUserDetails;
+import com.koko.kokopang.user.model.User;
 import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.apache.tomcat.util.http.parser.Authorization;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;

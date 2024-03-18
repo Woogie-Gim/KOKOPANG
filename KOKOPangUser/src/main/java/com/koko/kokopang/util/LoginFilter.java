@@ -1,8 +1,8 @@
-package com.koko.kokopanguser.util;
+package com.koko.kokopang.util;
 
 
-import com.koko.kokopanguser.dto.CustomUserDetails;
-import com.koko.kokopanguser.service.RedisService;
+import com.koko.kokopang.user.dto.CustomUserDetails;
+import com.koko.kokopang.user.service.RedisService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

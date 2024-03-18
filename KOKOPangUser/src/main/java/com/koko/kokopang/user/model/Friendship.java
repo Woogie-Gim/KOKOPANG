@@ -1,4 +1,4 @@
-package com.koko.kokopanguser.model;
+package com.koko.kokopang.user.model;
 
 import jakarta.persistence.*;
 import lombok.*;

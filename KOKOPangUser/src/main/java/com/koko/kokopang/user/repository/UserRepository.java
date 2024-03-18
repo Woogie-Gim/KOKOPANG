@@ -1,6 +1,6 @@
-package com.koko.kokopanguser.repository;
+package com.koko.kokopang.user.repository;
 
-import com.koko.kokopanguser.model.User;
+import com.koko.kokopang.user.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

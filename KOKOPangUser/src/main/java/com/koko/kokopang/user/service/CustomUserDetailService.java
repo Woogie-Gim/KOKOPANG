@@ -1,8 +1,8 @@
-package com.koko.kokopanguser.service;
+package com.koko.kokopang.user.service;
 
-import com.koko.kokopanguser.dto.CustomUserDetails;
-import com.koko.kokopanguser.model.User;
-import com.koko.kokopanguser.repository.UserRepository;
+import com.koko.kokopang.user.dto.CustomUserDetails;
+import com.koko.kokopang.user.model.User;
+import com.koko.kokopang.user.repository.UserRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

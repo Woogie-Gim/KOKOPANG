@@ -1,9 +1,9 @@
-package com.koko.kokopanguser.config;
+package com.koko.kokopang.config;
 
-import com.koko.kokopanguser.service.RedisService;
-import com.koko.kokopanguser.util.JWTFilter;
-import com.koko.kokopanguser.util.JWTUtil;
-import com.koko.kokopanguser.util.LoginFilter;
+import com.koko.kokopang.user.service.RedisService;
+import com.koko.kokopang.util.JWTFilter;
+import com.koko.kokopang.util.JWTUtil;
+import com.koko.kokopang.util.LoginFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;

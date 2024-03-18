@@ -1,7 +1,7 @@
-package com.koko.kokopanguser.service;
+package com.koko.kokopang.user.service;
 
-import com.koko.kokopanguser.dto.UserDTO;
-import com.koko.kokopanguser.model.User;
+import com.koko.kokopang.user.dto.UserDTO;
+import com.koko.kokopang.user.model.User;
 
 public interface UserService {
     User signup(UserDTO userDTO);

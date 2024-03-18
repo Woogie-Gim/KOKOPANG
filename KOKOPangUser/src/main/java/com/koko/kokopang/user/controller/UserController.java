@@ -1,8 +1,8 @@
-package com.koko.kokopanguser.controller;
+package com.koko.kokopang.user.controller;
 
-import com.koko.kokopanguser.dto.UserDTO;
-import com.koko.kokopanguser.model.User;
-import com.koko.kokopanguser.service.UserService;
+import com.koko.kokopang.user.dto.UserDTO;
+import com.koko.kokopang.user.model.User;
+import com.koko.kokopang.user.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

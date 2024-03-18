@@ -1,9 +1,8 @@
-package com.koko.kokopanguser.service;
+package com.koko.kokopang.user.service;
 
-import com.koko.kokopanguser.dto.UserDTO;
-import com.koko.kokopanguser.model.User;
-import com.koko.kokopanguser.repository.UserRepository;
-import lombok.ToString;
+import com.koko.kokopang.user.dto.UserDTO;
+import com.koko.kokopang.user.model.User;
+import com.koko.kokopang.user.repository.UserRepository;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,9 +23,9 @@ public class UserServiceImpl implements UserService {
         String email = userDTO.getEmail();
         String password = userDTO.getPassword();
 
-        if (!email.contains("@") || email.contains("'")) {
-            return null;
-        }
+//        if (!email.contains("@") || email.contains("'")) {
+//            return null;
+//        }
 
         if (userRepository.existsByEmail(email)) {
             return null;

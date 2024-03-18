@@ -1,9 +1,8 @@
-package com.koko.kokopanguser.controller;
+package com.koko.kokopang.user.controller;
 
-import com.koko.kokopanguser.service.RedisService;
-import com.koko.kokopanguser.util.JWTUtil;
+import com.koko.kokopang.user.service.RedisService;
+import com.koko.kokopang.util.JWTUtil;
 import io.jsonwebtoken.ExpiredJwtException;
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.http.HttpStatus;
