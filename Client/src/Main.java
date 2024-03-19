@@ -4,7 +4,6 @@ import java.net.Socket;
 public class Main {
     public static void main(String[] args) {
         Socket socket;
-
         try {
             socket = new Socket("localhost", 9999);
 
@@ -19,6 +18,7 @@ public class Main {
                         System.out.println(inputLine);
                     }
                 } catch (IOException e) {
+                    System.out.println("ERROR!!");
                     e.printStackTrace();
                 }
             });
