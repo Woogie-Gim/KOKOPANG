@@ -34,7 +34,7 @@ public class UserServiceImpl implements UserService {
         User newUser = new User();
         newUser.setEmail(email);
         newUser.setPassword(bCryptPasswordEncoder.encode(password));
-        newUser.setName(userDTO.getName());
+        newUser.setName("ㅎㅎㅎㅎ");
         newUser.setNickname("");
 
         userRepository.save(newUser);
@@ -84,7 +84,7 @@ public class UserServiceImpl implements UserService {
             return false;
         }
 
-        User user = userRepository.findByUserId(userId);
+        User user = userRepository.findById(userId);
 
         if (user == null) {
             return false;

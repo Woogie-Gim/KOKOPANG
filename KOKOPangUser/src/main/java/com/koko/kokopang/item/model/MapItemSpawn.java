@@ -1,12 +1,18 @@
 package com.koko.kokopang.item.model;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
 import java.util.List;
-import java.util.Map;
 
+@Getter
+@Setter
+@ToString
 public class MapItemSpawn {
-
     private String name;
     private String explanation;
     private String type;
-    private List<Map<Float, Float>> itemPoint;
+    private List<PointDTO> itemsPoint;
 }
+
