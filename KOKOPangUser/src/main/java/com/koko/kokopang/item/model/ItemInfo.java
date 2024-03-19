@@ -7,9 +7,9 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class PointDTO {
-    private Double firstX;
-    private Double firstZ;
-    private Double secondX;
-    private Double secondZ;
+public class ItemInfo {
+
+    private int chap;
+    private int leaf;
+
 }
