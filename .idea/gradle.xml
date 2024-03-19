@@ -4,6 +4,14 @@
   <component name="GradleSettings">
     <option name="linkedExternalProjectsSettings">
       <GradleProjectSettings>
+        <option name="externalProjectPath" value="$PROJECT_DIR$/Client" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$/Client" />
+          </set>
+        </option>
+      </GradleProjectSettings>
+      <GradleProjectSettings>
         <option name="externalProjectPath" value="$PROJECT_DIR$/KOKOPangData" />
         <option name="modules">
           <set>
@@ -24,6 +32,14 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$/KOKOPangUser" />
+          </set>
+        </option>
+      </GradleProjectSettings>
+      <GradleProjectSettings>
+        <option name="externalProjectPath" value="$PROJECT_DIR$/nettyEdu2" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$/nettyEdu2" />
           </set>
         </option>
       </GradleProjectSettings>
