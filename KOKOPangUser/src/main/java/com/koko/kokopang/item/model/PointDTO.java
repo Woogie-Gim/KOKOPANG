@@ -8,8 +8,8 @@ import lombok.ToString;
 @Setter
 @ToString
 public class PointDTO {
-    private Double firstX;
-    private Double firstZ;
-    private Double secondX;
-    private Double secondZ;
+    private double firstX;
+    private double firstZ;
+    private double secondX;
+    private double secondZ;
 }
