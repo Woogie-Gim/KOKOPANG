@@ -31,6 +31,7 @@ Reactor Netty를 사용하여 TCP 서버를 설정하고 운영하는 Java 클�
 public class TcpServerConfig {
 
     private static final Logger log = LoggerFactory.getLogger(TcpServerConfig.class);
+    private static final int PORT = 9999;
     private User userHandler;   // 클라이언트 관리와 메시지 브로드캐스팅에 사용
 
     public TcpServerConfig(User userHandler) { // 파라미터 : User 클래스의 인스턴스
@@ -44,7 +45,7 @@ public class TcpServerConfig {
     public DisposableServer createTcpServer() {
         return TcpServer
                 .create()                           // 1) TCP 서버 생성 및 설정
-                .port(9999)                         // 2) 서버가 리슨할 포트 번호 설정
+                .port(PORT)                         // 2) 서버가 리슨할 포트 번호 설정
                 .doOnConnection(connectionSetup())  // 3) 클라이언트 연ㄷ결 시 실행될 로직 정의
                                                     // 4) connectionSetup 메서드 참조
                 .handle(                            // 5) 클라이언트로부터 받은 데이터를 처리하는 로직을 정의
