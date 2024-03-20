@@ -5,6 +5,9 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Getter
 @Setter
@@ -21,8 +24,6 @@ public class User {
     private String role;
     private String gender;
 
-//    @OneToMany(mappedBy = "user")
-//    private List<Friendship> friendshipList = new ArrayList<>();
-
+    @OneToMany(mappedBy = "user")
+    private List<Friendship> friendsList = new ArrayList<>();
 }
-
