@@ -51,7 +51,7 @@ public class TcpServerConfig {
                 .handle(                            // 5) 클라이언트로부터 받은 데이터를 처리하는 로직을 정의
                         (in, out) ->
                                 in.receive().asString().flatMap(msg -> {
-                                    System.out.println(in.toString() + msg);    // 받은 메시지 출력
+                                    System.out.println(in + msg);               // 받은 메시지 출력
                                     log.debug("doOnNext: [{}]", msg);           // 로깅
                                     userHandler.broadcastMessage(msg);          // 브로드캐스팅
                                     return out;
