@@ -7,6 +7,9 @@ public class Item : ScriptableObject
 {
     // 아이템의 이름
     public string itemName;
+    // 아이템의 설명
+    [TextArea]
+    public string itemDescription;
     // 아이템의 유형
     public ItemType itemType;
     // 아이템의 이미지

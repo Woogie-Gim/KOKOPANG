@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class Slot : MonoBehaviour, IPointerClickHandler, IBeginDragHandler, IDragHandler, IEndDragHandler, IDropHandler
+public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler, IBeginDragHandler, IDragHandler, IEndDragHandler, IDropHandler
 {
     private Vector3 originPos;
 
@@ -22,9 +22,16 @@ public class Slot : MonoBehaviour, IPointerClickHandler, IBeginDragHandler, IDra
     [SerializeField]
     private GameObject go_CountImage;
 
+    private Rect baseRect;
+    private InputNumber theInputNumber;
+    private SlotToolTip theSlotToolTip;
+
     void Start()
     {
+        baseRect = transform.parent.parent.GetComponent<RectTransform>().rect;
         originPos = transform.position;
+        theInputNumber = FindObjectOfType<InputNumber>();
+        theSlotToolTip = FindObjectOfType<SlotToolTip>();
     }
 
     // 이미지 투명도 조절
@@ -120,8 +127,20 @@ public class Slot : MonoBehaviour, IPointerClickHandler, IBeginDragHandler, IDra
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        DragSlot.instance.SetColor(0);
-        DragSlot.instance.dragSlot = null;
+        // 인벤토리 최대, 최소 영역을 벗어났을 때
+        if (DragSlot.instance.transform.localPosition.x < baseRect.xMin || DragSlot.instance.transform.localPosition.x > baseRect.xMax ||
+            DragSlot.instance.transform.localPosition.y < baseRect.yMin || DragSlot.instance.transform.localPosition.y > baseRect.yMax)
+        {
+            if (DragSlot.instance.dragSlot != null)
+            {
+                theInputNumber.Call();
+            }
+        }
+        else
+        {
+            DragSlot.instance.SetColor(0);
+            DragSlot.instance.dragSlot = null;
+        }
     }
 
     public void OnDrop(PointerEventData eventData)
@@ -148,5 +167,20 @@ public class Slot : MonoBehaviour, IPointerClickHandler, IBeginDragHandler, IDra
         {
             DragSlot.instance.dragSlot.ClearSlot();
         }
+    }
+
+    // 마우스가 슬롯에 들어갈 때 발동 
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        if (item != null)
+        {
+            theSlotToolTip.ShowToolTip(item, transform.position);
+        }
+    }
+
+    // 슬롯에서 빠져 나갈 때 발동
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        theSlotToolTip.HideToolTip();
     }
 }

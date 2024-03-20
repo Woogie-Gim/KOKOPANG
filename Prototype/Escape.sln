@@ -5,9 +5,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Polyperfect.Crafting.Placem
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Polyperfect.Crafting.Integration", "Polyperfect.Crafting.Integration.csproj", "{06952926-3E4E-77C1-02A5-C7E33382001F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Polyperfect.Common", "Polyperfect.Common.csproj", "{DF9AFD71-51F3-AEA1-948C-6C0783C39DDC}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp", "Assembly-CSharp.csproj", "{0FB0ABFC-946D-1633-8070-49DD687763D9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Polyperfect.Common", "Polyperfect.Common.csproj", "{DF9AFD71-51F3-AEA1-948C-6C0783C39DDC}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Polyperfect.Crafting.Demo", "Polyperfect.Crafting.Demo.csproj", "{7A040C09-A519-0158-B9BD-09035717B242}"
 EndProject
@@ -37,14 +37,14 @@ Global
 		{06952926-3E4E-77C1-02A5-C7E33382001F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{06952926-3E4E-77C1-02A5-C7E33382001F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{06952926-3E4E-77C1-02A5-C7E33382001F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{DF9AFD71-51F3-AEA1-948C-6C0783C39DDC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DF9AFD71-51F3-AEA1-948C-6C0783C39DDC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{DF9AFD71-51F3-AEA1-948C-6C0783C39DDC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DF9AFD71-51F3-AEA1-948C-6C0783C39DDC}.Release|Any CPU.Build.0 = Release|Any CPU
 		{0FB0ABFC-946D-1633-8070-49DD687763D9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{0FB0ABFC-946D-1633-8070-49DD687763D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0FB0ABFC-946D-1633-8070-49DD687763D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0FB0ABFC-946D-1633-8070-49DD687763D9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DF9AFD71-51F3-AEA1-948C-6C0783C39DDC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DF9AFD71-51F3-AEA1-948C-6C0783C39DDC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DF9AFD71-51F3-AEA1-948C-6C0783C39DDC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DF9AFD71-51F3-AEA1-948C-6C0783C39DDC}.Release|Any CPU.Build.0 = Release|Any CPU
 		{7A040C09-A519-0158-B9BD-09035717B242}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{7A040C09-A519-0158-B9BD-09035717B242}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7A040C09-A519-0158-B9BD-09035717B242}.Release|Any CPU.ActiveCfg = Release|Any CPU
