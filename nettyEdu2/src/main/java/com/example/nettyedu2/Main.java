@@ -1,5 +1,7 @@
 package com.example.nettyedu2;
 
+import com.example.nettyedu2.User.User;
+import com.example.nettyedu2.User.UserService;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import reactor.netty.DisposableServer;
@@ -18,9 +20,8 @@ public class Main {
                                                     // 1) Application Context 생성
                                                     // 2) 설정 로드
                                                     // 3) Application 실행
-
         // [2] TCP 서버 설정 및 실행
-        User userHandler = new User();  // User 클래스 인스턴스 생성
+        UserService userHandler = new UserService();  // User 클래스 인스턴스 생성
         TcpServerConfig serverConfig = new TcpServerConfig(userHandler);    // TcpServerConfig 클래스 인스턴스 생성
 
         CountDownLatch latch = new CountDownLatch(1);   // TCP 서버가 계속 실행되도록 주 스레드 대기
