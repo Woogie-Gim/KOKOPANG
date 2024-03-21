@@ -1,5 +1,7 @@
 package com.example.nettyedu2;
 
+import com.example.nettyedu2.User.User;
+import com.example.nettyedu2.User.UserService;
 import io.netty.handler.codec.LineBasedFrameDecoder;
 import io.netty.channel.ChannelHandlerAdapter;
 import io.netty.channel.ChannelHandlerContext;
@@ -32,9 +34,11 @@ public class TcpServerConfig {
 
     private static final Logger log = LoggerFactory.getLogger(TcpServerConfig.class);
     private static final int PORT = 9999;
-    private User userHandler;   // 클라이언트 관리와 메시지 브로드캐스팅에 사용
 
-    public TcpServerConfig(User userHandler) { // 파라미터 : User 클래스의 인스턴스
+
+    private UserService userHandler;   // 클라이언트 관리와 메시지 브로드캐스팅에 사용
+
+    public TcpServerConfig(UserService userHandler) { // 파라미터 : User 클래스의 인스턴스
         this.userHandler = userHandler;
     }
 

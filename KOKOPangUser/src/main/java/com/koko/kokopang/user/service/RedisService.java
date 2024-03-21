@@ -15,11 +15,9 @@ public class RedisService {
         this.redisTemplate = redisTemplate;
     }
 
-    public String saveRefreshToken(String key, String refreshToken) {
+    public void saveRefreshToken(String key, String refreshToken) {
         ValueOperations<String,String> valueOperations = redisTemplate.opsForValue();
         valueOperations.set(key, refreshToken, 7, TimeUnit.DAYS);
-
-        return "토큰 저장 성공";
     }
 
     public boolean equalToken(String key, String refreshToken) {

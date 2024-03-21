@@ -4,13 +4,16 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.util.HashMap;
+import java.util.List;
+
 @Getter
 @Setter
 @ToString
 public class Coordinate {
-    private Double x;
-    private Double z;
-    private int type;
-    private ItemInfo itemInfo;
-    private int hp;
+    private double x;
+    private double z;
+    private int type = -1;
+    private int hp = 3;
+    private List<HashMap<String,Integer>> itemInfo;
 }

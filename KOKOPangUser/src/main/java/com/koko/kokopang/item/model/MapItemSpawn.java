@@ -1,5 +1,6 @@
 package com.koko.kokopang.item.model;
 
+import com.koko.kokopang.item.dto.PointDTO;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;

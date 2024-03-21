@@ -34,7 +34,7 @@ public class UserServiceImpl implements UserService {
         User newUser = new User();
         newUser.setEmail(email);
         newUser.setPassword(bCryptPasswordEncoder.encode(password));
-        newUser.setName("ㅎㅎㅎㅎ");
+        newUser.setName(userDTO.getName());
         newUser.setNickname("");
 
         userRepository.save(newUser);
