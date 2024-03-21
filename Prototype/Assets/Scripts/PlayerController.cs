@@ -10,14 +10,26 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private float runSpeed = 7.0f;
 
+    [SerializeField]
+    private float lookSensitivity;
+
+    [SerializeField]
+    private float cameraRotationLimit;
+    private float currentCameraRotationX;
+
+    [SerializeField]
+    private Camera theCamera;
+
     private float applySpeed;
 
     [SerializeField]
     private float jumpForce = 5.0f;
 
-    // 상태 변수
     private bool isRun = false;
     private bool isGround = true;
+
+    // 움직임 체크 변수
+    private Vector3 lastPos;
 
     // 캡슐 콜라이더와 맵 meshCollider의 충돌 확인
     private CapsuleCollider capsuleCollider;
@@ -30,6 +42,7 @@ public class PlayerController : MonoBehaviour
     {
         myRigid = GetComponent<Rigidbody>();
         capsuleCollider = GetComponent<CapsuleCollider>();
+
         applySpeed = walkSpeed;
     }
 
@@ -40,8 +53,13 @@ public class PlayerController : MonoBehaviour
         TryJump();
         TryRun();
         Move();
-        RotateToMouseDir();
+        if (!Inventory.inventoryActivated)
+        {
+            CharacterRotation();
+            CameraRotation();
+        }
     }
+
     private void IsGround()
     {
         isGround = Physics.Raycast(transform.position, Vector3.down, capsuleCollider.bounds.extents.y + 0.1f);
@@ -92,20 +110,23 @@ public class PlayerController : MonoBehaviour
 
         myRigid.MovePosition(transform.position + _velocity * Time.deltaTime);
     }
-    private void RotateToMouseDir()
+    private void CameraRotation()
     {
-        // 현재 마우스 포지션에서 정면 방향 * 10d으로 이동한 위치의 월드 좌표 구하기
-        Vector3 mouseWorldPostion = Camera.main.ScreenToWorldPoint(Input.mousePosition + Vector3.forward * 10f);
+        // 상하 카메라 회전
+        float _xRotation = Input.GetAxisRaw("Mouse Y");
+        float _cameraRotationX = _xRotation * lookSensitivity;
+        currentCameraRotationX -= _cameraRotationX;
+        // cameraRoatationLimit 범위 내에 가둠
+        currentCameraRotationX = Mathf.Clamp(currentCameraRotationX, -cameraRotationLimit, cameraRotationLimit);
 
-       // Atan2를 이용하여 높이와 밑변(tan) 으로 라디안(Radian) 구하기
-       // Mathf.Rad2Deg를 곱해서 라디안 (Radian) 값을 도수법(Degree)로 변환
-       float angle = Mathf.Atan2(this.transform.position.y - mouseWorldPostion.y, 
-           this.transform.position.x - mouseWorldPostion.x) * Mathf.Rad2Deg;
+        theCamera.transform.localEulerAngles = new Vector3(currentCameraRotationX, 0f, 0f);
+    }
 
-        // angle이 0 ~ 180의 각도이기 때문에 보정
-        float final = -(angle + 90f);
-
-        // Y축 회전
-        this.transform.rotation = Quaternion.Euler(new Vector3(0f, final, 0f));
+    private void CharacterRotation()
+    {
+        // 좌우 캐릭터 회전
+        float _yRotation = Input.GetAxisRaw("Mouse X") * lookSensitivity;
+        Quaternion _deltaRotation = Quaternion.Euler(new Vector3(0f, _yRotation, 0f));
+        myRigid.MoveRotation(myRigid.rotation * _deltaRotation);
     }
 }
