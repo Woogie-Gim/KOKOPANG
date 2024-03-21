@@ -1,7 +1,7 @@
 package com.koko.kokopang.item.service;
 
 import com.koko.kokopang.item.model.Coordinate;
-import com.koko.kokopang.item.model.PointDTO;
+import com.koko.kokopang.item.dto.PointDTO;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -101,7 +101,7 @@ public class ItemServiceImpl implements ItemService{
             idxList.add(i);
         }
 
-        // 전체 pointsList에서 25% 를 랜덤으로 뽑는다
+        // 전체 pointsList 에서 25% 를 랜덤으로 뽑는다
         Collections.shuffle(idxList);
         List<Integer> randomPoints = idxList.subList(0, rate);
 
@@ -120,10 +120,10 @@ public class ItemServiceImpl implements ItemService{
         }
 
         // 아이템별 드랍 정보
-        for (int i = 0; i < randomPoints.size(); i++) {
-            int type = pointsList.get(randomPoints.get(i)).getType(); // 타입 얻기
+        for (Integer point : randomPoints) {
+            int type = pointsList.get(point).getType(); // 타입 얻기
 
-            Coordinate item = pointsList.get(randomPoints.get(i)); // 수정할 item 얻기
+            Coordinate item = pointsList.get(point); // 수정할 item 얻기
 
             List<HashMap<String, Integer>> itemInfo = new ArrayList<>(); // 새로운 해쉬맵리스트 생성
 
@@ -135,8 +135,8 @@ public class ItemServiceImpl implements ItemService{
         }
 
         // 랜덤 박스 정보
-        for (int i = 0; i < randomPoints.size(); i++) {
-            Coordinate randomBox = pointsList.get(randomPoints.get(i));
+        for (Integer randomPoint : randomPoints) {
+            Coordinate randomBox = pointsList.get(randomPoint);
 
             if (randomBox.getType() == 5) {
                 double rv = random.nextDouble(); // 터질지 안 터질지
@@ -148,30 +148,30 @@ public class ItemServiceImpl implements ItemService{
                 // double[] probabilityList = new double[]{0.15, 0.15, 0.135, 0.1, 0.08, 0.08, 0.15, 0.05, 0.05, 0.05, 0.005};
 
                 if (rv < 0.1) {
-                    boxDropInfo.put("-1",-1); // -1 이면 터짐 0 ~ 4,7 ~ 12 는 안 터짐
+                    boxDropInfo.put("-1", -1); // -1 이면 터짐 0 ~ 4,7 ~ 12 는 안 터짐
                     boxInfo.add(boxDropInfo);
                     randomBox.setItemInfo(boxInfo);
                 } else {
                     double rv2 = random.nextDouble(); // 어떤 아이템이 나올지
                     if (rv2 < 0.15) {
                         boxDropInfo.put("0", random.nextInt(1, 4));
-                    } else if (0.15 <= rv2 && rv2 < 0.3) {
+                    } else if (rv2 < 0.3) {
                         boxDropInfo.put("1", random.nextInt(1, 4));
-                    } else if (0.3 <= rv2 && rv2 < 0.435) {
+                    } else if (rv2 < 0.435) {
                         boxDropInfo.put("2", random.nextInt(1, 4));
-                    } else if (0.435 <= rv2 && rv2 < 0.535) {
+                    } else if (rv2 < 0.535) {
                         boxDropInfo.put("3", random.nextInt(1, 4));
-                    } else if (0.535 <= rv2 && rv2 < 0.615) {
+                    } else if (rv2 < 0.615) {
                         boxDropInfo.put("4", random.nextInt(1, 4));
-                    } else if (0.615 <= rv2 && rv2 < 0.695) {
+                    } else if (rv2 < 0.695) {
                         boxDropInfo.put("7", random.nextInt(1, 4));
-                    } else if (0.695 <= rv2 && rv2 < 0.845) {
+                    } else if (rv2 < 0.845) {
                         boxDropInfo.put("8", random.nextInt(1, 4));
-                    } else if (0.845 <= rv2 && rv2 < 0.895) {
+                    } else if (rv2 < 0.895) {
                         boxDropInfo.put("9", random.nextInt(1, 4));
-                    } else if (0.895 <= rv2 && rv2 < 0.945) {
+                    } else if (rv2 < 0.945) {
                         boxDropInfo.put("10", random.nextInt(1, 4));
-                    } else if (0.945 <= rv2 && rv2 < 0.995) {
+                    } else if (rv2 < 0.995) {
                         boxDropInfo.put("11", random.nextInt(1, 4));
                     } else {
                         boxDropInfo.put("12", 1);

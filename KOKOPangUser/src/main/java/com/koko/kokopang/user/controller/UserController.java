@@ -8,7 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/user")
+@RequestMapping("/user")
 public class UserController {
 
     private final UserService userService;
@@ -28,32 +28,20 @@ public class UserController {
         User myUser = userService.signup(userDTO);
 
         if (myUser == null) {
-            return new ResponseEntity<String>("회원가입 실패", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<String>("회원가입 실패", HttpStatus.CONFLICT); // 409 에러
         }
-
 
         return new ResponseEntity<String>("회원가입성공", HttpStatus.OK);
     }
 
     /**
-     * 친구목록 조회
-     * @return
-     * @throws Exception
-     */
-
-    @GetMapping("/friends")
-    public ResponseEntity<?> getWaitingFriendInfo() throws Exception {
-        return new ResponseEntity<String>("asdf", HttpStatus.OK);
-    }
-
-    /**
      * 유저 정보 조회
-     * @param email 유저 아이디
+     * @param userId 유저 아이디
      * @return 유저 정보
-                                                                                                                         */
+     */
     @GetMapping("/profile")
-    public ResponseEntity<?> getUserProfile(@RequestParam String email) {
-        User user = userService.getProfile(email);
+    public ResponseEntity<?> getUserProfile(@RequestParam int userId) {
+        User user = userService.getProfile(userId);
         return new ResponseEntity<User>(user, HttpStatus.OK);
     }
 

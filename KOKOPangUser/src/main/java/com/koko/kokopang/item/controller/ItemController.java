@@ -1,7 +1,7 @@
 package com.koko.kokopang.item.controller;
 
 import com.koko.kokopang.item.model.Coordinate;
-import com.koko.kokopang.item.model.PointDTO;
+import com.koko.kokopang.item.dto.PointDTO;
 import com.koko.kokopang.item.service.ItemService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

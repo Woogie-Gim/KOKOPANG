@@ -1,4 +1,4 @@
-package com.koko.kokopang.item.model;
+package com.koko.kokopang.item.dto;
 
 import lombok.Getter;
 import lombok.Setter;
