@@ -554,5 +554,31 @@ public class InputNumber : MonoBehaviour
 
 # 이항우
 
+## 유저
+
+### 로그인
+![Alt text](Images/login.png)
+- 클라이언트 로그인 화면 UI 구성 및 로그인 기능 연동, 테스트 완료
+- JWT 활용한 인증 테스트 완료
+
+### 회원가입
+![Alt text](Images/signup.png)
+- 클라이언트 회원가입 팝업 UI 구성 및 회원가입 기능 연동, 테스트 완료
+
+## 로비
+![Alt text](Images/lobby.png)
+- 로그인 시 로비로 이동
+- 로그인 한 회원의 정보를 활용, 내 정보 띄우기
+
+## CI/CD
+![Alt text](Images/ec2.png)
+- AWS EC2에 Docker를 사용해 Jenkins 컨테이너 동작
+
+![Alt text](Images/jenkins.png)
+- Jenkins 기본 설정 및 플러그인 설치 완료
+
+## Netty
+- 클라이언트 - 서버 TCP 통신 예제 코드 작성
+
 
 # 장동재
