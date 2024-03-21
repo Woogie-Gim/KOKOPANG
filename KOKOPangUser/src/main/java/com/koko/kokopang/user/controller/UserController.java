@@ -36,12 +36,12 @@ public class UserController {
 
     /**
      * 유저 정보 조회
-     * @param userId 유저 아이디
+     * @param email 유저 아이디
      * @return 유저 정보
      */
     @GetMapping("/profile")
-    public ResponseEntity<?> getUserProfile(@RequestParam int userId) {
-        User user = userService.getProfile(userId);
+    public ResponseEntity<?> getUserProfile(@RequestParam String email) {
+        User user = userService.getProfile(email);
         return new ResponseEntity<User>(user, HttpStatus.OK);
     }
 
