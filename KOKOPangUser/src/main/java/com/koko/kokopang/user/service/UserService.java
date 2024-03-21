@@ -6,7 +6,7 @@ import com.koko.kokopang.user.model.User;
 public interface UserService {
     User signup(UserDTO userDTO);
 
-    User getProfile(String email);
+    User getProfile(int userId);
 
     User updateProfile(User user);
 

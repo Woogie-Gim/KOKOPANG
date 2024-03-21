@@ -43,8 +43,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User getProfile(String email) {
-        User user = userRepository.findByEmail(email);
+    public User getProfile(int userId) {
+        User user = userRepository.findById(userId);
 
         if (user == null) {
             System.out.println("User not exist");

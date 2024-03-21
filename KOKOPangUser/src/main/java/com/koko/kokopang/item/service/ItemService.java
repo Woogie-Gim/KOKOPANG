@@ -1,8 +1,7 @@
 package com.koko.kokopang.item.service;
 
 import com.koko.kokopang.item.model.Coordinate;
-import com.koko.kokopang.item.model.MapItemSpawn;
-import com.koko.kokopang.item.model.PointDTO;
+import com.koko.kokopang.item.dto.PointDTO;
 
 import java.util.List;
 
