@@ -34,7 +34,7 @@ public class UserServiceImpl implements UserService {
         User newUser = new User();
         newUser.setEmail(email);
         newUser.setPassword(bCryptPasswordEncoder.encode(password));
-        newUser.setName("ㅎㅎㅎㅎ");
+        newUser.setName(userDTO.getName());
         newUser.setNickname("");
 
         userRepository.save(newUser);
@@ -43,8 +43,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User getProfile(int userId) {
-        User user = userRepository.findById(userId);
+    public User getProfile(String email) {
+        User user = userRepository.findByEmail(email);
 
         if (user == null) {
             System.out.println("User not exist");
