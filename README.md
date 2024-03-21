@@ -582,3 +582,9 @@ public class InputNumber : MonoBehaviour
 
 
 # 장동재
+## 소켓(실시간 통신 서버)
+![gif](Images/multiRoomTest.gif)
+- 소켓 통신을 통해 방 생성, 참가, 데이터 송수신 테스트 완료
+
+![Alt]()
+- 유니티 클라이언트, WebFlux 서버 통신 및 데이터 송수신 테스트 완료
