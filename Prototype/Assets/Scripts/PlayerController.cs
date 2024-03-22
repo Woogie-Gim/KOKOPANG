@@ -25,6 +25,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private float jumpForce = 5.0f;
 
+    private bool isWalking = false;
     private bool isRun = false;
     private bool isGround = true;
 
@@ -107,6 +108,15 @@ public class PlayerController : MonoBehaviour
         Vector3 _moveVertical = transform.forward * _moveDirZ;
 
         Vector3 _velocity = (_moveHorizontal + _moveVertical).normalized * applySpeed;
+        
+        if (_velocity == Vector3.zero)
+        {
+            isWalking = false;
+        }
+        else
+        {
+            isWalking = true;
+        }
 
         myRigid.MovePosition(transform.position + _velocity * Time.deltaTime);
     }
@@ -128,5 +138,15 @@ public class PlayerController : MonoBehaviour
         float _yRotation = Input.GetAxisRaw("Mouse X") * lookSensitivity;
         Quaternion _deltaRotation = Quaternion.Euler(new Vector3(0f, _yRotation, 0f));
         myRigid.MoveRotation(myRigid.rotation * _deltaRotation);
+    }
+
+    public bool IsWalking()
+    {
+        return isWalking;
+    }
+
+    public bool IsRun()
+    {
+        return isRun;
     }
 }

@@ -60,16 +60,19 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\UI Scripts\InputNumber.cs" />
     <Compile Include="Assets\Store Asset\ExplosiveLLC\Demo Elements\Code\SmoothFollow.cs" />
+    <Compile Include="Assets\Scripts\Weapon\WeaponManager.cs" />
+    <Compile Include="Assets\Scripts\Weapon\AxeController.cs" />
     <Compile Include="Assets\Scripts\PlayerController.cs" />
     <Compile Include="Assets\Store Asset\ExplosiveLLC\Crafting Mecanim Animation Pack\Code\CrafterActions.cs" />
+    <Compile Include="Assets\Scripts\Weapon\CloseWeaponController.cs" />
     <Compile Include="Assets\Store Asset\ExplosiveLLC\Demo Elements\Code\GUIControls.cs" />
     <Compile Include="Assets\Store Asset\ExplosiveLLC\Crafting Mecanim Animation Pack\Code\CrafterNavigation.cs" />
     <Compile Include="Assets\Store Asset\ExplosiveLLC\Crafting Mecanim Animation Pack\Code\CrafterController.cs" />
-    <Compile Include="Assets\Scripts\GunController.cs" />
-    <Compile Include="Assets\Scripts\ArmsControl.cs" />
-    <Compile Include="Assets\Scripts\Arms.cs" />
+    <Compile Include="Assets\Scripts\Weapon\ArmsControl.cs" />
+    <Compile Include="Assets\Scripts\Weapon\Arms.cs" />
     <Compile Include="Assets\Scripts\ActionController.cs" />
     <Compile Include="Assets\Store Asset\Quirky Series Ultimate\_Scripts\Demo.cs" />
+    <Compile Include="Assets\Scripts\Weapon\PickAxeController.cs" />
     <Compile Include="Assets\Scripts\UI Scripts\SlotToolTip.cs" />
     <Compile Include="Assets\Store Asset\ExplosiveLLC\Crafting Mecanim Animation Pack\Code\CrafterAnimatorTriggers.cs" />
     <Compile Include="Assets\Scripts\ItemPickup.cs" />
@@ -79,12 +82,9 @@
     <Compile Include="Assets\Scripts\UI Scripts\Inventory.cs" />
     <Compile Include="Assets\Store Asset\ExplosiveLLC\Crafting Mecanim Animation Pack\Code\CrafterAnimatorController.cs" />
     <Compile Include="Assets\Scripts\FollowingCamera.cs" />
-    <Compile Include="Assets\Scripts\Gun.cs" />
     <Compile Include="Assets\Scripts\UI Scripts\Slot.cs" />
     <Compile Include="Assets\Store Asset\ExplosiveLLC\Crafting Mecanim Animation Pack\Code\CrafterShowItem.cs" />
     <Compile Include="Assets\Store Asset\ExplosiveLLC\Crafting Mecanim Animation Pack\Code\CrafterState.cs" />
-    <Compile Include="Assets\Scripts\Crosshair.cs" />
-    <Compile Include="Assets\Scripts\WeaponManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
