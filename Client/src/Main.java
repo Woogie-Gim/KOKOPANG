@@ -5,7 +5,7 @@ public class Main {
     public static void main(String[] args) {
         Socket socket;
         try {
-            socket = new Socket("localhost", 9999);
+            socket = new Socket("localhost", 1370);
 
             PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
             BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
