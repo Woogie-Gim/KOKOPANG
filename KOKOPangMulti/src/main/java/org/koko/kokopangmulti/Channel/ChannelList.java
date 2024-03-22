@@ -1,4 +1,4 @@
-package org.koko.kokopangmulti.Object;
+package org.koko.kokopangmulti.Channel;
 
 import java.util.ArrayList;
 import java.util.List;

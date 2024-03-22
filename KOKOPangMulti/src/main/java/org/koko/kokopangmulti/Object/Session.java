@@ -12,4 +12,8 @@ public class Session {
     }
 
     public Session() {}
+
+    public Connection getConnection() {
+        return this.connection;
+    }
 }
