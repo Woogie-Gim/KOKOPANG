@@ -12,6 +12,7 @@ public class Main {
             BufferedReader stdIn = new BufferedReader(new InputStreamReader(System.in));
 
             Thread receiver = new Thread(() -> {
+
                 try {
                     String inputLine;
                     while ((inputLine = in.readLine()) != null) {
@@ -26,6 +27,9 @@ public class Main {
             receiver.start();
 
             System.out.println("[Client] 서버 접속 성공");
+
+            String json = "{\"channel\": \"lobby\", \"message\": \"It's me Mario!\"}";
+            out.println(json);
 
             String userInput;
             while((userInput = stdIn.readLine()) != null) {
