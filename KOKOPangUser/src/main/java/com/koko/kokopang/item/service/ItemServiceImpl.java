@@ -4,12 +4,13 @@ import com.koko.kokopang.item.model.Coordinate;
 import com.koko.kokopang.item.dto.PointDTO;
 import org.springframework.stereotype.Service;
 
+import java.security.SecureRandom;
 import java.util.*;
 
 @Service
 public class ItemServiceImpl implements ItemService{
 
-    private static final Random random = new Random();
+    private static final Random random = new SecureRandom();
 
     // 아이템별 아이템드랍 정보 만드는 함수
     private HashMap<String, Integer> createItemDropInfo(int type) {
