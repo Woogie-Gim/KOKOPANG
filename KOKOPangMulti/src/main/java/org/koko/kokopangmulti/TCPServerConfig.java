@@ -12,7 +12,6 @@ import org.koko.kokopangmulti.Object.Session;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.stereotype.Service;
 import reactor.netty.Connection;
 import reactor.netty.DisposableServer;
@@ -27,10 +26,10 @@ import java.util.function.Consumer;
 @Service
 public class TCPServerConfig implements CommandLineRunner {
     private static final Logger log = LoggerFactory.getLogger(TCPServerConfig.class);
-    private static final int PORT = 9999;
+    private static final int PORT = 1370;
 
     private Channel channel;
-    private ChannelHandler channelHandler = new ChannelHandler();
+    private final ChannelHandler channelHandler = new ChannelHandler();
 
     public TCPServerConfig() {
     }
@@ -82,37 +81,41 @@ public class TCPServerConfig implements CommandLineRunner {
 
     private Mono<Void> clientDataHandler(NettyInbound in, NettyOutbound out) {
         ObjectMapper objectMapper = new ObjectMapper();
-        return in.receive().asString().flatMap(msg -> {
-            try {
-                Map<String, String> messageMap = objectMapper.readValue(msg, new TypeReference<Map<String, String>>() {
-                });
-                String channelName = messageMap.get("channel");
-                String messageContent = messageMap.get("message");
+        return in.receive()
+                .asString()
+                .flatMap(msg -> {
+                    try {
+                        Map<String, String> messageMap = objectMapper.readValue(msg, new TypeReference<Map<String, String>>() {
+                        });
+                        String channelName = messageMap.get("channel"); // lobby
+                        String messageContent = messageMap.get("message"); // data
 
+                        // ---------------------------------------------------------------
+                        // lobbyHandler(data)
+                        // ---------------------------------------------------------------
 
-                if (channelName.equals("lobby")) {
-                    System.out.println(messageContent);
-                    return Mono.empty();
+                        if (channelName.equals("lobby")) {
+                            System.out.println(messageContent);
+                            return Mono.empty();
+                        } else {
+                            // 채널 리스트에서 해당 채널 이름에 해당하는 채널 객체 찾기
+                            Channel channel = ChannelList.getInstance().getChannelList().stream()
+                                    .filter(ch -> ch.getChannelName().equals(channelName))
+                                    .findFirst()
+                                    .orElse(null);
 
-                } else {
-                    // 채널 리스트에서 해당 채널 이름에 해당하는 채널 객체 찾기
-                    Channel channel = ChannelList.getInstance().getChannelList().stream()
-                            .filter(ch -> ch.getChannelName().equals(channelName))
-                            .findFirst()
-                            .orElse(null);
-
-                    if (channel != null) {
-                        // broadcastMessage 메서드가 Mono<Void>를 반환하므로, 이를 직접 반환
-                        return channelHandler.broadcastMessage(messageContent, channel);
-                    } else {
-                        System.out.println("채널을 찾을 수 없습니다: " + channelName);
-                        return Mono.empty();
+                            if (channel != null) {
+                                // broadcastMessage 메서드가 Mono<Void>를 반환하므로, 이를 직접 반환
+                                return channelHandler.broadcastMessage(messageContent, channel);
+                            } else {
+                                System.out.println("채널을 찾을 수 없습니다: " + channelName);
+                                return Mono.empty();
+                            }
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        return Mono.error(e); // 오류 발생 시, Mono.error로 오류를 반환
                     }
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-                return Mono.error(e); // 오류 발생 시, Mono.error로 오류를 반환
-            }
-        }).then();
+                }).then();
     }
 }

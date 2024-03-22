@@ -5,8 +5,9 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 public class ChannelHandler {
-    public boolean addLobby(Session session, Channel channel) {
-        return channel.getLobby().getSessionList().add(session);
+    public void addLobby(Session session, Channel channel) {
+        channel.getLobby().getSessionList().add(session);
+        System.out.println(Channel.getLobby().getSessionList());
     }
 
     // 채널 내 모든 세션에 메시지 브로드캐스트
