@@ -13,6 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.stereotype.Service;
 import reactor.netty.Connection;
 import reactor.netty.DisposableServer;
 import reactor.netty.NettyInbound;
@@ -23,7 +24,7 @@ import reactor.core.publisher.Mono;
 import java.util.Map;
 import java.util.function.Consumer;
 
-@SpringBootApplication
+@Service
 public class TCPServerConfig implements CommandLineRunner {
     private static final Logger log = LoggerFactory.getLogger(TCPServerConfig.class);
     private static final int PORT = 9999;
