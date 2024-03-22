@@ -1085,10 +1085,13 @@ private static final Random random = new Random();
 # 이주현
 ### 🛠 CLIENT-SERVER COMMUNICATION ARCHITECTURE 🛠
 **[ CHANNEL MANAGING ]**
+
 ![./channelManage1.png](./img/channelManage1.drawio.png)
+
 ![./channelManage2.png](./img/channelManage2.drawio.png)
 
 **[ INGAME ]**
+
 ![./img/ingame.png](./img/ingame.png)
 
 ### 📜 [STUDY] Socket Communication 📜
