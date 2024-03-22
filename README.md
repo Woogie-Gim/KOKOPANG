@@ -7,7 +7,7 @@
 | 강승원 | 클라이언트 | [강승원](#강승원) | [강승원]() |
 | 김선욱 | 클라이언트 | [김선욱](#김선욱) | [김선욱](https://lab.ssafy.com/s10-metaverse-game-sub2/S10P22C211/-/tree/develop/Prototype?ref_type=heads) |
 | 김영일 | 서버 및 데이터 | [김영일](#김영일) | [김영일]() |
-| 이주현 | 서버 및 데이터 | [이주현](#이주현) | [이주현]() |
+| 이주현 | 서버 및 데이터 | [이주현](#이주현) | [이주현](https://lab.ssafy.com/s10-metaverse-game-sub2/S10P22C211/-/tree/develop/nettyEdu2/src/main/java/com/example/nettyedu2?ref_type=heads) |
 | 이항우 | 클라이언트, 서버, 데이터 및 CI/CD | [이항우](#이항우) | [이항우]() |
 | 장동재 | 서버 및 데이터 | [장동재](#장동재) | [장동재]() |
 
@@ -1083,7 +1083,52 @@ private static final Random random = new Random();
 
 
 # 이주현
+### 🛠 CLIENT-SERVER COMMUNICATION ARCHITECTURE 🛠
+**[ CHANNEL MANAGING ]**
+![./channelManage1.png](./img/channelManage1.drawio.png)
+![./channelManage2.png](./img/channelManage2.drawio.png)
 
+**[ INGAME ]**
+![./img/ingame.png](./img/ingame.png)
+
+### 📜 [STUDY] Socket Communication 📜
+([관련 폴더](https://lab.ssafy.com/s10-metaverse-game-sub2/S10P22C211/-/tree/develop/nettyEdu2/src/main/java/com/example/nettyedu2?ref_type=heads))
+
+**[ TcpServerConfig.java ]**
+
+Reactor Netty를 사용하여 TCP 서버를 설정하고 운영하는 Java 클래스
+
+[주요 구성 요소]
+- TcpServerConfig 클래스 : TCP 서버의 설정과 실행을 담당하는 클래스
+- User 클래스의 인스턴스 : 클라이언트 관리와 메시지 브로드캑스트를 담당
+- Logger(log) : 로그 기록을 위한 Logger 인스턴스
+
+[동작 과정]
+1) TcpServerConfig 생성자
+   : User 클래스의 인스턴스를 파라미터로 받아 이를 userHanler에 할당
+
+2) createTcpServer 메서드
+   : TCP 서버 생성 및 설정
+
+3) connectionSetup 메서드
+   : 클라이언트 연결 시 필요한 설정을 정의
+
+**[ User.java ]**
+
+TCP 서버에서 클라이언트 관리와 메시지 브로드캐스팅을 담당하는 클래스
+
+[기능]
+1) 클라이언트의 연결 추적
+2) 모든 클라이언트에게 메시지를 브로드캐스트
+
+**[ User.java ]**
+
+
+Spring Boot와 Reactor Netty를 사용하여 TCP 서버를 설정하고 실행한다
+
+[1] Spring Boot Application 설정
+
+[2] TCP 서버 설정 및 실행
 
 # 이항우
 
