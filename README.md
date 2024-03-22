@@ -1242,7 +1242,7 @@ public class RoomManager {
 }
 ```
 ## Unity, Webflux
-![unity](Images/unity-server(unity).png)
-![Server](Images/unity-server(server).png)
+![unity](Images/unity-server(unity).PNG)
+![Server](Images/unity-server(server).PNG)
 - unity 클라이언트 - webflux 서버 연결 및 데이터 전송 테스트
 - java socket 테스트 코드 동작 완료 후 webflux에 비슷한 방법으로 통신 테스트 성공
