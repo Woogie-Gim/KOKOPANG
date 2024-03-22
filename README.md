@@ -154,7 +154,7 @@ public class Loading : MonoBehaviour
 ```
 - 메인맵 프로토 타입 제작
 
-![Alt text](Images/minimap.gif)
+![Alt text](Images/minimap.png)
 ```txt
 - 이동 거리 및 속도 고려
 - 이동속도 대비 맵 스케일 고려
@@ -1115,9 +1115,134 @@ private static final Random random = new Random();
 
 
 # 장동재
+
 ## 소켓(실시간 통신 서버)
 ![gif](Images/multiRoomTest.gif)
 - 소켓 통신을 통해 방 생성, 참가, 데이터 송수신 테스트 완료
 
-![Alt]()
-- 유니티 클라이언트, WebFlux 서버 통신 및 데이터 송수신 테스트 완료
+### RoomManager
+- 서버에 존재하는 방 관리 클래스
+  - 방 생성, 방 목록, 방 참가
+  
+- 방목록에 방이 존재하거나 존재하지 않을 경우 다른 데이터를 클라이언트에 송신
+```java
+// RoomManager
+
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.net.Socket;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
+public class RoomManager {
+    HashMap<String, Room> rooms = new HashMap<String, Room>();
+    List<String> roomsList;
+    DataInputStream in;
+    DataOutputStream out;
+    String userName;
+    Socket socket;
+    Room roomInfo = null;
+
+    public void roomList(String userName, Socket socket) {
+        this.userName = userName;
+        this.socket = socket;
+
+        StringBuilder sb = new StringBuilder();
+
+        try {
+            out = new DataOutputStream(socket.getOutputStream());
+            roomsList = new ArrayList<>(rooms.keySet());
+
+            if (!roomsList.isEmpty()) {
+                for (int i = 1; i < roomsList.size() + 1; i++) {
+                    if (i != roomsList.size()) {
+                        sb.append(i).append(". ").append(roomsList.get(i - 1)).append("\n");
+                    } else {
+                        sb.append(i).append(" .").append(roomsList.get(i - 1));
+                    }
+                }
+                String res = sb.toString();
+                out.writeUTF("[Server] 방목록" + "\n" + res);
+            } else {
+                out.writeUTF("[Server] 방이 존재하지 않습니다.");
+            }
+
+            roomCommand();
+        } catch (IOException e) {
+        }
+    }
+
+    public void roomCommand() {
+        try {
+            this.out = new DataOutputStream(socket.getOutputStream());
+            this.in = new DataInputStream(socket.getInputStream());
+
+            if (rooms.isEmpty()) {
+                out.writeBoolean(false);
+                out.writeUTF("[Server] 방을 생성하시겠습니까? [y/n]: ");
+
+                String res = in.readUTF();
+
+                if (res.equals("y")) {
+                    roomCreate();
+                } else {
+                    out.writeUTF("[Server] n");
+                }
+            } else {
+                out.writeBoolean(true);
+                out.writeUTF("[Server] 방 생성(c) / 방 참가(방 번호): ");
+
+                String res = in.readUTF();
+
+                if (res.equals("c")) {
+                    out.writeUTF("create");
+                    roomCreate();
+                } else {
+                    out.writeUTF("join");
+
+                    int index = Integer.parseInt(res) - 1;
+
+                    if (index < 0 || index > roomsList.size()) {
+                        out.writeBoolean(false);
+                        out.writeUTF("[Server] 옳바른 방 번호를 입력해 주세요.");
+                        index = Integer.parseInt(in.readUTF()) - 1;
+                    }
+//                    out.writeBoolean(true);
+                    String roomName = roomsList.get(index);
+                    Room room = rooms.get(roomName);
+                    room.joinUser(userName, socket);
+                }
+            }
+        } catch (IOException e) {
+        }
+    }
+
+    private void roomCreate() {
+        Room room = new Room();
+        this.roomInfo = room;
+
+        try {
+            out.writeUTF("[Server] 방 제목을 입력하세요: ");
+            String name = in.readUTF();
+
+            rooms.put(name, room);
+            System.out.println(name + "방 생성");
+            out.writeUTF("[Server] " + name + "방이 성공적으로 생성되었습니다.");
+
+            room.joinUser(userName, socket);
+        } catch (Exception e) {
+        }
+    }
+
+    public Room roomInfo() {
+        return roomInfo;
+    }
+}
+```
+## Unity, Webflux
+![unity](Images/unity-server(unity).png)
+![Server](Images/unity-server(server).png)
+- unity 클라이언트 - webflux 서버 연결 및 데이터 전송 테스트
+- java socket 테스트 코드 동작 완료 후 webflux에 비슷한 방법으로 통신 테스트 성공
