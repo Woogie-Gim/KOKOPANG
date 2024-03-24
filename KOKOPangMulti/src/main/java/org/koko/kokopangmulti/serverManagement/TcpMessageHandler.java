@@ -5,6 +5,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.koko.kokopangmulti.Channel.Channel;
 import org.koko.kokopangmulti.Channel.ChannelHandler;
 import org.koko.kokopangmulti.Channel.ChannelList;
+import org.koko.kokopangmulti.messageHandling.IngameMsgHandler;
+import org.koko.kokopangmulti.messageHandling.LobbyMsgHandler;
+import org.koko.kokopangmulti.messageHandling.RoomMsgHandler;
 import org.springframework.context.annotation.Bean;
 import reactor.core.publisher.Mono;
 import reactor.netty.NettyInbound;
@@ -19,9 +22,15 @@ public class TcpMessageHandler {
      */
     private final ChannelHandler channelHandler;
     private final ObjectMapper objectMapper;
-    public TcpMessageHandler(ChannelHandler channelHandler, ObjectMapper objectMapper) {
+    private final LobbyMsgHandler lobbyMsgHandler;
+    private final RoomMsgHandler roomMsgHandler;
+    private final IngameMsgHandler ingameMsgHandler;
+    public TcpMessageHandler(ChannelHandler channelHandler, ObjectMapper objectMapper, LobbyMsgHandler lobbyMsgHandler, RoomMsgHandler roomMsgHandler, IngameMsgHandler ingameMsgHandler) {
         this.channelHandler = channelHandler;
         this.objectMapper = objectMapper;
+        this.lobbyMsgHandler = lobbyMsgHandler;
+        this.roomMsgHandler = roomMsgHandler;
+        this.ingameMsgHandler = ingameMsgHandler;
     }
 
     public Mono<Void> handleMessage(NettyInbound in, NettyOutbound out) {
@@ -36,32 +45,37 @@ public class TcpMessageHandler {
                         String channelName = messageMap.get("channel");
                         String data = messageMap.get("data");
 
-                        // LOBBY DATA
+                        // Broadcast LOBBY DATA
                         if (channelName.equals("lobby")) {
-                            System.out.println("FROM LOBBY");
-                            System.out.println("data = " + data);
+
+                            lobbyMsgHandler.printData(data);
                             return Mono.empty();
+
                         }
 
-                        // GAMEROOM DATA
-                        else if (channelName.equals("channel")) {
-                            System.out.println("FROM WAITING ROOM");
-                            System.out.println("data = " + data);
+                        // Broadcast GAMEROOM DATA
+                        else if (channelName.equals("room")) {
+
+                            roomMsgHandler.printData(data);
                             return Mono.empty();
+
                         }
 
-                        // INGAME DATA
+                        // Broadcast INGAME DATA
                         else if (channelName.equals("ingame")) {
-                            System.out.println("DURING GAME");
-                            System.out.println("data = " + data);
+
+                            ingameMsgHandler.printData(data);
                             return Mono.empty();
+
                         }
 
                         return Mono.empty();
 
                     } catch (Exception e) {
+
                         e.printStackTrace();
                         return Mono.error(e); // 오류 발생 시, Mono.error로 오류를 반환
+
                     }
                 }).then();
     }

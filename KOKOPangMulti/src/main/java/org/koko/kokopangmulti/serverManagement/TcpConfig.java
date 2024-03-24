@@ -3,6 +3,9 @@ package org.koko.kokopangmulti.serverManagement;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.koko.kokopangmulti.Channel.Channel;
 import org.koko.kokopangmulti.Channel.ChannelHandler;
+import org.koko.kokopangmulti.messageHandling.IngameMsgHandler;
+import org.koko.kokopangmulti.messageHandling.LobbyMsgHandler;
+import org.koko.kokopangmulti.messageHandling.RoomMsgHandler;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -20,12 +23,12 @@ public class TcpConfig {
 
     @Bean
     public TcpConnectionHandler tcpConnectionHandler() {
-        return new TcpConnectionHandler(channelHandler(), channel());
+        return new TcpConnectionHandler(channelHandler(), new Channel());
     }
 
     @Bean
     public TcpMessageHandler tcpMessageHandler() {
-        return new TcpMessageHandler(channelHandler(), new ObjectMapper());
+        return new TcpMessageHandler(channelHandler(), new ObjectMapper(), new LobbyMsgHandler(), new RoomMsgHandler(), new IngameMsgHandler());
     }
 
     @Bean
@@ -33,8 +36,5 @@ public class TcpConfig {
         return new ChannelHandler();
     }
 
-    @Bean
-    public Channel channel() {
-        return new Channel();
-    }
+
 }
