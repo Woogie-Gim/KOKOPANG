@@ -1,27 +1,26 @@
 package org.koko.kokopangmulti.Channel;
 
-import org.koko.kokopangmulti.Object.Session;
+import reactor.netty.Connection;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
 
 public class Channel {
     private String channelName;
-    private List<Session> sessionList;
+    private HashMap<String, Connection> sessionList;
 
-    public Channel(String channelName, List<Session> sessionList) {
+    public Channel(String channelName) {
         this.channelName = channelName;
-        this.sessionList = sessionList;
+        this.sessionList = new HashMap<>();
     }
 
-    public List<Session> getSessionList() {
-        return sessionList;
+    public HashMap<String, Connection> getSessionList() {
+        return this.sessionList;
     }
 
     public Channel() {}
 
     // Channel클래스 로드시 lobby인스턴스 바로 생성(eager initialization: 이른 초기화)
-    public static final Channel lobby = new Channel("lobby", new ArrayList<>());
+    public static final Channel lobby = new Channel("lobby");
 
     public static Channel getLobby() {
         return lobby;

@@ -36,11 +36,9 @@ public class TcpConnectionHandler implements Consumer<Connection> {
              */
             @Override
             public void handlerAdded(ChannelHandlerContext ctx) {
-
                 Session session = new Session(conn.address().toString(), conn); // 세션 생성
                 channelHandler.addLobby(session, channel.getLobby());           // lobby channel 추가
                 log.info("client added to lobby");
-
             }
 
             /*

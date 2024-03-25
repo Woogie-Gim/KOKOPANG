@@ -9,8 +9,7 @@ import org.koko.kokopangmulti.messageHandling.RoomMsgHandler;
 import reactor.core.publisher.Mono;
 import reactor.netty.NettyInbound;
 import reactor.netty.NettyOutbound;
-
-import java.util.Map;
+import org.json.JSONObject;
 
 public class TcpMessageHandler {
 
@@ -36,24 +35,31 @@ public class TcpMessageHandler {
                 .asString()
                 .flatMap(msg -> {
                     try {
-                        Map<String, String> messageMap = objectMapper.readValue(msg, new TypeReference<Map<String, String>>() {
-                        });
+                        // 클라이언트 측에서 송신한 메시지를 JSON객체로 변환
+                        JSONObject json = new JSONObject(msg);
 
-                        String channelName = messageMap.get("channel");
-                        String data = messageMap.get("data");
+                        // JSON객체에서 최상위 값들 파싱(현재 참가 채널 이름 및 하위 데이터)
+                        String channelName = json.getString("channel");
+                        String data = json.getString("data");
 
-                        // Broadcast LOBBY DATA
+                        // 파싱한 데이터 테스트 출력
+                        System.out.println(channelName);
+                        System.out.println(data);
+
+                        // channelName이 lobby일 경우
                         if (channelName.equals("lobby")) {
 
+                            // 로비 msg핸들러 호출
                             lobbyMsgHandler.printData(data);
                             return Mono.empty();
 
                         }
 
-                        // Broadcast GAMEROOM DATA
+                        // channelName이 room일 경우
                         else if (channelName.equals("room")) {
 
-                            roomMsgHandler.printData(data);
+                            // 룸 msg핸들러 호출
+                            roomMsgHandler.filterData(data);
                             return Mono.empty();
 
                         }
