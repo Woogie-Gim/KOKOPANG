@@ -7,7 +7,7 @@ public class ChannelList {
 
     private static final ChannelList instance = new ChannelList();
 
-    private final List<Channel> channelList = new ArrayList<>();
+    private static final List<Channel> channelList = new ArrayList<>();
 
     public synchronized void addChannel(Channel channel) {
         channelList.add(channel);
@@ -17,7 +17,7 @@ public class ChannelList {
         return channelList.remove(channel);
     }
 
-    public List<Channel> getChannelList() {
+    public static List<Channel> getChannelList() {
         return new ArrayList<>(channelList);
     }
 

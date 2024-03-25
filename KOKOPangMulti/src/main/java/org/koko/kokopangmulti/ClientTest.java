@@ -1,7 +1,9 @@
+package org.koko.kokopangmulti;
+
 import java.io.*;
 import java.net.Socket;
 
-public class Main {
+public class ClientTest {
     public static void main(String[] args) {
         Socket socket;
         try {
@@ -28,7 +30,7 @@ public class Main {
 
             System.out.println("[Client] 서버 접속 성공");
 
-            String json = "{\"channel\": \"lobby\", \"message\": \"It's me Mario!\"}";
+            String json = "{\"channel\":\"lobby\",\"data\":{\"type\":\"enter\",\"userName\":\"user1\"}}";
             out.println(json);
 
             String userInput;
