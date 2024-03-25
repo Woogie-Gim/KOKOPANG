@@ -25,4 +25,5 @@ public class User {
     private String nickname;
     private String role;
     private String gender;
+    private int rating = 1000;
 }

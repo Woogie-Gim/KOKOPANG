@@ -1,10 +1,13 @@
 package com.koko.kokopang.user.service;
 
+import com.koko.kokopang.user.controller.UserProfileController;
 import com.koko.kokopang.user.dto.FriendDTO;
 import com.koko.kokopang.user.dto.FriendshipDTO;
 import com.koko.kokopang.user.model.Friendship;
+import com.koko.kokopang.user.model.UserProfile;
 import com.koko.kokopang.user.repository.FriendshipRepository;
 import com.koko.kokopang.user.repository.UserRepository;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -15,10 +18,12 @@ public class FriendshipServiceImpl implements FriendshipService{
 
     private final FriendshipRepository friendshipRepository;
     private final UserRepository userRepository;
+    private final UserProfileService userProfileService;
 
-    public FriendshipServiceImpl(FriendshipRepository friendshipRepository, UserRepository userRepository) {
+    public FriendshipServiceImpl(FriendshipRepository friendshipRepository, UserRepository userRepository, UserProfileService userProfileService) {
         this.friendshipRepository = friendshipRepository;
         this.userRepository = userRepository;
+        this.userProfileService = userProfileService;
     }
 
     @Override
@@ -33,6 +38,7 @@ public class FriendshipServiceImpl implements FriendshipService{
         Friendship friendRequest = new Friendship();
         friendRequest.setUser(userRepository.findById(userId));
         friendRequest.setFriendId(friendId);
+        friendRequest.setFriendRating(userRepository.findById(friendId).getRating());
 
         friendshipRepository.save(friendRequest);
 
@@ -52,8 +58,13 @@ public class FriendshipServiceImpl implements FriendshipService{
             friend.setFriendId(userId == friendship.getFriendId() ? friendship.getUser().getId() : friendship.getFriendId());
             friend.setFriendName(userId == friendship.getFriendId() ? userRepository.findById(friendship.getUser().getId()).getName() : userRepository.findById(friendship.getFriendId()).getName());
             friend.setIsWaiting(friendship.getIsWaiting());
-            friend.setIsFrom(friendship.getIsFrom());
-
+            friend.setIsFrom(userId != friendship.getFriendId());
+            friend.setFriendRating(friendship.getFriendRating());
+            UserProfile friendProfile = userProfileService
+                    .getUserProfile(userId == friendship.getFriendId() ? friendship.getUser().getId() : friendship.getFriendId());
+            if (friendProfile != null) {
+                friend.setFriendProfileImg("http://localhost:8080/profile/getImg/" + friendProfile.getSaveFolder() + "/" + friendProfile.getOriginalName() + "/" + friendProfile.getSaveName());
+            }
             userFriendsList.add(friend);
         }
 

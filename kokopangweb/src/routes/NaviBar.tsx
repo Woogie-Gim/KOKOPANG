@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import { useNavigate } from 'react-router-dom'
 import { MenuBox, Menu, LogoBox } from '../styles/Main/MainStyle'
-import logo from '../assets/jam.gif'
+import logo from '../assets/koko_logo.png'
 
 const NaviBar = () => {
   
