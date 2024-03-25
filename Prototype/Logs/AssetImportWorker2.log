@@ -1,0 +1,516 @@
+Using pre-set license
+Built from '2021.3/staging' branch; Version is '2021.3.33f1 (ee5a2aa03ab2) revision 15620650'; Using compiler version '192829333'; Build Type 'Release'
+OS: 'Windows 10  (10.0.19045) 64bit Enterprise' Language: 'ko' Physical Memory: 32505 MB
+BatchMode: 1, IsHumanControllingUs: 0, StartBugReporterOnCrash: 0, Is64bit: 1, IsPro: 1
+
+COMMAND LINE ARGUMENTS:
+C:\Program Files\Unity\Hub\Editor\2021.3.33f1\Editor\Unity.exe
+-adb2
+-batchMode
+-noUpm
+-name
+AssetImportWorker2
+-projectPath
+C:/Users/SSAFY/Documents/Unity Projects/Escape
+-logFile
+Logs/AssetImportWorker2.log
+-srvPort
+62041
+Successfully changed project path to: C:/Users/SSAFY/Documents/Unity Projects/Escape
+C:/Users/SSAFY/Documents/Unity Projects/Escape
+[UnityMemory] Configuration Parameters - Can be set up in boot.config
+    "memorysetup-bucket-allocator-granularity=16"
+    "memorysetup-bucket-allocator-bucket-count=8"
+    "memorysetup-bucket-allocator-block-size=33554432"
+    "memorysetup-bucket-allocator-block-count=8"
+    "memorysetup-main-allocator-block-size=16777216"
+    "memorysetup-thread-allocator-block-size=16777216"
+    "memorysetup-gfx-main-allocator-block-size=16777216"
+    "memorysetup-gfx-thread-allocator-block-size=16777216"
+    "memorysetup-cache-allocator-block-size=4194304"
+    "memorysetup-typetree-allocator-block-size=2097152"
+    "memorysetup-profiler-bucket-allocator-granularity=16"
+    "memorysetup-profiler-bucket-allocator-bucket-count=8"
+    "memorysetup-profiler-bucket-allocator-block-size=33554432"
+    "memorysetup-profiler-bucket-allocator-block-count=8"
+    "memorysetup-profiler-allocator-block-size=16777216"
+    "memorysetup-profiler-editor-allocator-block-size=1048576"
+    "memorysetup-temp-allocator-size-main=16777216"
+    "memorysetup-job-temp-allocator-block-size=2097152"
+    "memorysetup-job-temp-allocator-block-size-background=1048576"
+    "memorysetup-job-temp-allocator-reduction-small-platforms=262144"
+    "memorysetup-temp-allocator-size-background-worker=32768"
+    "memorysetup-temp-allocator-size-job-worker=262144"
+    "memorysetup-temp-allocator-size-preload-manager=33554432"
+    "memorysetup-temp-allocator-size-nav-mesh-worker=65536"
+    "memorysetup-temp-allocator-size-audio-worker=65536"
+    "memorysetup-temp-allocator-size-cloud-worker=32768"
+    "memorysetup-temp-allocator-size-gi-baking-worker=262144"
+    "memorysetup-temp-allocator-size-gfx=262144"
+Player connection [8032] Host "[IP] 192.168.100.47 [Port] 0 [Flags] 2 [Guid] 3569010485 [EditorId] 3569010485 [Version] 1048832 [Id] WindowsEditor(7,DESKTOP-LL832F4) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" joined multi-casting on [225.0.0.222:54997]...
+
+Player connection [8032] Host "[IP] 192.168.100.47 [Port] 0 [Flags] 2 [Guid] 3569010485 [EditorId] 3569010485 [Version] 1048832 [Id] WindowsEditor(7,DESKTOP-LL832F4) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" joined alternative multi-casting on [225.0.0.222:34997]...
+
+[Physics::Module] Initialized MultithreadedJobDispatcher with {0} workers.
+Refreshing native plugins compatible for Editor in 128.87 ms, found 5 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Initialize engine version: 2021.3.33f1 (ee5a2aa03ab2)
+[Subsystems] Discovering subsystems at path C:/Program Files/Unity/Hub/Editor/2021.3.33f1/Editor/Data/Resources/UnitySubsystems
+[Subsystems] Discovering subsystems at path C:/Users/SSAFY/Documents/Unity Projects/Escape/Assets
+GfxDevice: creating device client; threaded=0; jobified=0
+Direct3D:
+    Version:  Direct3D 11.0 [level 11.1]
+    Renderer: NVIDIA GeForce RTX 3050 Ti Laptop GPU (ID=0x25a0)
+    Vendor:   NVIDIA
+    VRAM:     3977 MB
+    Driver:   31.0.15.4633
+Initialize mono
+Mono path[0] = 'C:/Program Files/Unity/Hub/Editor/2021.3.33f1/Editor/Data/Managed'
+Mono path[1] = 'C:/Program Files/Unity/Hub/Editor/2021.3.33f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit-win32'
+Mono config path = 'C:/Program Files/Unity/Hub/Editor/2021.3.33f1/Editor/Data/MonoBleedingEdge/etc'
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56452
+Begin MonoManager ReloadAssembly
+Registering precompiled unity dll's ...
+Register platform support module: C:/Program Files/Unity/Hub/Editor/2021.3.33f1/Editor/Data/PlaybackEngines/WebGLSupport/UnityEditor.WebGL.Extensions.dll
+Register platform support module: C:/Program Files/Unity/Hub/Editor/2021.3.33f1/Editor/Data/PlaybackEngines/AndroidPlayer/UnityEditor.Android.Extensions.dll
+Register platform support module: C:/Program Files/Unity/Hub/Editor/2021.3.33f1/Editor/Data/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.dll
+Register platform support module: C:/Program Files/Unity/Hub/Editor/2021.3.33f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
+Registered in 0.005365 seconds.
+Native extension for WindowsStandalone target not found
+[usbmuxd] Start listen thread
+[usbmuxd] Listen thread started
+Native extension for iOS target not found
+Native extension for Android target not found
+Android Extension - Scanning For ADB Devices 1335 ms
+Native extension for WebGL target not found
+Refreshing native plugins compatible for Editor in 142.49 ms, found 5 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  1.951 seconds
+Domain Reload Profiling:
+	ReloadAssembly (1952ms)
+		BeginReloadAssembly (77ms)
+			ExecutionOrderSort (0ms)
+			DisableScriptedObjects (0ms)
+			BackupInstance (0ms)
+			ReleaseScriptingObjects (0ms)
+			CreateAndSetChildDomain (1ms)
+		EndReloadAssembly (1801ms)
+			LoadAssemblies (77ms)
+			RebuildTransferFunctionScriptingTraits (0ms)
+			SetupTypeCache (83ms)
+			ReleaseScriptCaches (0ms)
+			RebuildScriptCaches (20ms)
+			SetupLoadedEditorAssemblies (1666ms)
+				LogAssemblyErrors (0ms)
+				InitializePlatformSupportModulesInManaged (1413ms)
+				SetLoadedEditorAssemblies (0ms)
+				RefreshPlugins (143ms)
+				BeforeProcessingInitializeOnLoad (1ms)
+				ProcessInitializeOnLoadAttributes (76ms)
+				ProcessInitializeOnLoadMethodAttributes (32ms)
+				AfterProcessingInitializeOnLoad (0ms)
+				EditorAssembliesLoaded (0ms)
+			ExecutionOrderSort2 (0ms)
+			AwakeInstancesAfterBackupRestoration (0ms)
+Platform modules already initialized, skipping
+Registering precompiled user dll's ...
+Registered in 0.003800 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for WindowsStandalone target not found
+Native extension for iOS target not found
+Native extension for Android target not found
+Native extension for WebGL target not found
+Refreshing native plugins compatible for Editor in 1.89 ms, found 5 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Package Manager log level set to [2]
+[Package Manager] Server::EnsureServerProcessIsRunning -- launch failed, reason: Unity was launched with the -noUpm command-line argument
+[Package Manager] Cannot connect to Unity Package Manager local server
+Mono: successfully reloaded assembly
+- Completed reload, in  1.219 seconds
+Domain Reload Profiling:
+	ReloadAssembly (1220ms)
+		BeginReloadAssembly (105ms)
+			ExecutionOrderSort (0ms)
+			DisableScriptedObjects (4ms)
+			BackupInstance (0ms)
+			ReleaseScriptingObjects (0ms)
+			CreateAndSetChildDomain (19ms)
+		EndReloadAssembly (1038ms)
+			LoadAssemblies (83ms)
+			RebuildTransferFunctionScriptingTraits (0ms)
+			SetupTypeCache (219ms)
+			ReleaseScriptCaches (0ms)
+			RebuildScriptCaches (46ms)
+			SetupLoadedEditorAssemblies (683ms)
+				LogAssemblyErrors (0ms)
+				InitializePlatformSupportModulesInManaged (24ms)
+				SetLoadedEditorAssemblies (0ms)
+				RefreshPlugins (2ms)
+				BeforeProcessingInitializeOnLoad (65ms)
+				ProcessInitializeOnLoadAttributes (571ms)
+				ProcessInitializeOnLoadMethodAttributes (16ms)
+				AfterProcessingInitializeOnLoad (4ms)
+				EditorAssembliesLoaded (0ms)
+			ExecutionOrderSort2 (0ms)
+			AwakeInstancesAfterBackupRestoration (5ms)
+Platform modules already initialized, skipping
+========================================================================
+Worker process is ready to serve import requests
+Launched and connected shader compiler UnityShaderCompiler.exe after 0.03 seconds
+Refreshing native plugins compatible for Editor in 1.46 ms, found 5 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 3804 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 51 unused Assets / (1.3 MB). Loaded Objects now: 4275.
+Memory consumption went from 201.9 MB to 200.6 MB.
+Total: 2.684800 ms (FindLiveObjects: 0.263000 ms CreateObjectMapping: 0.090600 ms MarkObjects: 2.097400 ms  DeleteObjects: 0.233000 ms)
+
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:CustomObjectIndexerAttribute: bc11b3a6c3213fcdd17b65e7da85e133 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
+  custom:SearchIndexIgnoredProperties: e643bd26f0fe6173181afceb89e7c659 -> 
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.006055 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for WindowsStandalone target not found
+Native extension for iOS target not found
+Native extension for Android target not found
+Native extension for WebGL target not found
+Refreshing native plugins compatible for Editor in 1.82 ms, found 5 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+[Package Manager] Server::EnsureServerProcessIsRunning -- launch failed, reason: Unity was launched with the -noUpm command-line argument
+[Package Manager] Cannot connect to Unity Package Manager local server
+Mono: successfully reloaded assembly
+- Completed reload, in  1.313 seconds
+Domain Reload Profiling:
+	ReloadAssembly (1314ms)
+		BeginReloadAssembly (132ms)
+			ExecutionOrderSort (0ms)
+			DisableScriptedObjects (3ms)
+			BackupInstance (0ms)
+			ReleaseScriptingObjects (0ms)
+			CreateAndSetChildDomain (33ms)
+		EndReloadAssembly (1102ms)
+			LoadAssemblies (96ms)
+			RebuildTransferFunctionScriptingTraits (0ms)
+			SetupTypeCache (288ms)
+			ReleaseScriptCaches (2ms)
+			RebuildScriptCaches (43ms)
+			SetupLoadedEditorAssemblies (660ms)
+				LogAssemblyErrors (0ms)
+				InitializePlatformSupportModulesInManaged (26ms)
+				SetLoadedEditorAssemblies (0ms)
+				RefreshPlugins (2ms)
+				BeforeProcessingInitializeOnLoad (52ms)
+				ProcessInitializeOnLoadAttributes (553ms)
+				ProcessInitializeOnLoadMethodAttributes (22ms)
+				AfterProcessingInitializeOnLoad (5ms)
+				EditorAssembliesLoaded (0ms)
+			ExecutionOrderSort2 (0ms)
+			AwakeInstancesAfterBackupRestoration (5ms)
+Platform modules already initialized, skipping
+Refreshing native plugins compatible for Editor in 1.70 ms, found 5 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 3742 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 34 unused Assets / (1.3 MB). Loaded Objects now: 4291.
+Memory consumption went from 194.8 MB to 193.5 MB.
+Total: 2.508800 ms (FindLiveObjects: 0.266300 ms CreateObjectMapping: 0.246500 ms MarkObjects: 1.845800 ms  DeleteObjects: 0.149500 ms)
+
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:CustomObjectIndexerAttribute: bc11b3a6c3213fcdd17b65e7da85e133 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
+  custom:SearchIndexIgnoredProperties: e643bd26f0fe6173181afceb89e7c659 -> 
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+========================================================================
+Received Import Request.
+  Time since last request: 14480.094264 seconds.
+  path: Assets/Survival Assets/Image/UI/Craft_Manual/Craft_Manul_BuildTab_Pillar.png
+  artifactKey: Guid(58823fe63f05e9d4e8681f57f447a6d6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Survival Assets/Image/UI/Craft_Manual/Craft_Manul_BuildTab_Pillar.png using Guid(58823fe63f05e9d4e8681f57f447a6d6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'b5cd04e40a7a46dee2244f28a2478eb9') in 0.072883 seconds 
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.000024 seconds.
+  path: Assets/Survival Assets/Image/UI/Craft_Manual/Craft_Manul_BuildTab_floor.png
+  artifactKey: Guid(07d9ee022bed6c249993d8da5e7625c6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Survival Assets/Image/UI/Craft_Manual/Craft_Manul_BuildTab_floor.png using Guid(07d9ee022bed6c249993d8da5e7625c6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'c3d786cf671519321434f90cb67ba6c9') in 0.011979 seconds 
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.203146 seconds.
+  path: Assets/Survival Assets/Image/UI/Craft_Manual/Craft_Manual_Tab_2.png
+  artifactKey: Guid(695af53490687ec4ea13a69d181442f0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Survival Assets/Image/UI/Craft_Manual/Craft_Manual_Tab_2.png using Guid(695af53490687ec4ea13a69d181442f0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '985e97a7255dbb591e2876e711e48629') in 0.012119 seconds 
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.000465 seconds.
+  path: Assets/Survival Assets/Image/UI/Craft_Manual/Craft_Manual_Tab_1.png
+  artifactKey: Guid(02b8eb8c9d9395a46a441ff06277bb85) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Survival Assets/Image/UI/Craft_Manual/Craft_Manual_Tab_1.png using Guid(02b8eb8c9d9395a46a441ff06277bb85) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'ae39e5ae89244d07c1d68636689156a2') in 0.012249 seconds 
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.016605 seconds.
+  path: Assets/Survival Assets/Image/UI/Craft_Manual/Craft_Manual_Base_UI.png
+  artifactKey: Guid(cb3b1c5b981ecee40a7993bac5583475) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Survival Assets/Image/UI/Craft_Manual/Craft_Manual_Base_UI.png using Guid(cb3b1c5b981ecee40a7993bac5583475) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'e4a66463cdf06f14350ef718509a8538') in 0.031070 seconds 
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.206545 seconds.
+  path: Assets/Survival Assets/Image/UI/Craft_Manual/Craft_Manual_Base_Slot.png
+  artifactKey: Guid(3f5b5904a9ec6e7429b363387476daf1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Survival Assets/Image/UI/Craft_Manual/Craft_Manual_Base_Slot.png using Guid(3f5b5904a9ec6e7429b363387476daf1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'cb69a978b947b6d452d4c8ece1e9ea03') in 0.024581 seconds 
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 889.060720 seconds.
+  path: Assets/Store Asset/HIGHLANDS - Stylized Environment/Prefabs/Camp/Barrel_1.prefab
+  artifactKey: Guid(73a1d856aed07a544b56bbbc01eb4025) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Store Asset/HIGHLANDS - Stylized Environment/Prefabs/Camp/Barrel_1.prefab using Guid(73a1d856aed07a544b56bbbc01eb4025) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '7491208513ee5ac4f4d4cb08738b4645') in 0.066090 seconds 
+Number of asset objects unloaded after import = 23
+========================================================================
+Received Import Request.
+  Time since last request: 0.000017 seconds.
+  path: Assets/Store Asset/HIGHLANDS - Stylized Environment/Prefabs/Camp/Bonfire.prefab
+  artifactKey: Guid(5b47feeb30930574f8f43b91dc9a981c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Store Asset/HIGHLANDS - Stylized Environment/Prefabs/Camp/Bonfire.prefab using Guid(5b47feeb30930574f8f43b91dc9a981c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '7eafa9f79f6216b18ff0dabb7240dadf') in 0.041350 seconds 
+Number of asset objects unloaded after import = 19
+========================================================================
+Received Import Request.
+  Time since last request: 0.000014 seconds.
+  path: Assets/Store Asset/HIGHLANDS - Stylized Environment/Prefabs/Camp/Dryer_1.prefab
+  artifactKey: Guid(a254519f8c63aa7438f0285927ad1a51) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Store Asset/HIGHLANDS - Stylized Environment/Prefabs/Camp/Dryer_1.prefab using Guid(a254519f8c63aa7438f0285927ad1a51) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '8e15acfb03c3a1f192255762a6f53a93') in 0.029172 seconds 
+Number of asset objects unloaded after import = 24
+========================================================================
+Received Import Request.
+  Time since last request: 0.000016 seconds.
+  path: Assets/Store Asset/HIGHLANDS - Stylized Environment/Prefabs/Camp/Dryer_2.prefab
+  artifactKey: Guid(d879b8b16a66e1341b9d68b6e070a810) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Store Asset/HIGHLANDS - Stylized Environment/Prefabs/Camp/Dryer_2.prefab using Guid(d879b8b16a66e1341b9d68b6e070a810) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'fea5ae55101643f5cbff42579661596e') in 0.025944 seconds 
+Number of asset objects unloaded after import = 23
+========================================================================
+Received Import Request.
+  Time since last request: 0.000029 seconds.
+  path: Assets/Store Asset/HIGHLANDS - Stylized Environment/Prefabs/Camp/Chest.prefab
+  artifactKey: Guid(837c363e6ae91444cab0a3ba49e35cc0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Store Asset/HIGHLANDS - Stylized Environment/Prefabs/Camp/Chest.prefab using Guid(837c363e6ae91444cab0a3ba49e35cc0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '9ddaab43d79ea86d6eb29cd03c406e00') in 0.043761 seconds 
+Number of asset objects unloaded after import = 51
+========================================================================
+Received Import Request.
+  Time since last request: 0.000033 seconds.
+  path: Assets/Store Asset/HIGHLANDS - Stylized Environment/Prefabs/Camp/Boiler.prefab
+  artifactKey: Guid(a25f84c53c7e5974793fdc9b7faf534a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Store Asset/HIGHLANDS - Stylized Environment/Prefabs/Camp/Boiler.prefab using Guid(a25f84c53c7e5974793fdc9b7faf534a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '6e6c64fff0cc8a88c42397a22b5bb238') in 0.044165 seconds 
+Number of asset objects unloaded after import = 25
+========================================================================
+Received Import Request.
+  Time since last request: 1.192404 seconds.
+  path: Assets/Store Asset/HIGHLANDS - Stylized Environment/Prefabs/Camp/Gold_1.prefab
+  artifactKey: Guid(ef4ba70a5a9c21d46a6eb5cc6a0f8782) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Store Asset/HIGHLANDS - Stylized Environment/Prefabs/Camp/Gold_1.prefab using Guid(ef4ba70a5a9c21d46a6eb5cc6a0f8782) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '9e9615e46f23c032428592d06d6aa35a') in 0.021691 seconds 
+Number of asset objects unloaded after import = 18
+========================================================================
+Received Import Request.
+  Time since last request: 0.022106 seconds.
+  path: Assets/Store Asset/HIGHLANDS - Stylized Environment/Prefabs/Camp/Gold_2.prefab
+  artifactKey: Guid(775223507430a794495d2ba0db556c6d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Store Asset/HIGHLANDS - Stylized Environment/Prefabs/Camp/Gold_2.prefab using Guid(775223507430a794495d2ba0db556c6d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'df4cb26ae979729d705e90697305d83d') in 0.011772 seconds 
+Number of asset objects unloaded after import = 18
+========================================================================
+Received Import Request.
+  Time since last request: 0.389439 seconds.
+  path: Assets/Store Asset/HIGHLANDS - Stylized Environment/Prefabs/Camp/Bag_3.prefab
+  artifactKey: Guid(1ef8e2fb8e73acb49b569e9af1394f70) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Store Asset/HIGHLANDS - Stylized Environment/Prefabs/Camp/Bag_3.prefab using Guid(1ef8e2fb8e73acb49b569e9af1394f70) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd930ab710ec246b4a9a12ec5d9969098') in 0.021611 seconds 
+Number of asset objects unloaded after import = 18
+========================================================================
+Received Import Request.
+  Time since last request: 0.315320 seconds.
+  path: Assets/Store Asset/HIGHLANDS - Stylized Environment/Prefabs/Camp/Bag_2.prefab
+  artifactKey: Guid(ec0b906b49891d84497b3a77df2a0b6c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Store Asset/HIGHLANDS - Stylized Environment/Prefabs/Camp/Bag_2.prefab using Guid(ec0b906b49891d84497b3a77df2a0b6c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'c15d60a27651dba3e4aa1cb08f3f56c0') in 0.012278 seconds 
+Number of asset objects unloaded after import = 18
+========================================================================
+Received Import Request.
+  Time since last request: 0.024150 seconds.
+  path: Assets/Store Asset/HIGHLANDS - Stylized Environment/Prefabs/Camp/Bag_1.prefab
+  artifactKey: Guid(737c5df932ec2b646924cc44130034ce) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Store Asset/HIGHLANDS - Stylized Environment/Prefabs/Camp/Bag_1.prefab using Guid(737c5df932ec2b646924cc44130034ce) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '146a2f8b1e842762fa40169f1b0a15f9') in 0.013329 seconds 
+Number of asset objects unloaded after import = 18
+========================================================================
+Received Import Request.
+  Time since last request: 5.983914 seconds.
+  path: Assets/Store Asset/HIGHLANDS - Stylized Environment/Prefabs/Camp/Log_1.prefab
+  artifactKey: Guid(74228cd3f2bda2b49864f297e9bf2d58) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Store Asset/HIGHLANDS - Stylized Environment/Prefabs/Camp/Log_1.prefab using Guid(74228cd3f2bda2b49864f297e9bf2d58) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'bbb91412aea19ad30948d6786ae83e77') in 0.044193 seconds 
+Number of asset objects unloaded after import = 18
+========================================================================
+Received Import Request.
+  Time since last request: 0.546615 seconds.
+  path: Assets/Store Asset/HIGHLANDS - Stylized Environment/Prefabs/Camp/Log_2.prefab
+  artifactKey: Guid(0467242ab11747d47862e11d154500c4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Store Asset/HIGHLANDS - Stylized Environment/Prefabs/Camp/Log_2.prefab using Guid(0467242ab11747d47862e11d154500c4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'e6f6d613aa439cb8f7f1b7a429c2e1b6') in 0.029022 seconds 
+Number of asset objects unloaded after import = 18
+========================================================================
+Received Import Request.
+  Time since last request: 0.028964 seconds.
+  path: Assets/Store Asset/HIGHLANDS - Stylized Environment/Prefabs/Camp/Log_3.prefab
+  artifactKey: Guid(2ec426cfd922a9c4c9245a94a91487fa) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Store Asset/HIGHLANDS - Stylized Environment/Prefabs/Camp/Log_3.prefab using Guid(2ec426cfd922a9c4c9245a94a91487fa) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '5f357c07a83ae7d7b07f33a05e530fe8') in 0.033126 seconds 
+Number of asset objects unloaded after import = 18
+========================================================================
+Received Import Request.
+  Time since last request: 3.370128 seconds.
+  path: Assets/Store Asset/HIGHLANDS - Stylized Environment/Prefabs/Camp/Table_2.prefab
+  artifactKey: Guid(0fb638f93407d6442ac14f6325e7ef35) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Store Asset/HIGHLANDS - Stylized Environment/Prefabs/Camp/Table_2.prefab using Guid(0fb638f93407d6442ac14f6325e7ef35) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '9e5cee801fd973cb2809f38d22d64a18') in 0.016878 seconds 
+Number of asset objects unloaded after import = 19
+========================================================================
+Received Import Request.
+  Time since last request: 0.046210 seconds.
+  path: Assets/Store Asset/HIGHLANDS - Stylized Environment/Prefabs/Camp/Tent_1.prefab
+  artifactKey: Guid(bfcd0cbcec4ca2e4cb375ec63bb133f6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Store Asset/HIGHLANDS - Stylized Environment/Prefabs/Camp/Tent_1.prefab using Guid(bfcd0cbcec4ca2e4cb375ec63bb133f6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '268d77cb289f3036dea7e42173d7d87f') in 0.039671 seconds 
+Number of asset objects unloaded after import = 24
+========================================================================
+Received Import Request.
+  Time since last request: 0.606451 seconds.
+  path: Assets/Store Asset/HIGHLANDS - Stylized Environment/Prefabs/Camp/Tent_2.prefab
+  artifactKey: Guid(20babfa15e5757d48a1fc360c6ffde22) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Store Asset/HIGHLANDS - Stylized Environment/Prefabs/Camp/Tent_2.prefab using Guid(20babfa15e5757d48a1fc360c6ffde22) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '4b9b14809dcdce63305ca717c01c2304') in 0.024227 seconds 
+Number of asset objects unloaded after import = 24
+========================================================================
+Received Import Request.
+  Time since last request: 0.033894 seconds.
+  path: Assets/Store Asset/HIGHLANDS - Stylized Environment/Prefabs/Camp/Tent_3.prefab
+  artifactKey: Guid(35456aed993631f4ca2a1191d763795b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Store Asset/HIGHLANDS - Stylized Environment/Prefabs/Camp/Tent_3.prefab using Guid(35456aed993631f4ca2a1191d763795b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'fb85a806e07ec29bb331452c9c23b233') in 0.027958 seconds 
+Number of asset objects unloaded after import = 24
+========================================================================
+Received Import Request.
+  Time since last request: 0.682313 seconds.
+  path: Assets/Store Asset/HIGHLANDS - Stylized Environment/Prefabs/Camp/Tent_4.prefab
+  artifactKey: Guid(171bbd9aad7db734db87b10982666332) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Store Asset/HIGHLANDS - Stylized Environment/Prefabs/Camp/Tent_4.prefab using Guid(171bbd9aad7db734db87b10982666332) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '04ee6eefc52f1afe24a88f3f14afdae7') in 0.017200 seconds 
+Number of asset objects unloaded after import = 24
+========================================================================
+Received Import Request.
+  Time since last request: 0.078431 seconds.
+  path: Assets/Store Asset/HIGHLANDS - Stylized Environment/Prefabs/Camp/Trough.prefab
+  artifactKey: Guid(dc3cbccf4fb249b40b7fb3bb00937af6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Store Asset/HIGHLANDS - Stylized Environment/Prefabs/Camp/Trough.prefab using Guid(dc3cbccf4fb249b40b7fb3bb00937af6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '43309cdb3cc1113b6c35f6735c5264c2') in 0.020272 seconds 
+Number of asset objects unloaded after import = 19
+========================================================================
+Received Import Request.
+  Time since last request: 15.827389 seconds.
+  path: Assets/Store Asset/HIGHLANDS - Stylized Environment/Prefabs/Forest/Log_1.prefab
+  artifactKey: Guid(90a56fc27be526b4395d224dbbcc96f1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Store Asset/HIGHLANDS - Stylized Environment/Prefabs/Forest/Log_1.prefab using Guid(90a56fc27be526b4395d224dbbcc96f1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '3803bae8987ed70854c1ce6e9ee44773') in 0.033664 seconds 
+Number of asset objects unloaded after import = 21
+========================================================================
+Received Import Request.
+  Time since last request: 0.209128 seconds.
+  path: Assets/Store Asset/HIGHLANDS - Stylized Environment/Prefabs/Forest/Log_2.prefab
+  artifactKey: Guid(ea36fe9384b515a4f870e62da9de3152) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Store Asset/HIGHLANDS - Stylized Environment/Prefabs/Forest/Log_2.prefab using Guid(ea36fe9384b515a4f870e62da9de3152) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '7c7857062f4531ad1293aa849fa51912') in 0.028677 seconds 
+Number of asset objects unloaded after import = 26
+========================================================================
+Received Import Request.
+  Time since last request: 3.734335 seconds.
+  path: Assets/Store Asset/HIGHLANDS - Stylized Environment/Prefabs/Witches House/House.prefab
+  artifactKey: Guid(78770e97e37fac245953fb2a4d605e3f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Store Asset/HIGHLANDS - Stylized Environment/Prefabs/Witches House/House.prefab using Guid(78770e97e37fac245953fb2a4d605e3f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd85493027f00617917b91367864d7086') in 0.052868 seconds 
+Number of asset objects unloaded after import = 80
+========================================================================
+Received Import Request.
+  Time since last request: 0.161510 seconds.
+  path: Assets/Store Asset/HIGHLANDS - Stylized Environment/Prefabs/Witches House/Pillar.prefab
+  artifactKey: Guid(0e9a345e04a27b1429a9e4dc896b5d1e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Store Asset/HIGHLANDS - Stylized Environment/Prefabs/Witches House/Pillar.prefab using Guid(0e9a345e04a27b1429a9e4dc896b5d1e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'a62213643f92edd41fe6fc59accb0748') in 0.023627 seconds 
+Number of asset objects unloaded after import = 39
+========================================================================
+Received Import Request.
+  Time since last request: 0.019116 seconds.
+  path: Assets/Store Asset/HIGHLANDS - Stylized Environment/Prefabs/Witches House/Scroll_2.prefab
+  artifactKey: Guid(d7b10d08bf0cb31469c47a5d49536a35) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Store Asset/HIGHLANDS - Stylized Environment/Prefabs/Witches House/Scroll_2.prefab using Guid(d7b10d08bf0cb31469c47a5d49536a35) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'b2ecc096b0ac98b03dcbeadfe2327a9d') in 0.036016 seconds 
+Number of asset objects unloaded after import = 17
+========================================================================
+Received Import Request.
+  Time since last request: 0.164930 seconds.
+  path: Assets/Store Asset/HIGHLANDS - Stylized Environment/Prefabs/Witches House/Table.prefab
+  artifactKey: Guid(473547bf95be29f4f8e5bedfbd95c1ae) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Store Asset/HIGHLANDS - Stylized Environment/Prefabs/Witches House/Table.prefab using Guid(473547bf95be29f4f8e5bedfbd95c1ae) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '4bf8b62ab7c35dda82cad8a122e5cb0a') in 0.018131 seconds 
+Number of asset objects unloaded after import = 19
+========================================================================
+Received Import Request.
+  Time since last request: 0.026763 seconds.
+  path: Assets/Store Asset/HIGHLANDS - Stylized Environment/Prefabs/Witches House/Witches_Boiler.prefab
+  artifactKey: Guid(975c06e2161777d47945bb5a2c7b3fbe) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Store Asset/HIGHLANDS - Stylized Environment/Prefabs/Witches House/Witches_Boiler.prefab using Guid(975c06e2161777d47945bb5a2c7b3fbe) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '3d04d68652d29d643c5874b3cafd571b') in 0.021926 seconds 
+Number of asset objects unloaded after import = 19
+========================================================================
+Received Import Request.
+  Time since last request: 2.421561 seconds.
+  path: Assets/Store Asset/HIGHLANDS - Stylized Environment/Prefabs/Witches House Props (Interactable)/Mushroom_3.prefab
+  artifactKey: Guid(916e0ae7b6f90834280ee62422f72a2f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/Store Asset/HIGHLANDS - Stylized Environment/Prefabs/Witches House Props (Interactable)/Mushroom_3.prefab using Guid(916e0ae7b6f90834280ee62422f72a2f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '0fd558369eea2c118ecb51a44aa16bd9') in 0.062557 seconds 
+Number of asset objects unloaded after import = 58
+Editor requested this worker to shutdown with reason: Scaling down because of idle timeout
+AssetImportWorker is now disconnected from the server
+Process exiting
+Exiting without the bug reporter. Application will terminate with return code 0
