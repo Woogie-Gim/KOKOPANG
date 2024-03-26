@@ -19,18 +19,6 @@ public class Channel {
     }
 
     /*
-     * LOBBY 채널 생성
-     */
-    public static final Channel lobby = new Channel("lobby");
-
-    /*
-     * LOBBY 채널 반환
-     */
-    public static Channel getLobby() {
-        return lobby;
-    }
-
-    /*
      * CHANNEL 정보 반환 : 채널 이름, SESSIONLIST
      */
     public String getChannelName() {
