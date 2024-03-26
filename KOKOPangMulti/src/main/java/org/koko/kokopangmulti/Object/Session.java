@@ -2,14 +2,14 @@ package org.koko.kokopangmulti.Object;
 
 import reactor.netty.Connection;
 
+import java.util.HashMap;
+
 
 public class Session {
 
-    public String ipAddress;
-    static Connection connection;
+    private static HashMap<String, Connection> sessionList = new HashMap<>();
 
-    public Session(String ipAddress, Connection connection) {
-        this.ipAddress = ipAddress;
-        this.connection = connection;
+    public static HashMap<String, Connection> getSessionList() {
+        return sessionList;
     }
 }
