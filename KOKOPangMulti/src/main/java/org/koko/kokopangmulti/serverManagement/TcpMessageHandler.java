@@ -46,6 +46,10 @@ public class TcpMessageHandler {
                         System.out.println(channelName);
                         System.out.println(data);
 
+                        if (channelName.equals("initial")) {
+                            System.out.println(in);
+                        }
+
                         // channelName이 lobby일 경우
                         if (channelName.equals("lobby")) {
 
