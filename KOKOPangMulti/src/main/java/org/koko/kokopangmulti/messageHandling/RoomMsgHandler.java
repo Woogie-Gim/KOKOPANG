@@ -19,8 +19,9 @@ public class RoomMsgHandler {
         if (type.equals("create")) {
             String channelName = data.getString("channelName");
             ChannelHandler.createChannel(userName, channelName);
-        } else if (type.equals("exit")) {
-//            exitRoom(userName, roomIndex);
+        } else if (type.equals("join")) {
+            int channelIndex = Integer.parseInt(data.getString("channelIndex"));
+            ChannelHandler.joinChannel(userName, channelIndex);
         }
     }
 
