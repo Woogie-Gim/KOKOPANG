@@ -1,14 +1,23 @@
 package org.koko.kokopangmulti.Channel;
 
-import org.koko.kokopangmulti.Object.Session;
-//import org.koko.kokopangmulti.Object.SessionList;
-import reactor.core.publisher.Flux;
-import reactor.core.publisher.Mono;
+import reactor.netty.Connection;
 
 public class ChannelHandler {
-    public void addLobby(Session session, Channel channel) {
-//        channel.getLobby().getSessionList().add(session);
-        System.out.println(Channel.getLobby().getSessionList());
+    public static void createChannel(String userName, String channelName) {
+        // userName을 통해 connection 정보 추출 및 로비의 세션 목록에서 해당 유저 제거
+        Connection connection = ChannelList.getLobby().getSessionList().get(userName);
+        ChannelList.getLobby().getSessionList().remove(userName);
+
+        // 방 생성 및 방 목록에 방 추가 하면서 생성된 방의 index 할당
+        Channel channel = new Channel(channelName);
+        int index = ChannelList.addChannel(channel);
+
+        // 생성된 방에 유저 추가
+        ChannelList.getChannelInfo(index).getSessionList().put(userName, connection);
+
+        // 동작 확인
+        System.out.println("Lobby: " + ChannelList.getLobby().getSessionList());
+        System.out.println(channelName + ": " + ChannelList.getChannelInfo(index).getSessionList());
     }
 
     public static void joinChannel(int roomIndex, String userName) {

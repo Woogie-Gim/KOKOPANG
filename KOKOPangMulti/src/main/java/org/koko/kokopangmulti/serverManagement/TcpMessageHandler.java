@@ -2,7 +2,9 @@ package org.koko.kokopangmulti.serverManagement;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.koko.kokopangmulti.Channel.Channel;
 import org.koko.kokopangmulti.Channel.ChannelHandler;
+import org.koko.kokopangmulti.Channel.ChannelList;
 import org.koko.kokopangmulti.Object.Session;
 import org.koko.kokopangmulti.messageHandling.IngameMsgHandler;
 import org.koko.kokopangmulti.messageHandling.LobbyMsgHandler;
@@ -43,56 +45,41 @@ public class TcpMessageHandler {
                         // JSON객체에서 최상위 값들 파싱(현재 참가 채널 이름 및 하위 데이터)
                         String channelName = json.getString("channel");
                         String userName = json.getString("userName");
-                        String data = json.getString("data");
 
                         // 파싱한 데이터 테스트 출력
                         System.out.println("테스트");
                         System.out.println(userName);
                         System.out.println(channelName);
-                        System.out.println(data);
 
                         if (channelName.equals("lobby")) {
 
-                            // 최초 접속 시 로비에 userName과 connection 정보 등록
+                            // 최초 접속 시 userName, connection 정보 Session 해쉬맵, 로비에 등록
                             if (Session.getSessionList().get(userName) == null) {
                                 in.withConnection(connection -> {
                                     Session.getSessionList().put(userName, connection);
+                                    ChannelList.getLobby().getSessionList().put(userName, connection);
                                     System.out.println(Session.getSessionList());
                                 });
+                            } else {
+//                                lobbyMsgHandler.printData(data);
                             }
                         }
 
-//                        System.out.println(data);
+                        // channelName이 room일 경우
+                        else if (channelName.equals("room")) {
+                            JSONObject data = json.getJSONObject("data");
 
-//                        if (channelName.equals("initial")) {
-//                            System.out.println(in);
-//                        }
-//
-//                        // channelName이 lobby일 경우
-//                        if (channelName.equals("lobby")) {
-//
-//                            // 로비 msg핸들러 호출
-//                            lobbyMsgHandler.printData(data);
-//                            return Mono.empty();
-//
-//                        }
-//
-//                        // channelName이 room일 경우
-//                        else if (channelName.equals("room")) {
-//
-//                            // 룸 msg핸들러 호출
-//                            roomMsgHandler.filterData(data);
-//                            return Mono.empty();
-//
-//                        }
-//
-//                        // Broadcast INGAME DATA
-//                        else if (channelName.equals("ingame")) {
-//
+                            // 룸 msg핸들러 호출
+                            roomMsgHandler.filterData(userName, data);
+                        }
+
+                        // Broadcast INGAME DATA
+                        else if (channelName.equals("ingame")) {
+
 //                            ingameMsgHandler.printData(data);
-//                            return Mono.empty();
-//
-//                        }
+                            return Mono.empty();
+
+                        }
 
                         return Mono.empty();
 
