@@ -44,7 +44,7 @@ public class TcpConnectionHandler implements Consumer<Connection> {
             @Override
             protected void channelRead0(ChannelHandlerContext ctx, String msg) throws Exception {
                 // 클라이언트로부터 메시지(여기서는 JSON 문자열)를 받음
-                JSONObject json = new JSONObject(msg); // JSON 파싱
+                JSONObject json = new JSONObject(msg);          // JSON 파싱
                 String userName = json.getString("userName"); // userName 추출
 
                 // 테스트 메시지 출력
@@ -55,11 +55,6 @@ public class TcpConnectionHandler implements Consumer<Connection> {
 
                 // 세션 리스트 확인
                 System.out.println(Session.getSessionList());
-            }
-
-            @Override
-            public void handlerAdded(ChannelHandlerContext ctx) {
-                log.info("client added to lobby");
             }
 
             /*
