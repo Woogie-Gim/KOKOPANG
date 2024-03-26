@@ -14,6 +14,10 @@ public class Channel {
         this.sessionList = new HashMap<>();
     }
 
+    public Channel() {
+
+    }
+
     /*
      * LOBBY 채널 생성
      */
