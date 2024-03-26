@@ -46,6 +46,16 @@ public class FriendshipServiceImpl implements FriendshipService{
     }
 
     @Override
+    public void acceptFriend(FriendDTO friendDTO) {
+        // FriendDTO에 맞는 Friendship 찾아오기
+        Friendship friendship = friendshipRepository.findByUserIdAndFriendId(friendDTO.getUserId(), friendDTO.getFriendId());
+        friendship.setIsWaiting(false);
+        friendshipRepository.save(friendship);
+
+        System.out.println(friendship.toString());
+    }
+
+    @Override
     public List<FriendshipDTO> getFriends(int userId) {
         List<Friendship> friendslist = friendshipRepository.findFriendshipByUserId(userId);
 

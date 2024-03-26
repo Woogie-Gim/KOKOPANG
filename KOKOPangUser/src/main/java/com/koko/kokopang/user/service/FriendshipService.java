@@ -9,6 +9,8 @@ import java.util.List;
 public interface FriendshipService {
     Friendship addToFriends(FriendDTO friendDTO);
 
+    void acceptFriend(FriendDTO friendDTO);
+
     List<FriendshipDTO> getFriends(int userId);
 
     String getFriendProfile(int userId ,int friendId);

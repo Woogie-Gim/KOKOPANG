@@ -18,4 +18,6 @@ public interface FriendshipRepository extends JpaRepository<Friendship,Integer> 
             "OR f.friendId = :userId")
     List<Friendship> findFriendshipByUserId(@Param("userId") int userId);
 
+    Friendship findByUserIdAndFriendId(int userId, int friendId);
+
 }
