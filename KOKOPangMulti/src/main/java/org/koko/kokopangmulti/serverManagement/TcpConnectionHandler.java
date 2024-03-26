@@ -30,31 +30,21 @@ public class TcpConnectionHandler implements Consumer<Connection> {
         this.channel = channel;
     }
 
+
+
     @Override
     public void accept(Connection conn) {
-//        conn.addHandler(new LineBasedFrameDecoder(1024));
-//        conn.addHandler(new ChannelHandlerAdapter()
         conn.addHandler(new LineBasedFrameDecoder(1024));
-        conn.addHandler(new StringDecoder(CharsetUtil.UTF_8)); // String으로 디코딩
-        conn.addHandler(new SimpleChannelInboundHandler<String>() {
+        conn.addHandler(new ChannelHandlerAdapter() {
 
             /*
              * 클라이언트 연결 처리 로직
              */
+
             @Override
-            protected void channelRead0(ChannelHandlerContext ctx, String msg) throws Exception {
-                // 클라이언트로부터 메시지(여기서는 JSON 문자열)를 받음
-                JSONObject json = new JSONObject(msg);          // JSON 파싱
-                String userName = json.getString("userName"); // userName 추출
-
-                // 테스트 메시지 출력
-                System.out.println(userName);
-
-                // 세션 생성 및 로비에 추가하는 로직
-                Session.getSessionList().put(userName, conn);
-
-                // 세션 리스트 확인
-                System.out.println(Session.getSessionList());
+            public void handlerAdded(ChannelHandlerContext ctx) {
+                // 클라이언트가 연결되었을 때의 처리
+                log.info("Client connected: {}", ctx.channel().remoteAddress());
             }
 
             /*
