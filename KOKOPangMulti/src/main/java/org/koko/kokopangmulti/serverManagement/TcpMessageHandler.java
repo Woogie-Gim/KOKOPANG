@@ -62,7 +62,7 @@ public class TcpMessageHandler {
                                     System.out.println(Session.getSessionList());
                                 });
                             } else {
-                                String data = json.getString("data");
+                                JSONObject data = json.getJSONObject("data");
                                 lobbyMsgHandler.filterData(userName, data);
                             }
                         }
