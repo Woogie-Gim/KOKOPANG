@@ -1,8 +1,9 @@
 package org.koko.kokopangmulti.messageHandling;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.koko.kokopangmulti.Channel.Channel;
+import org.koko.kokopangmulti.Channel.ChannelList;
 
 public class RoomMsgHandler {
 
@@ -12,7 +13,7 @@ public class RoomMsgHandler {
 
         switch (type) {
             case "create":
-                roomCreated();
+                roomCreated(data);
                 break;
             case "join":
                 roomJoined();
@@ -24,8 +25,13 @@ public class RoomMsgHandler {
 
     }
 
-    public void roomCreated() {
+    public void roomCreated(JSONObject data) {
         System.out.println("ROOM CREATED");
+        String channelName = data.getString("channelName");
+        String userName = data.getString("userName");
+        Channel channel = new Channel(channelName, userName);   // channel 생성
+        ChannelList.addChannel(channel);                        // channelList에 추가
+        System.out.println(channel.getChannelName()+"'s q = " + channel.getUsers());
     }
 
     public void roomJoined() {
