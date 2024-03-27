@@ -1,27 +1,46 @@
 package org.koko.kokopangmulti.Channel;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class ChannelList {
 
     private static final ChannelList instance = new ChannelList();
+    private static Integer index = 0;
 
-    private static final List<Channel> channelList = new ArrayList<>();
+    private static final HashMap<Integer, Channel> channelList = new HashMap<>();
 
-    public synchronized void addChannel(Channel channel) {
-        channelList.add(channel);
+    public static synchronized int addChannel(Channel channel) {
+        index++;
+        channelList.put(index, channel);
+        return index;
     }
 
-    public synchronized boolean removeChannel(Channel channel) {
-        return channelList.remove(channel);
+    public synchronized void removeChannel(int index) {
+        channelList.remove(index);
     }
 
-    public static List<Channel> getChannelList() {
-        return new ArrayList<>(channelList);
+    // 채널 목록 반환
+    public static HashMap<Integer, Channel> getChannelList() {
+        return channelList;
+    }
+
+    // 채널 정보 반환
+    public static Channel getChannelInfo(int index) {
+        return channelList.get(index);
     }
 
     public static ChannelList getInstance() {
         return instance;
+    }
+
+
+    // LOBBY 채널 생성
+    public static final Channel lobby = new Channel("lobby");
+
+    // LOBBY 채널 반환
+    public static Channel getLobby() {
+        return lobby;
     }
 }

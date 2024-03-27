@@ -12,17 +12,16 @@ import java.util.Map;
 public class RoomMsgHandler {
     ObjectMapper objectMapper;
 
-    public void filterData(String data) throws JSONException {
-        JSONObject json = new JSONObject(data);
+    public void filterData(String userName, JSONObject data) throws JSONException {
 
-        String order = json.getString("order");
-        String userName = json.getString("userName");
-        int roomIndex = Integer.parseInt(json.getString("index"));
+        String type = data.getString("type");
 
-        if (order.equals("join")) {
-            ChannelHandler.joinChannel(roomIndex, userName);
-        } else if (order.equals("exit")) {
-//            exitRoom(userName, roomIndex);
+        if (type.equals("create")) {
+            String channelName = data.getString("channelName");
+            ChannelHandler.createChannel(userName, channelName);
+        } else if (type.equals("join")) {
+            int channelIndex = Integer.parseInt(data.getString("channelIndex"));
+            ChannelHandler.joinChannel(userName, channelIndex);
         }
     }
 
