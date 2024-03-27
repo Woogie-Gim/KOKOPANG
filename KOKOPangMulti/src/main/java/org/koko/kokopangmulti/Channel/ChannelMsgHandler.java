@@ -23,7 +23,8 @@ public class ChannelMsgHandler {
                 channelHandler.createChannel(userName, channelName);
                 break;
             case "join":
-                roomJoined();
+                int channelIndex = data.getInt("channelIndex");
+                channelHandler.joinChannel(userName, channelIndex);
                 break;
             case "leave":
                 roomLeaved();
