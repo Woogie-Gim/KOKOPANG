@@ -49,10 +49,9 @@ public class FriendshipServiceImpl implements FriendshipService{
     public void acceptFriend(FriendDTO friendDTO) {
         // FriendDTO에 맞는 Friendship 찾아오기
         Friendship friendship = friendshipRepository.findByUserIdAndFriendId(friendDTO.getUserId(), friendDTO.getFriendId());
+        // isWaiting을 false로 바꾸며 친구요청 수락
         friendship.setIsWaiting(false);
         friendshipRepository.save(friendship);
-
-        System.out.println(friendship.toString());
     }
 
     @Override

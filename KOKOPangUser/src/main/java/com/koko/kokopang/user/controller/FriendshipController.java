@@ -40,7 +40,7 @@ public class FriendshipController {
     public ResponseEntity<?> acceptFriendRequest(@RequestBody FriendDTO friendDTO) {
         friendshipService.acceptFriend(friendDTO);
 
-        return null;
+        return new ResponseEntity<Void>(HttpStatus.OK);
     }
 
     /**
