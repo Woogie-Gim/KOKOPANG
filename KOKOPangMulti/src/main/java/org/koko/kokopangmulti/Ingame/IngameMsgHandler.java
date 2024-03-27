@@ -1,4 +1,4 @@
-package org.koko.kokopangmulti.messageHandling;
+package org.koko.kokopangmulti.Ingame;
 
 public class IngameMsgHandler {
 

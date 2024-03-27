@@ -1,8 +1,6 @@
-package org.koko.kokopangmulti.Channel;
+package org.koko.kokopangmulti.Object;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 public class ChannelList {
 

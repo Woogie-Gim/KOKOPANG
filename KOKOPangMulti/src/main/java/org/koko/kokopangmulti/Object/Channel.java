@@ -1,4 +1,4 @@
-package org.koko.kokopangmulti.Channel;
+package org.koko.kokopangmulti.Object;
 
 import org.koko.kokopangmulti.Object.Session;
 import reactor.netty.Connection;
@@ -20,10 +20,10 @@ public class Channel {
     }
 
     // GAME CHANNEL
-    public Channel(String channelName, String userName) {
+    public Channel(String channelName, String userName, Connection conn) {
         this.channelName = channelName;
         this.sessionList = new HashMap<>();
-        this.sessionList.put(userName, Session.getSessionList().get(userName));
+        this.sessionList.put(userName, conn);
         this.q = new ArrayDeque<String>();
         q.addLast(userName); // 들어온 순서대로 기록
     }
