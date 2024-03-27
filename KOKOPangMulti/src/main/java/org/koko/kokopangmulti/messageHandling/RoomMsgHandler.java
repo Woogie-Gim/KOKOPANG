@@ -1,10 +1,9 @@
 package org.koko.kokopangmulti.messageHandling;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.koko.kokopangmulti.Channel.ChannelHandler;
-
+import org.koko.kokopangmulti.Channel.Channel;
+import org.koko.kokopangmulti.Channel.ChannelList;
 
 public class RoomMsgHandler {
 
@@ -12,16 +11,35 @@ public class RoomMsgHandler {
 
         String type = data.getString("type");
 
-        if (type.equals("create")) {
-            String channelName = data.getString("channelName");
-            ChannelHandler.createChannel(userName, channelName);
-        } else if (type.equals("join")) {
-            int channelIndex = data.getInt("channelIndex");
-            ChannelHandler.joinChannel(userName, channelIndex);
-        } else if (type.equals("leave")) {
-            int channelIndex = data.getInt("channelIndex");
-            ChannelHandler.leaveChannel(userName, channelIndex);
+        switch (type) {
+            case "create":
+                roomCreated(data);
+                break;
+            case "join":
+                roomJoined();
+                break;
+            case "leave":
+                roomLeaved();
+                break;
         }
+
+    }
+
+    public void roomCreated(JSONObject data) {
+        System.out.println("ROOM CREATED");
+        String channelName = data.getString("channelName");
+        String userName = data.getString("userName");
+        Channel channel = new Channel(channelName, userName);   // channel 생성
+        ChannelList.addChannel(channel);                        // channelList에 추가
+        System.out.println(channel.getChannelName()+"'s q = " + channel.getUsers());
+    }
+
+    public void roomJoined() {
+        System.out.println("ROOM JOINED");
+    }
+
+    public void roomLeaved() {
+        System.out.println("ROOM LEAVED");
     }
 
 }
