@@ -57,4 +57,13 @@ public class Channel {
         return this.sessionList;
     }
 
+    public int getIdx(String userName) { return this.nameToIdx.get(userName); }
+
+    public HashMap<String, Integer> getNameToIdx() {
+        return nameToIdx;
+    }
+
+    public HashMap<Integer, String> getIdxToName() {
+        return idxToName;
+    }
 }
