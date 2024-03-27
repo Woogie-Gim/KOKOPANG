@@ -27,7 +27,7 @@ public class ChannelMsgHandler {
                 channelHandler.joinChannel(userName, channelIndex);
                 break;
             case "leave":
-                int channelIndex = data.getInt("channelIndex");
+                channelIndex = data.getInt("channelIndex");
                 ChannelHandler.leaveChannel(userName, channelIndex);
                 break;
         }
