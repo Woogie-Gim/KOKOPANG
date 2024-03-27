@@ -52,12 +52,13 @@ public class TcpMessageHandler {
                         System.out.println(channelName);
 
                         if (channelName.equals("lobby")) {
-
                             // 최초 접속 시 userName, connection 정보 Session 해쉬맵, 로비에 등록
                             if (Session.getSessionList().get(userName) == null) {
                                 in.withConnection(connection -> {
                                     Session.getSessionList().put(userName, connection);
                                     ChannelList.getLobby().getSessionList().put(userName, connection);
+
+                                    // 들어갔는지 확인용 로그
                                     System.out.println(Session.getSessionList());
                                 });
                             } else {

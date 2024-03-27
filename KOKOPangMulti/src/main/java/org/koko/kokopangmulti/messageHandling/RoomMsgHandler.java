@@ -20,8 +20,11 @@ public class RoomMsgHandler {
             String channelName = data.getString("channelName");
             ChannelHandler.createChannel(userName, channelName);
         } else if (type.equals("join")) {
-            int channelIndex = Integer.parseInt(data.getString("channelIndex"));
+            int channelIndex = data.getInt("channelIndex");
             ChannelHandler.joinChannel(userName, channelIndex);
+        } else if (type.equals("leave")) {
+            int channelIndex = data.getInt("channelIndex");
+            ChannelHandler.leaveChannel(userName, channelIndex);
         }
     }
 
