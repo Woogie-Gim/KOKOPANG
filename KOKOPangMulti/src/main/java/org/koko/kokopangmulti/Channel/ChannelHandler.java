@@ -1,7 +1,11 @@
 package org.koko.kokopangmulti.Channel;
 
 import org.koko.kokopangmulti.Object.Session;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 import reactor.netty.Connection;
+
+import java.util.HashMap;
 
 public class ChannelHandler {
     public static void createChannel(String userName, String channelName) {
@@ -43,10 +47,18 @@ public class ChannelHandler {
         // 로비 클라이언트에게 로비 참가중인 유저 목록 브로드캐스팅
     }
 
-    // 채널 내 모든 세션에 메시지 브로드캐스트
-//    public Mono<Void> broadcastMessage(String message, Channel channel) {
-//        return Flux.fromIterable(channel.getSessionList())
-//                .flatMap(session -> session.getConnection().outbound().sendString(Mono.just(message)).then())
-//                .then();
-//    }
+//    // 채널 내 모든 세션에 메시지 브로드캐스트
+////    public static Mono<Void> broadcastMessage(int channelIndex, String userName, String message) {
+////        HashMap<String, Connection> channel = ChannelList.getChannelInfo(channelIndex).getSessionList();
+////
+////        return Flux.fromIterable(ChannelList.getChannelInfo(channelIndex).getSessionList())
+////                .flatMap(session -> session.getConnection().outbound().sendString(Mono.just(message)).then())
+////                .then();
+////    }
+
+    public static Mono<Void> broadcastLobby(String json) {
+        return Flux.fromIterable(ChannelList.getLobby().getSessionList().values())
+                .flatMap(connection -> connection.outbound().sendString(Mono.just(json)).then())
+                .then();
+    }
 }
