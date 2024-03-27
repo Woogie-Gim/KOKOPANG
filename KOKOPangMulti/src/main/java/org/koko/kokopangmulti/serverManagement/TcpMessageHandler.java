@@ -61,7 +61,8 @@ public class TcpMessageHandler {
                                     System.out.println(Session.getSessionList());
                                 });
                             } else {
-//                                lobbyMsgHandler.printData(data);
+                                String data = json.getString("data");
+                                lobbyMsgHandler.filterData(userName, data);
                             }
                         }
 
