@@ -26,7 +26,8 @@ public class ChannelMsgHandler {
                 roomJoined();
                 break;
             case "leave":
-                roomLeaved();
+                int channelIndex = data.getInt("channelIndex");
+                ChannelHandler.leaveChannel(userName, channelIndex);
                 break;
         }
     }

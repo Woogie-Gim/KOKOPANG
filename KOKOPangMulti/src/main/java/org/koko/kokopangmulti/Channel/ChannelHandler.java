@@ -3,6 +3,7 @@ package org.koko.kokopangmulti.Channel;
 import org.koko.kokopangmulti.Object.Channel;
 import org.koko.kokopangmulti.Object.ChannelList;
 import org.koko.kokopangmulti.Object.Session;
+import org.koko.kokopangmulti.Object.SessionsInChannel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import reactor.netty.Connection;
@@ -69,17 +70,58 @@ public class ChannelHandler {
     }
 
     public static void leaveChannel(String userName, int channelIndex) {
-        // channelIndex를 통해 해당 채널에 유저 제거
-        ChannelList.getChannelInfo(channelIndex).getSessionList().remove(userName);
-        // 세션 목록에서 유저 커넥션 정보 파싱
-        Connection connection = Session.getSessionList().get(userName);
-        // 로비에 유저 정보 추가
-        ChannelList.getLobby().getSessionList().put(userName, connection);
+        Channel channel = ChannelList.getChannelInfo(channelIndex);
+        SessionsInChannel sic = channel.getSessionsInChannel();
+        int cnt = sic.getCnt();
 
-        // 기존 유저가 참가하던 채널에 참가중인 세션목록에 변경사항 브로드캐스팅
+        // 1. channel의 nameToIdx
+        int idx = channel.getIdx(userName);
+        channel.getNameToIdx().remove(userName);
 
-        // 로비에 유저 목록, 채널의 변경사항 브로드캐스팅
+        // 2. channel의 idxToName
+        channel.getIdxToName().remove(idx);
 
+        // 3. channel의 sessionsInChannel
+        sic.minusCnt();
+        sic.setFalseIsExisted(idx);
+
+        switch (cnt) {
+            // 4. cnt == 0
+            case 0:
+                ChannelList.getChannelList().remove(channelIndex);
+                channel = null;
+                // flag = 1 (방 나가기 메서드의 로컬 변수) ==> ????
+                break;
+            // 5. cnt == 1
+            case 1:
+                if (idx != 0) {
+                    // nameToidx의 value를 0으로 수정???
+                    channel.getIdxToName().remove(idx);
+                    channel.getIdxToName().put(idx, userName);
+                    sic.getIsExisted().set(idx, 0);
+                    sic.getIsExisted().set(0, 1);
+                }
+                break;
+            // 6. cnt > 1
+            default:
+                if (sic.getIsExisted().get(0) == 0) {
+                    for (Integer value: sic.getIsExisted()) {
+                        if (value == 0) {
+                            continue;
+                        } else if (value == 1) {
+                            idx = value;
+                            break;
+                        }
+                    }
+
+                    sic.setFalseIsExisted(idx);
+                    sic.setTrueIsExisted(0);
+
+                    channel.getIdxToName().remove(idx);
+                    channel.getIdxToName().put(0, userName);
+                }
+                break;
+        }
     }
 
 //    // 채널 내 모든 세션에 메시지 브로드캐스트
