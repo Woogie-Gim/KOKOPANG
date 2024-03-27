@@ -38,9 +38,6 @@ public class ChannelHandler {
         channel.getSessionsInChannel().setTrueIsExisted(0);
         System.out.println("channel.sessionsInChannel.isExisted = " + channel.getSessionsInChannel().getIsExisted());
 
-        channel.getSessionsInChannel().setFalseIsExisted(0);
-        System.out.println("channel.sessionsInChannel.isExisted = " + channel.getSessionsInChannel().getIsExisted());
-
         channel.getSessionsInChannel().setFalseIsExisted(6);
         System.out.println("channel.sessionsInChannel.isExisted = " + channel.getSessionsInChannel().getIsExisted());
 
@@ -49,22 +46,42 @@ public class ChannelHandler {
 
     }
 
-    public static void joinChannel(String userName, int roomIndex) {
-        // userName을 통해 connection 정보 추출 및 로비의 세션 목록에서 해당 유저 제거
-        Connection connection = Session.getSessionList().get(userName);
+    public static void joinChannel(String userName, int channelIndex) {
+
+        // 1) Lobby에서 [userName] 제거
         ChannelList.getLobby().getSessionList().remove(userName);
 
-        // roomIndex를 통해 ChannelList에서 채널 정보 파싱
-        Channel channel = ChannelList.getChannelList().get(roomIndex);
+        // 2) 참가할 channel 인스턴스
+        Channel channel = ChannelList.getChannelInfo(channelIndex);
 
-        // 해당 채널에 유저 추가
-        channel.getSessionList().put(userName, connection);
+        // 3) channel 참가 인원 확인 : 이미 6명이라면 join 거절
+        if (channel.getSessionsInChannel().getCnt() ==6) {
+            log.warn("[JOIN REJECTED] ROOM IS FULL");
+            return;
+        }
 
-        // 정상 작동 확인 테스트
-        System.out.println(channel.getChannelName() + ": " + channel.getSessionList());
-        System.out.println("Lobby: " + ChannelList.getLobby().getSessionList());
+        // 4) channel 안 [userName]의 idx 탐색
+        for (int i=0; i<6; i++) {
+            if (channel.getSessionsInChannel().getIsExisted().get(i) == 0) {
+                channel.getSessionsInChannel().setTrueIsExisted(i); // UPDATE isExisted
+                channel.getSessionsInChannel().plusCnt();           // UPDATE cnt
+                channel.addSession(userName, i);                    // UPDATE nameToIdx, idxToName
+                break;
+            }
+        }
 
-        // 로비 클라이언트에게 로비 참가중인 유저 목록 브로드캐스팅, 방에 참가중인 세션들에게 세션 목록 브로드캐스트
+        // 5) LOGGING JOIN
+        log.info("[userName:{}] CHANNEL JOINED, channelName:{}", userName, ChannelList.getChannelInfo(channelIndex).getChannelName());
+
+        // 6) Broadcasting
+
+        // 동작 확인
+        System.out.println("channel.sessionsInChannel.cnt = " + channel.getSessionsInChannel().getCnt());
+        System.out.println("channel.sessionsInChannel.isExisted = " + channel.getSessionsInChannel().getIsExisted());
+
+        for( String key : ChannelList.getChannelInfo(channelIndex).getNameToIdx().keySet() ){
+            System.out.println( String.format("[userName:%s], [idx:%s]", key, ChannelList.getChannelInfo(channelIndex).getNameToIdx().get(key)) );
+        }
 
     }
 
