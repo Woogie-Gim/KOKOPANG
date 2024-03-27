@@ -54,7 +54,7 @@ public class TcpMessageHandler {
                                     lobbyMsgHandler.filterData(userName, data);
                                 }
                                 break;
-                            case "room" :
+                            case "channel" :
                                 JSONObject data = json.getJSONObject("data");
                                 // 룸 msg핸들러 호출
                                 channelMsgHandler.filterData(userName, data);
