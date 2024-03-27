@@ -2,11 +2,11 @@ package org.koko.kokopangmulti.Channel;
 
 import org.koko.kokopangmulti.Object.Channel;
 import org.koko.kokopangmulti.Object.ChannelList;
-import org.koko.kokopangmulti.Object.Session;
 import org.koko.kokopangmulti.Object.SessionsInChannel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import reactor.netty.Connection;
+
+import java.util.ArrayList;
 
 public class ChannelHandler {
     private static final Logger log = LoggerFactory.getLogger(ChannelHandler.class);
@@ -56,13 +56,13 @@ public class ChannelHandler {
         Channel channel = ChannelList.getChannelInfo(channelIndex);
 
         // 3) channel 참가 인원 확인 : 이미 6명이라면 join 거절
-        if (channel.getSessionsInChannel().getCnt() ==6) {
+        if (channel.getSessionsInChannel().getCnt() == 6) {
             log.warn("[JOIN REJECTED] ROOM IS FULL");
             return;
         }
 
         // 4) channel 안 [userName]의 idx 탐색
-        for (int i=0; i<6; i++) {
+        for (int i = 0; i < 6; i++) {
             if (channel.getSessionsInChannel().getIsExisted().get(i) == 0) {
                 channel.getSessionsInChannel().setTrueIsExisted(i); // UPDATE isExisted
                 channel.getSessionsInChannel().plusCnt();           // UPDATE cnt
@@ -80,13 +80,14 @@ public class ChannelHandler {
         System.out.println("channel.sessionsInChannel.cnt = " + channel.getSessionsInChannel().getCnt());
         System.out.println("channel.sessionsInChannel.isExisted = " + channel.getSessionsInChannel().getIsExisted());
 
-        for( String key : ChannelList.getChannelInfo(channelIndex).getNameToIdx().keySet() ){
-            System.out.println( String.format("[userName:%s], [idx:%s]", key, ChannelList.getChannelInfo(channelIndex).getNameToIdx().get(key)) );
+        for (String key : ChannelList.getChannelInfo(channelIndex).getNameToIdx().keySet()) {
+            System.out.println(String.format("[userName:%s], [idx:%s]", key, ChannelList.getChannelInfo(channelIndex).getNameToIdx().get(key)));
         }
 
     }
 
     public static void leaveChannel(String userName, int channelIndex) {
+        Boolean flag = false;
         Channel channel = ChannelList.getChannelInfo(channelIndex);
         SessionsInChannel sic = channel.getSessionsInChannel();
         int cnt = sic.getCnt();
@@ -107,39 +108,41 @@ public class ChannelHandler {
             case 0:
                 ChannelList.getChannelList().remove(channelIndex);
                 channel = null;
-                // flag = 1 (방 나가기 메서드의 로컬 변수) ==> ????
+                flag = true;
                 break;
             // 5. cnt == 1
             case 1:
-                if (idx != 0) {
-                    // nameToidx의 value를 0으로 수정???
-                    channel.getIdxToName().remove(idx);
-                    channel.getIdxToName().put(idx, userName);
-                    sic.getIsExisted().set(idx, 0);
-                    sic.getIsExisted().set(0, 1);
+                // 나간 사람이 방장인 경우
+                if (idx == 0) {
+                    // 남은 사람의 정보 파싱 =>  맵에서 남아 있는 유저의 정보를 파싱...? how???
+                    // 남은 사람의 idx를 0번으로 이동하는 작업
+                    // isExisted, utoi, itou 전부 변경
                 }
                 break;
             // 6. cnt > 1
             default:
                 if (sic.getIsExisted().get(0) == 0) {
-                    for (Integer value: sic.getIsExisted()) {
-                        if (value == 0) {
-                            continue;
-                        } else if (value == 1) {
-                            idx = value;
+                    ArrayList<Integer> isExisted = sic.getIsExisted();
+
+                    // 해당 value의 인덱스값을 할당하기 위해 foreach 대신 for문 사용
+                    for (int i = 0; i < isExisted.size(); i++) {
+                        if (isExisted.get(i) == 1) {
+                            idx = i;
                             break;
                         }
                     }
-
-                    sic.setFalseIsExisted(idx);
-                    sic.setTrueIsExisted(0);
-
-                    channel.getIdxToName().remove(idx);
-                    channel.getIdxToName().put(0, userName);
                 }
+
+                sic.setFalseIsExisted(idx);
+                sic.setTrueIsExisted(0);
+
+                channel.getIdxToName().remove(idx);
+                channel.getIdxToName().put(0, userName);
+
                 break;
         }
     }
+}
 
 //    // 채널 내 모든 세션에 메시지 브로드캐스트
 ////    public static Mono<Void> broadcastMessage(int channelIndex, String userName, String message) {
