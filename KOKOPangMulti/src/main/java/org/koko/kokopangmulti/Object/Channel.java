@@ -40,6 +40,15 @@ public class Channel {
         return channelName;
     }
 
+    public HashMap<String, Integer> getNameToIdx() {
+        return this.nameToIdx;
+    }
+
+    public void addSession(String userName, Integer idx) {
+        this.nameToIdx.put(userName, idx);
+        this.idxToName.put(idx, userName);
+    }
+
     public SessionsInChannel getSessionsInChannel() {
         return this.sessionsInChannel;
     }
