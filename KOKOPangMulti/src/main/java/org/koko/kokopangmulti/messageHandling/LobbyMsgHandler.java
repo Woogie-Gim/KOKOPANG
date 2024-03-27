@@ -14,12 +14,11 @@ public class LobbyMsgHandler {
 
     private static final ObjectMapper objectMapper = new ObjectMapper();
 
-    public void filterData(String userName, String data) throws JSONException {
-        JSONObject json = new JSONObject(data);
-        String type = json.getString("type");
+    public void filterData(String userName, JSONObject data) throws JSONException {
+        String type = data.getString("type");
 
         if (type.equals("chat")) {
-            String message = json.getString("message");
+            String message = data.getString("message");
             HashMap<String, String> chatMap = new HashMap<>();
 
             chatMap.put("type", "chat");
