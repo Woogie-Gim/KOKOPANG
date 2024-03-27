@@ -27,7 +27,7 @@ public class LobbyMsgHandler {
 
             String chatJson;
             try {
-                chatJson = objectMapper.writeValueAsString(chatMap);
+                chatJson = objectMapper.writeValueAsString(chatMap) + "\n";
                 broadcastLobby(chatJson).subscribe(
                         null,
                         error -> System.err.println("Error broadcasting to lobby: " + error),
