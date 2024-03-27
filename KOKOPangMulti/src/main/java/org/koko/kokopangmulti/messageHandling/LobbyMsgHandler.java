@@ -4,6 +4,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.koko.kokopangmulti.Channel.ChannelHandler;
+import org.koko.kokopangmulti.Channel.ChannelList;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 import java.util.HashMap;
 
@@ -26,7 +29,7 @@ public class LobbyMsgHandler {
             String chatJson;
             try {
                 chatJson = objectMapper.writeValueAsString(chatMap);
-                ChannelHandler.broadcastLobby(chatJson).subscribe(
+                broadcastLobby(chatJson).subscribe(
                         null,
                         error -> System.err.println("Error broadcasting to lobby: " + error),
                         () -> System.out.println("Broadcast to lobby completed")
@@ -35,5 +38,12 @@ public class LobbyMsgHandler {
                 e.printStackTrace();
             }
         }
+    }
+
+    // 브로드캐스트
+    public static Mono<Void> broadcastLobby(String json) {
+        return Flux.fromIterable(ChannelList.getLobby().getSessionList().values())
+                .flatMap(connection -> connection.outbound().sendString(Mono.just(json)).then())
+                .then();
     }
 }

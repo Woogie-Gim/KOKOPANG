@@ -1,11 +1,7 @@
 package org.koko.kokopangmulti.Channel;
 
 import org.koko.kokopangmulti.Object.Session;
-import reactor.core.publisher.Flux;
-import reactor.core.publisher.Mono;
 import reactor.netty.Connection;
-
-import java.util.HashMap;
 
 public class ChannelHandler {
     public static void createChannel(String userName, String channelName) {
@@ -24,9 +20,9 @@ public class ChannelHandler {
         System.out.println("Lobby: " + ChannelList.getLobby().getSessionList());
         System.out.println(channelName + ": " + ChannelList.getChannelInfo(index).getSessionList());
 
-        // 클라이언트에게 방 인덱스 전송
+        // 생성된 채널에 대한 정보 채널 내 세션에게 브로드캐스팅
 
-        // 로비 클라이언트에게 방 목록, 로비 참가 유저 변경사항 브로드 캐스팅
+        // 로비 클라이언트에게 방 목록, 로비 참가 유저 변경사항 브로드캐스팅
     }
 
     public static void joinChannel(String userName, int roomIndex) {
@@ -44,7 +40,22 @@ public class ChannelHandler {
         System.out.println(channel.getChannelName() + ": " + channel.getSessionList());
         System.out.println("Lobby: " + ChannelList.getLobby().getSessionList());
 
-        // 로비 클라이언트에게 로비 참가중인 유저 목록 브로드캐스팅
+        // 로비 클라이언트에게 로비 참가중인 유저 목록 브로드캐스팅, 방에 참가중인 세션들에게 세션 목록 브로드캐스트
+
+    }
+
+    public static void leaveChannel(String userName, int channelIndex) {
+        // channelIndex를 통해 해당 채널에 유저 제거
+        ChannelList.getChannelInfo(channelIndex).getSessionList().remove(userName);
+        // 세션 목록에서 유저 커넥션 정보 파싱
+        Connection connection = Session.getSessionList().get(userName);
+        // 로비에 유저 정보 추가
+        ChannelList.getLobby().getSessionList().put(userName, connection);
+
+        // 기존 유저가 참가하던 채널에 참가중인 세션목록에 변경사항 브로드캐스팅
+
+        // 로비에 유저 목록, 채널의 변경사항 브로드캐스팅
+
     }
 
 //    // 채널 내 모든 세션에 메시지 브로드캐스트
@@ -55,10 +66,4 @@ public class ChannelHandler {
 ////                .flatMap(session -> session.getConnection().outbound().sendString(Mono.just(message)).then())
 ////                .then();
 ////    }
-
-    public static Mono<Void> broadcastLobby(String json) {
-        return Flux.fromIterable(ChannelList.getLobby().getSessionList().values())
-                .flatMap(connection -> connection.outbound().sendString(Mono.just(json)).then())
-                .then();
-    }
 }
