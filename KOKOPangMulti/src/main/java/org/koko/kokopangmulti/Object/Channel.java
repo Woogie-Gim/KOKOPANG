@@ -1,17 +1,17 @@
 package org.koko.kokopangmulti.Object;
 
-import org.koko.kokopangmulti.Object.Session;
 import reactor.netty.Connection;
 
-import java.util.ArrayDeque;
-import java.util.Deque;
 import java.util.HashMap;
 
 public class Channel {
 
     private String channelName;
+    private HashMap<String, Integer> nameToIdx;
+    private HashMap<Integer, String> idxToName;
+    private SessionsInChannel sessionsInChannel;
+    private Boolean isOnGame;
     private HashMap<String, Connection> sessionList;
-    private Deque q;
 
     // LOBBY CHANNEL
     public Channel(String channelName) {
@@ -19,13 +19,15 @@ public class Channel {
         this.sessionList = new HashMap<>();
     }
 
-    // GAME CHANNEL
-    public Channel(String channelName, String userName, Connection conn) {
+    // GAME CHANNEL 생성자
+    public Channel(String channelName, String userName) {
         this.channelName = channelName;
-        this.sessionList = new HashMap<>();
-        this.sessionList.put(userName, conn);
-        this.q = new ArrayDeque<String>();
-        q.addLast(userName); // 들어온 순서대로 기록
+        this.nameToIdx = new HashMap<>();
+        this.nameToIdx.put(userName, 0);
+        this.idxToName = new HashMap<>();
+        this.idxToName.put(0, userName);
+        this.sessionsInChannel = new SessionsInChannel();   // cnt=1, isExisted=[1,0,0,0,0,0]
+        this.isOnGame = false;
     }
     public Channel() {
 
@@ -38,12 +40,12 @@ public class Channel {
         return channelName;
     }
 
-    public HashMap<String, Connection> getSessionList() {
-        return this.sessionList;
+    public SessionsInChannel getSessionsInChannel() {
+        return this.sessionsInChannel;
     }
 
-    public Deque<String> getUsers() {
-        return this.q;
+    public HashMap<String, Connection> getSessionList() {
+        return this.sessionList;
     }
 
 }
