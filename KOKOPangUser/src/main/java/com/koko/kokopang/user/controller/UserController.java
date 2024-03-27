@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/user")
 public class UserController {
@@ -41,8 +43,8 @@ public class UserController {
      */
     @GetMapping("/profile")
     public ResponseEntity<?> getUserProfile(@RequestParam String email) {
-        User user = userService.getProfile(email);
-        return new ResponseEntity<User>(user, HttpStatus.OK);
+        UserDTO user = userService.getProfile(email);
+        return new ResponseEntity<UserDTO>(user, HttpStatus.OK);
     }
 
     /**
@@ -78,5 +80,10 @@ public class UserController {
         }
 
         return new ResponseEntity<String>("비밀번호 변경 실패", HttpStatus.BAD_REQUEST);
+    }
+
+    @GetMapping("/all")
+    public ResponseEntity<?> getAllUser() {
+        return new ResponseEntity<List<UserDTO>>(userService.getAllUser(), HttpStatus.OK);
     }
 }

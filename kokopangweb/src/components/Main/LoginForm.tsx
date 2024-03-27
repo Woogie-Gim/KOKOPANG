@@ -28,7 +28,7 @@ const LoginForm = () => {
   const [profileFile, setProfileFile] = useState<null | string>(null);
   const fileInput = useRef<HTMLInputElement>(null);
 
-  const { isLogin, login, PATH, token, setToken } =
+  const { isLogin, login, PATH, token, setToken, setTokenExpireTime } =
     useAuthStore(
       useShallow((state) => ({
         isLogin: state.isLogIn,
@@ -36,6 +36,7 @@ const LoginForm = () => {
         PATH: state.PATH,
         setToken: state.setToken,
         token: state.token,
+        setTokenExpireTime: state.setTokenExpireTime,
       }))
     );
 
@@ -62,41 +63,42 @@ const LoginForm = () => {
     data.append("username", username);
     data.append("password", password);
 
-    axios.post(`${PATH}/login`, data)
-      .then((res) => {
+    try {
+      // 로그인 요청
+      const loginRes = await axios.post(`${PATH}/login`, data);
+      const { authorization, refreshtoken } = loginRes.headers;
 
-        setToken(res.headers.authorization, res.headers.refreshtoken)
-        axios.get(`${PATH}/user/profile?email=${username}`, {
-          headers: {
-            Authorization: token
-          }
-        }
-        )
-          .then((res) => {
-            console.log(res)
-            setUser(res.data)
-          })
-          .catch((error) => console.log(error))
-      })
-      .catch((error) => console.log(error.response))
+      // 토큰 저장
+      setToken(authorization, refreshtoken);
+      setTokenExpireTime(new Date().getTime());
 
-    await axios.get(`${PATH}/friend/list?userId=${user.id}`, {
-      headers: {
-        Authorization: token
-      }
-    })
-      .then((res2) => {
-        const newObj = { friendName: user.name, friendRating: user.rating, friendProfileImg: user.profileImage };
-        res2.data.push(newObj);
-        const sortedFriendsList = res2.data.sort((a: any, b: any) => b.friendRating - a.friendRating);
-        user.setFriendsList(sortedFriendsList.slice(0, 10));
-        login();
-        setRefRef(!refRef)
-      })
-      .catch((error) => {
-        console.log(error)
-      })
-  }
+      // 사용자 프로필 요청
+      const profileRes = await axios.get(`${PATH}/user/profile?email=${username}`, {
+        headers: {
+          Authorization: authorization,
+        },
+      });
+
+      console.log(profileRes);
+      setUser(profileRes.data);
+
+        // 친구 목록 요청
+      const friendsRes = await axios.get(`${PATH}/friend/list?userId=${profileRes.data.userId}`, {
+        headers: {
+          Authorization: authorization,
+        },
+      });
+      const sortedFriendsList = friendsRes.data.sort((a: any, b: any) => b.friendRating - a.friendRating);
+      user.setFriendsList(sortedFriendsList.slice(0, 10));
+
+      login();
+      setRefRef(prevRefRef => !prevRefRef);
+    
+
+    } catch (error: any) {
+      console.log(error.response || error);
+    }
+  };
 
   const uploadImg = (event: any) => {
     const { files } = event.target;
@@ -128,7 +130,7 @@ const LoginForm = () => {
       formData.append("imgInfo", profileFile as string);
       // userId를 함께 보내야 함
       const data = {
-        userId: user.id,
+        userId: user.userId,
       };
       formData.append("profileImg", JSON.stringify(data));
       axios({
@@ -200,33 +202,46 @@ const LoginForm = () => {
   }
 
   useEffect(() => {
-    axios
-      .get(`${PATH}/profile/read`, {
-        params: { userId: user.id },
+    if (isLogin) {
+      axios
+        .get(`${PATH}/profile/read`, {
+          params: { userId: user.userId },
+          headers: {
+            Authorization: token,
+          },
+        })
+        .then((response) => {
+          if (!response.data) return;
+          const image = response.data;
+          if (image) {
+            setAvatar(
+              `${PATH}/profile/getImg/${image.saveFolder}/${image.originalName}/${image.saveName}`
+            );
+            user.setProfileImage(
+              `${PATH}/profile/getImg/${image.saveFolder}/${image.originalName}/${image.saveName}`
+            );
+            setOldProfile({
+              id: image.id,
+              userId: image.userId,
+              saveFolder: image.saveFolder,
+              originalName: image.originalName,
+              saveName: image.saveName,
+            });
+          }
+        })
+        .catch((error) => console.log(error));
+
+      axios.get(`${PATH}/friend/list?userId=${user.userId}`, {
         headers: {
           Authorization: token,
         },
       })
-      .then((response) => {
-        if (!response.data) return;
-        const image = response.data;
-        if (image) {
-          setAvatar(
-            `${PATH}/profile/getImg/${image.saveFolder}/${image.originalName}/${image.saveName}`
-          );
-          user.setProfileImage(
-            `${PATH}/profile/getImg/${image.saveFolder}/${image.originalName}/${image.saveName}`
-          );
-          setOldProfile({
-            id: image.id,
-            userId: image.userId,
-            saveFolder: image.saveFolder,
-            originalName: image.originalName,
-            saveName: image.saveName,
-          });
-        }
-      })
-      .catch((error) => console.log(error));
+        .then((res) => {
+          const sortedFriendsList = res.data.sort((a: any, b: any) => b.friendRating - a.friendRating);
+          user.setFriendsList(sortedFriendsList.slice(0, 10));
+        })
+        ;
+    }
   }, [refRef]);
 
   return (
@@ -252,8 +267,7 @@ const LoginForm = () => {
           </div>
           <ProfileBox>
             <div className='name_box'>{name} 님</div>
-            <div>안녕ㅇㅇ</div>
-            <div>{user.rating}</div>
+            <div>Rating: {user.rating}</div>
           </ProfileBox>
         </UserBox>
         <DownLoadBox onClick={downloadApp}>DOWNLOAD</DownLoadBox>

@@ -24,6 +24,7 @@ public class ItemController {
 
     @PostMapping("/create")
     public ResponseEntity<?> createItem(@RequestBody PointDTO pointDTO) {
+        System.out.println(pointDTO.toString());
         List<Coordinate> pointsList = itemService.createItem(pointDTO);
         return new ResponseEntity<List<Coordinate>>(pointsList, HttpStatus.OK);
     }

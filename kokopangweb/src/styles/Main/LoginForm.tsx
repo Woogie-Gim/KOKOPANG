@@ -8,7 +8,7 @@ const LoginBox = styled.div`
   margin-left: 10px;
   border: 0;
   border-radius: 10px;
-  box-shadow: 5px 5px 15px 1px lightgray;
+  background-color: white;
 `;
 
 const UserLogin = styled.input`
@@ -79,7 +79,6 @@ const ProfileBox = styled.div`
     width: 100%;
     height: auto;
     font-size: 25px;
-    font-weight: 700;
   }
 
 `
@@ -93,7 +92,6 @@ const DownLoadBox = styled.div`
   background-color: tomato;
   color: white;
   font-size: 25px;
-  font-weight: 700;
   text-align: center;
   cursor: pointer;
 `
@@ -104,7 +102,11 @@ const FriendsBox = styled.div`
   border: 1px solid lightgray;
   border-radius: 5px;
   overflow: scroll;
-  overscroll-behavior: none;
+  -ms-overflow-style: none;
+
+  &::-webkit-scrollbar{
+    display:none;
+  }
 
   .container {
     position: sticky;
@@ -112,24 +114,13 @@ const FriendsBox = styled.div`
     top: 0;
     display: flex;
     flex-direction: row;
-    background-color: white;
-    border-bottom: 1px solid gray;
-  }
-
-  .container2 {
-    position: sticky;
-    padding: 10px;
-    bottom: 0;
-    display: flex;
-    flex-direction: row;
-    background-color: white;
+    background-color: lightgray;
     border-bottom: 1px solid gray;
   }
 
   .item {
     flex: 1;
     text-align: center;
-    font-weight: 700;
     font-size: 20px;
   }
 

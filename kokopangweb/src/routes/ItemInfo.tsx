@@ -1,8 +1,11 @@
 import React from 'react'
+import NaviBar from './NaviBar'
 
 const ItemInfo = () => {
   return (
-    <div>ItemInfo</div>
+    <div>
+      <NaviBar />
+    </div>
   )
 }
 

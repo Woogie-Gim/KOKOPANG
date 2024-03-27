@@ -15,12 +15,10 @@ interface UserStore extends UserInterface {
 const useUserStore = create(
   persist<UserStore>(
     (set) => ({
-      id: null,
+      userId: null,
       email: null,
       name: null,
       gender: null,
-      nickname: null,
-      password: null,
       role: null,
       rating: 1000,
 
@@ -31,12 +29,10 @@ const useUserStore = create(
 
       setUser: (userInfo) => {
         set({
-          id: userInfo.id,
+          userId: userInfo.userId,
           email: userInfo.email,
           name: userInfo.name,
           gender: userInfo.gender,
-          nickname: userInfo.nickname,
-          password: userInfo.password,
           role: userInfo.role,
           rating: userInfo.rating,
         });

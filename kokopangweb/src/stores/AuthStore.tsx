@@ -27,6 +27,7 @@ const useAuthStore = create(
       },
       logout: () => {
         set({ isLogIn: false });
+        localStorage.clear();
       },
       setToken: (token, refToken) => {
         set({ token: token });

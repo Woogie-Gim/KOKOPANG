@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 
 import { InfoBox, UpBox, NoticeBox, NoticeHeader } from '../styles/Main/MainStyle'
 
+import TokenCheker from '../utils/TokenCheker'
 import MainCarousel from '../components/Main/MainCarousel'
 import LoginForm from '../components/Main/LoginForm'
 import NaviBar from './NaviBar'
@@ -30,10 +31,10 @@ const Main = () => {
   const goToNextSlide = () => {
     setCurrentSlide((prevSlide) => (prevSlide + 1) % Notices.length);
   };
-
   
   return (
     <div>
+      <TokenCheker />
       <NaviBar />
       <UpBox>
         <InfoBox>
