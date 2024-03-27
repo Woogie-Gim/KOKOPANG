@@ -1,10 +1,9 @@
-package org.koko.kokopangmulti.messageHandling;
+package org.koko.kokopangmulti.Lobby;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.koko.kokopangmulti.Channel.ChannelHandler;
-import org.koko.kokopangmulti.Channel.ChannelList;
+import org.koko.kokopangmulti.Object.ChannelList;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
