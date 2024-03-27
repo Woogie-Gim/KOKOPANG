@@ -2,20 +2,26 @@ package com.koko.kokopang.user.service;
 
 import com.koko.kokopang.user.dto.UserDTO;
 import com.koko.kokopang.user.model.User;
+import com.koko.kokopang.user.model.UserProfile;
 import com.koko.kokopang.user.repository.UserRepository;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final UserProfileService userProfileService;
 
-    public UserServiceImpl(UserRepository userRepository, BCryptPasswordEncoder bCryptPasswordEncoder) {
+    public UserServiceImpl(UserRepository userRepository, BCryptPasswordEncoder bCryptPasswordEncoder, UserProfileService userProfileService) {
         this.userRepository = userRepository;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+        this.userProfileService = userProfileService;
     }
 
     @Override
@@ -35,23 +41,33 @@ public class UserServiceImpl implements UserService {
         newUser.setEmail(email);
         newUser.setPassword(bCryptPasswordEncoder.encode(password));
         newUser.setName(userDTO.getName());
-        newUser.setNickname("");
-
+        newUser.setRating(1000);
         userRepository.save(newUser);
 
         return newUser;
     }
 
     @Override
-    public User getProfile(String email) {
+    public UserDTO getProfile(String email) {
         User user = userRepository.findByEmail(email);
+        UserDTO userDTO = new UserDTO();
 
         if (user == null) {
             System.out.println("User not exist");
             return null;
         }
 
-        return user;
+        userDTO.setUserId(user.getId());
+        userDTO.setName(user.getName());
+        userDTO.setEmail(user.getEmail());
+        userDTO.setRating(user.getRating());
+        UserProfile img = userProfileService.getUserProfile(user.getId());
+        if (img != null) {
+            String imgUrl = "http://localhost:8080/profile/getImg/"
+                    + img.getSaveFolder() + "/" + img.getOriginalName() + "/" + img.getSaveName();
+            userDTO.setProfileImg(imgUrl);
+        }
+        return userDTO;
     }
 
     @Override
@@ -65,7 +81,6 @@ public class UserServiceImpl implements UserService {
         }
 
         userProfile.setName(user.getName());
-        userProfile.setNickname(user.getNickname());
 
         return userProfile;
     }
@@ -92,5 +107,28 @@ public class UserServiceImpl implements UserService {
 
         user.setPassword(bCryptPasswordEncoder.encode(password));
         return true;
+    }
+
+    @Override
+    public List<UserDTO> getAllUser() {
+        List<User> allUsers = userRepository.findAllDesc();
+        List<UserDTO> users = new ArrayList<>();
+
+        for (User user:allUsers) {
+            UserDTO reUser = new UserDTO();
+            reUser.setUserId(user.getId());
+            reUser.setName(user.getName());
+            reUser.setEmail(user.getEmail());
+            reUser.setRating(user.getRating());
+            UserProfile img = userProfileService.getUserProfile(user.getId());
+            if (img != null) {
+                String imgUrl = "http://localhost:8080/profile/getImg/"
+                        + img.getSaveFolder() + "/" + img.getOriginalName() + "/" + img.getSaveName();
+                reUser.setProfileImg(imgUrl);
+            }
+            users.add(reUser);
+        }
+
+        return users;
     }
 }

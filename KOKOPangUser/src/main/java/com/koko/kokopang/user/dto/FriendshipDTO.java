@@ -12,7 +12,8 @@ public class FriendshipDTO {
     private int userId;
     private int friendId;
     private String friendName;
-
+    private int friendRating;
+    private String friendProfileImg;
     // isWaiting  isFrom
     //  true       true   :  내가 보냈고 아직 수락 안 받음
     //  true       false  :  내가 받았고 아직 수락 안 받음

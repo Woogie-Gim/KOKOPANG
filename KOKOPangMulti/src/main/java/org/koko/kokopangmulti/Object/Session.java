@@ -2,18 +2,15 @@ package org.koko.kokopangmulti.Object;
 
 import reactor.netty.Connection;
 
+import java.util.HashMap;
+
+
 public class Session {
-    String userName;
-    Connection connection;
 
-    public Session(String userName, Connection connection) {
-        this.userName = userName;
-        this.connection = connection;
+    private static HashMap<String, Connection> sessionList = new HashMap<>();
+
+    public static HashMap<String, Connection> getSessionList() {
+        return sessionList;
     }
 
-    public Session() {}
-
-    public Connection getConnection() {
-        return this.connection;
-    }
 }

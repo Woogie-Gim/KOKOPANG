@@ -32,6 +32,18 @@ public class FriendshipController {
     }
 
     /**
+     * 친구 요청 수락
+     * @param friendDTO 내의 userId, friendId는 friendship DB에 맞춘다
+     * @return
+     */
+    @PostMapping("/accept")
+    public ResponseEntity<?> acceptFriendRequest(@RequestBody FriendDTO friendDTO) {
+        friendshipService.acceptFriend(friendDTO);
+
+        return new ResponseEntity<Void>(HttpStatus.OK);
+    }
+
+    /**
      * 로그인 후 로비 화면에서 나의 친구목록 띄우기 (서로 친구일때만)
      * @param userId
      * @return List<FriendshipDTO>

@@ -13,7 +13,6 @@ const InfoBox = styled.div`
     height: 600px;
     border: 0;
     border-radius: 10px;
-    box-shadow: 0px 5px 15px 1px lightgray;
 `
 
 const Header = styled.div`
@@ -31,6 +30,7 @@ const MenuBox = styled.div`
     justify-content: space-between;
     align-items: center;
     flex-direction: row;
+    color: white;
 `
 
 const LogoBox = styled.div`
@@ -56,7 +56,6 @@ const Menu = styled.div`
     margin: 10px;
     padding: 5px;
     font-size: 25px;
-    font-weight: 700;
     text-align: center;
     border-radius: 10px;
     cursor: pointer;
@@ -72,9 +71,8 @@ const NoticeHeader = styled.div`
     width: 80%;
     margin: 0 auto;
     font-size: 30px;
-    font-weight: 700;
     margin-bottom: 20px;
-    
+    color: white;
 `
 
 const NoticeBox = styled.div`
@@ -83,6 +81,7 @@ const NoticeBox = styled.div`
     overflow: hidden;
     margin: 0 auto;
     margin-bottom: 50px;
+    color: white;
 `
 
 export { InfoBox, UpBox, Header, MenuBox, Menu,LogoBox, NoticeBox, NoticeHeader};
