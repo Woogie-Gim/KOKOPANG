@@ -1,14 +1,10 @@
 package org.koko.kokopangmulti.serverManagement;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import org.koko.kokopangmulti.Channel.Channel;
-import org.koko.kokopangmulti.Channel.ChannelHandler;
-import org.koko.kokopangmulti.Channel.ChannelList;
+import org.koko.kokopangmulti.Object.ChannelList;
 import org.koko.kokopangmulti.Object.Session;
-import org.koko.kokopangmulti.messageHandling.IngameMsgHandler;
-import org.koko.kokopangmulti.messageHandling.LobbyMsgHandler;
-import org.koko.kokopangmulti.messageHandling.RoomMsgHandler;
+import org.koko.kokopangmulti.Ingame.IngameMsgHandler;
+import org.koko.kokopangmulti.Lobby.LobbyMsgHandler;
+import org.koko.kokopangmulti.Channel.ChannelMsgHandler;
 import reactor.core.publisher.Mono;
 import reactor.netty.NettyInbound;
 import reactor.netty.NettyOutbound;
@@ -19,17 +15,13 @@ public class TcpMessageHandler {
     /*
      * 의존성 주입
      */
-    private final ChannelHandler channelHandler;
-    private final ObjectMapper objectMapper;
     private final LobbyMsgHandler lobbyMsgHandler;
-    private final RoomMsgHandler roomMsgHandler;
+    private final ChannelMsgHandler channelMsgHandler;
     private final IngameMsgHandler ingameMsgHandler;
 
-    public TcpMessageHandler(ChannelHandler channelHandler, ObjectMapper objectMapper, LobbyMsgHandler lobbyMsgHandler, RoomMsgHandler roomMsgHandler, IngameMsgHandler ingameMsgHandler) {
-        this.channelHandler = channelHandler;
-        this.objectMapper = objectMapper;
+    public TcpMessageHandler(LobbyMsgHandler lobbyMsgHandler, ChannelMsgHandler channelMsgHandler, IngameMsgHandler ingameMsgHandler) {
         this.lobbyMsgHandler = lobbyMsgHandler;
-        this.roomMsgHandler = roomMsgHandler;
+        this.channelMsgHandler = channelMsgHandler;
         this.ingameMsgHandler = ingameMsgHandler;
     }
 
@@ -46,41 +38,30 @@ public class TcpMessageHandler {
                         String channelName = json.getString("channel");
                         String userName = json.getString("userName");
 
-                        // 파싱한 데이터 테스트 출력
-                        System.out.println("테스트");
-                        System.out.println(userName);
-                        System.out.println(channelName);
+                        switch(channelName) {
+                            case "lobby" :
+                                // 최초 접속 시 userName, connection 정보 Session 해쉬맵, 로비에 등록
+                                if (Session.getSessionList().get(userName) == null) {
+                                    in.withConnection(connection -> {
+                                        Session.getSessionList().put(userName, connection);
+                                        ChannelList.getLobby().getSessionList().put(userName, connection);
 
-                        if (channelName.equals("lobby")) {
-                            // 최초 접속 시 userName, connection 정보 Session 해쉬맵, 로비에 등록
-                            if (Session.getSessionList().get(userName) == null) {
-                                in.withConnection(connection -> {
-                                    Session.getSessionList().put(userName, connection);
-                                    ChannelList.getLobby().getSessionList().put(userName, connection);
-
-                                    // 들어갔는지 확인용 로그
-                                    System.out.println(Session.getSessionList());
-                                });
-                            } else {
+                                        // 들어갔는지 확인용 로그
+                                        System.out.println(Session.getSessionList());
+                                    });
+                                } else {
+                                    JSONObject data = json.getJSONObject("data");
+                                    lobbyMsgHandler.filterData(userName, data);
+                                }
+                                break;
+                            case "room" :
                                 JSONObject data = json.getJSONObject("data");
-                                lobbyMsgHandler.filterData(userName, data);
-                            }
-                        }
-
-                        // channelName이 room일 경우
-                        else if (channelName.equals("room")) {
-                            JSONObject data = json.getJSONObject("data");
-
-                            // 룸 msg핸들러 호출
-                            roomMsgHandler.filterData(userName, data);
-                        }
-
-                        // Broadcast INGAME DATA
-                        else if (channelName.equals("ingame")) {
-
-//                            ingameMsgHandler.printData(data);
-                            return Mono.empty();
-
+                                // 룸 msg핸들러 호출
+                                channelMsgHandler.filterData(userName, data);
+                                break;
+                            case "ingame" :
+//                                ingameMsgHandler.printData(data);
+                                break;
                         }
 
                         return Mono.empty();
