@@ -22,8 +22,7 @@ public class User {
     private String email;
     private String password;
     private String name;
-    private String nickname;
     private String role;
     private String gender;
-    private int rating = 1000;
+    private int rating;
 }
