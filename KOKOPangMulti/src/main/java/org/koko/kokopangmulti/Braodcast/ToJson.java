@@ -13,12 +13,19 @@ public class ToJson {
     public static String lobbySessionsToJson() {
         ObjectMapper objectMapper = new ObjectMapper();
         Map<String, Object> data = new LinkedHashMap<>();
-        List<Map<String, Object>> jsonArray = new ArrayList<>();
+        List<Object> jsonArray = new ArrayList<>();
 
         for (Map.Entry<String, Integer> entry : ChannelList.getLobby().getSessionList().entrySet()) {
-            Map<String, Object> session = new HashMap<>();
-            session.put(entry.getKey(), entry.getValue());
-            jsonArray.add(session);
+            Map<String, Object> jsonObject = new LinkedHashMap<>();
+
+            jsonObject.put("userName", entry.getKey());
+            jsonObject.put("userId", entry.getValue());
+
+            try {
+                jsonArray.add(objectMapper.writeValueAsString(jsonObject));
+            } catch (JsonProcessingException e) {
+                throw new RuntimeException(e);
+            }
         }
 
         data.put("type", "sessionList");

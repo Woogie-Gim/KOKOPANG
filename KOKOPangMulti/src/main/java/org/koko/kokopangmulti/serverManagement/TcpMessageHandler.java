@@ -49,11 +49,9 @@ public class TcpMessageHandler {
                                         Session.getSessionList().put(userName, connection);
                                         ChannelList.getLobby().getSessionList().put(userName, userId);
 
-                                        // 들어갔는지 확인용 로그
-                                        System.out.println(Session.getSessionList());
-
                                         // 유저에게 현재 채널 정보 브로드캐스팅
                                         BroadcastToLobby.broadcastPrivate(connection, ToJson.channelListToJson()).subscribe();
+
                                         // 로비에 유저목록 브로드캐스팅
                                         BroadcastToLobby.broadcastLobby(ToJson.lobbySessionsToJson()).subscribe();
                                     });

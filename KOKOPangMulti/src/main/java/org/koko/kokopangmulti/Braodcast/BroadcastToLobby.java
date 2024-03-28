@@ -7,21 +7,15 @@ import reactor.core.publisher.Mono;
 import reactor.netty.Connection;
 
 public class BroadcastToLobby {
-    // 브로드캐스트
+    // 로비 전체 브로드캐스트
     public static Mono<Void> broadcastLobby(String json) {
         return Flux.fromIterable(ChannelList.getLobby().getSessionList().keySet())
                 .flatMap(userName -> Session.getSessionList().get(userName).outbound().sendString(Mono.just(json)).then())
                 .then();
     }
 
+    // 특정 유저에게만 브로드캐스트
     public static Mono<Void> broadcastPrivate(Connection connection, String json) {
-        return Flux.fromIterable(Session.getSessionList().keySet())
-                .flatMap(userName -> {
-                    if (Session.getSessionList().get(userName).equals(connection)) {
-                        return connection.outbound().sendString(Mono.just(json)).then();
-                    }
-                    return Mono.empty();
-                })
-                .then();
+        return connection.outbound().sendString(Mono.just(json)).then();
     }
 }

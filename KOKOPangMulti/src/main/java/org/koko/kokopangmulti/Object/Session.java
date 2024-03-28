@@ -8,7 +8,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class Session {
 
-    private static ConcurrentHashMap<String, Connection> sessionList = new ConcurrentHashMap<>();
+    private static final ConcurrentHashMap<String, Connection> sessionList = new ConcurrentHashMap<>();
 
     public static ConcurrentHashMap<String, Connection> getSessionList() {
         return sessionList;
