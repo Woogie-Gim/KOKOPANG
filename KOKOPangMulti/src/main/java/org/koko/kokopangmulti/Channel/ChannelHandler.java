@@ -19,10 +19,14 @@ public class ChannelHandler {
         Channel channel = new Channel(channelName, userName);
 
         // 2) Lobby에서 [userName] session 제거
+        int userId = ChannelList.getLobby().getSessionList().get(userName);
         ChannelList.getLobby().getSessionList().remove(userName);
 
         // 3) ChannelList에 channel 추가
         int channelIndex = ChannelList.addChannel(channel);
+
+        // sessionList해쉬맵에 이름, id값 추가
+        channel.getSessionList().put(userName, userId);
 
         // 4) BroadCasting
 
@@ -36,18 +40,18 @@ public class ChannelHandler {
     }
 
     public static void joinChannel(String userName, int channelIndex) {
-
-        // 1) Lobby에서 [userName] 제거
-        ChannelList.getLobby().getSessionList().remove(userName);
-
-        // 2) 참가할 channel 인스턴스
+        // 1) 참가할 channel 인스턴스
         Channel channel = ChannelList.getChannelInfo(channelIndex);
 
-        // 3) channel 참가 인원 확인 : 이미 6명이라면 join 거절
+        // 2) channel 참가 인원 확인 : 이미 6명이라면 join 거절
         if (channel.getSessionsInChannel().getCnt() == 6) {
             log.warn("[JOIN REJECTED] ROOM IS FULL");
             return;
         }
+
+        // 3) Lobby에서 [userName] 제거
+        int userId = ChannelList.getLobby().getSessionList().get(userName);
+        ChannelList.getLobby().getSessionList().remove(userName);
 
         // 4) channel 안 [userName]의 idx 탐색
         for (int i = 0; i < 6; i++) {
@@ -55,6 +59,7 @@ public class ChannelHandler {
                 channel.getSessionsInChannel().setTrueIsExisted(i); // UPDATE isExisted
                 channel.getSessionsInChannel().plusCnt();           // UPDATE cnt
                 channel.addSession(userName, i);                    // UPDATE nameToIdx, idxToName
+                channel.getSessionList().put(userName, userId);
                 break;
             }
         }
@@ -84,6 +89,7 @@ public class ChannelHandler {
         // 1. 나가는 [userName] 삭제
         channel.getNameToIdx().remove(userName);    // nameToIdx
         channel.getIdxToName().remove(idx);         // idxToName
+        channel.getSessionList().remove(userName);  // sessionList
         sic.minusCnt();                             // cnt
         sic.setFalseIsExisted(idx);                 // isExist
 
