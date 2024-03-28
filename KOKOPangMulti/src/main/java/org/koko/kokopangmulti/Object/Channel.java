@@ -1,8 +1,12 @@
 package org.koko.kokopangmulti.Object;
 
-import reactor.netty.Connection;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class Channel {
 
@@ -11,7 +15,9 @@ public class Channel {
     private HashMap<Integer, String> idxToName;
     private SessionsInChannel sessionsInChannel;
     private Boolean isOnGame;
-    private HashMap<String, Connection> sessionList;
+    private HashMap<String, Integer> sessionList;
+
+    private static final ObjectMapper objectMapper = new ObjectMapper();
 
     // LOBBY CHANNEL
     public Channel(String channelName) {
@@ -53,7 +59,7 @@ public class Channel {
         return this.sessionsInChannel;
     }
 
-    public HashMap<String, Connection> getSessionList() {
+    public HashMap<String, Integer> getSessionList() {
         return this.sessionList;
     }
 
@@ -61,5 +67,22 @@ public class Channel {
 
     public HashMap<Integer, String> getIdxToName() {
         return idxToName;
+    }
+
+    public String toJson() {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("type", "sessionList");
+
+        List<Map<String, Object>> jsonArray = new ArrayList<>();
+
+        for(Map.Entry<String, Integer> entry : sessionList.entrySet()) {
+            Map<String, Object> session = new HashMap<>();
+            session.put(entry.getKey(), entry.getValue());
+            jsonArray.add(session);
+        }
+
+        jsonObject.put("data", jsonArray);
+
+        return jsonObject.toString();
     }
 }
