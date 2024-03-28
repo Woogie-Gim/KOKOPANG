@@ -58,13 +58,16 @@
     <Analyzer Include="C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\Extensions\Microsoft\Visual Studio Tools for Unity\Analyzers\Microsoft.Unity.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Store Asset\QuickOutline\Scripts\Outline.cs" />
     <Compile Include="Assets\Scripts\UI Scripts\InputNumber.cs" />
     <Compile Include="Assets\Store Asset\ExplosiveLLC\Demo Elements\Code\SmoothFollow.cs" />
     <Compile Include="Assets\Scripts\Weapon Scripts\WeaponManager.cs" />
     <Compile Include="Assets\Scripts\Weapon Scripts\AxeController.cs" />
     <Compile Include="Assets\Store Asset\HIGHLANDS - Stylized Environment\Scripts\PhysicsObject.cs" />
     <Compile Include="Assets\Store Asset\HIGHLANDS - Stylized Environment\Scripts\CloudMover.cs" />
+    <Compile Include="Assets\Store Asset\Table\DemoScene\Scripts\RotationOffset.cs" />
     <Compile Include="Assets\Scripts\PlayerController.cs" />
+    <Compile Include="Assets\Scripts\Object Scripts\Cow.cs" />
     <Compile Include="Assets\Store Asset\ExplosiveLLC\Crafting Mecanim Animation Pack\Code\CrafterActions.cs" />
     <Compile Include="Assets\Scripts\Weapon Scripts\CloseWeaponController.cs" />
     <Compile Include="Assets\Store Asset\ExplosiveLLC\Demo Elements\Code\GUIControls.cs" />
@@ -85,6 +88,7 @@
     <Compile Include="Assets\Scripts\UI Scripts\GameOver.cs" />
     <Compile Include="Assets\Scripts\UI Scripts\SlotToolTip.cs" />
     <Compile Include="Assets\Store Asset\ExplosiveLLC\Crafting Mecanim Animation Pack\Code\CrafterAnimatorTriggers.cs" />
+    <Compile Include="Assets\Scripts\UI Scripts\PreviewObject.cs" />
     <Compile Include="Assets\Scripts\ItemPickup.cs" />
     <Compile Include="Assets\Scripts\Item.cs" />
     <Compile Include="Assets\Store Asset\ExplosiveLLC\Crafting Mecanim Animation Pack\Code\CrafterIKHands.cs" />
@@ -95,13 +99,15 @@
     <Compile Include="Assets\Scripts\FollowingCamera.cs" />
     <Compile Include="Assets\Scripts\UI Scripts\QuickSlotController.cs" />
     <Compile Include="Assets\Store Asset\HIGHLANDS - Stylized Environment\Scripts\LightCulling.cs" />
+    <Compile Include="Assets\Scripts\UI Scripts\CraftManual.cs" />
     <Compile Include="Assets\Store Asset\HIGHLANDS - Stylized Environment\Scripts\SoundGroup.cs" />
     <Compile Include="Assets\Scripts\UI Scripts\Slot.cs" />
+    <Compile Include="Assets\Scripts\Object Scripts\Barrel.cs" />
     <Compile Include="Assets\Store Asset\ExplosiveLLC\Crafting Mecanim Animation Pack\Code\CrafterShowItem.cs" />
     <Compile Include="Assets\Scripts\UI Scripts\Timer.cs" />
     <Compile Include="Assets\Store Asset\ExplosiveLLC\Crafting Mecanim Animation Pack\Code\CrafterState.cs" />
     <Compile Include="Assets\Scripts\PlayerMovement.cs" />
-    <Compile Include="Assets\Scripts\UI Scripts\CraftManual.cs" />
+    <Compile Include="Assets\Scripts\Object Scripts\Ore.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
@@ -113,16 +119,19 @@
     <None Include="Assets\TextMesh Pro\Shaders\TMPro_Mobile.cginc" />
     <None Include="Assets\Survival Assets\Water Shader\Water_Shader.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF SSD.shader" />
+    <None Include="Assets\Store Asset\QuickOutline\Resources\Shaders\OutlineMask.shader" />
     <None Include="Assets\Store Asset\polyperfect\Crafting System\- UI\- UXML\SelectFragmentView.uxml" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Surface-Mobile.shader" />
     <None Include="Assets\Store Asset\HIGHLANDS - Stylized Environment\Shaders\Highlands_Foliage.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Surface.shader" />
+    <None Include="Assets\Store Asset\Crates And Barrels Pack Volume 1 - Free Version\manual.txt" />
     <None Include="Assets\TextMesh Pro\Sprites\EmojiOne Attribution.txt" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap-Custom-Atlas.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile SSD.shader" />
     <None Include="Assets\TextMesh Pro\Resources\LineBreaking Leading Characters.txt" />
     <None Include="Assets\TextMesh Pro\Shaders\TMPro_Properties.cginc" />
+    <None Include="Assets\Store Asset\QuickOutline\Readme.txt" />
     <None Include="Assets\TextMesh Pro\Shaders\TMPro_Surface.cginc" />
     <None Include="Assets\Store Asset\HIGHLANDS - Stylized Environment\Shaders\Highlands_Background_Objects.shader" />
     <None Include="Assets\TextMesh Pro\Resources\LineBreaking Following Characters.txt" />
@@ -132,6 +141,7 @@
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Masking.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF Overlay.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap-Mobile.shader" />
+    <None Include="Assets\Store Asset\QuickOutline\Resources\Shaders\OutlineFill.shader" />
     <None Include="Assets\TextMesh Pro\Fonts\LiberationSans - OFL.txt" />
     <None Include="Assets\Store Asset\Quirky Series Ultimate\_Shader\ToonRamp.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile.shader" />

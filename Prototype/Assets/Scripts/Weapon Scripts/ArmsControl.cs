@@ -6,17 +6,37 @@ public class ArmsControl : CloseWeaponController
 {
     // 활성화 여부
     public static bool isActivate = false;
+
+    [SerializeField]
+    private QuickSlotController theQuickSlotController;
     void Update()
     {
-        if (isActivate)
+        if (isActivate && !Inventory.inventoryActivated)
         {
-            TryAttack();
+            if (QuickSlotController.go_HandItem == null)
+            {
+                TryAttack();
+            }
+            else
+            {
+                TryEating();
+            }
         }
     }
      void Start()
     {
         WeaponManager.currentWeapon = currentArms.GetComponent<Transform>();
         WeaponManager.currentWeaponAnim = currentArms.anim;
+        isActivate = true;
+    }
+
+    private void TryEating()
+    {
+        if (Input.GetButtonDown("Fire2"))
+        {
+            currentArms.anim.SetTrigger("Eat");
+            theQuickSlotController.EatItem();
+        }
     }
 
     protected override IEnumerator HitCoroutine()
@@ -26,11 +46,6 @@ public class ArmsControl : CloseWeaponController
             if (CheckObject())
             {
                 isSwing = false;
-                Debug.Log(hitInfo.transform.name);
-                if (hitInfo.transform.tag == "NPC")
-                {
-                    hitInfo.transform.GetComponent<Pig>().Damage(currentArms.damage, transform.position);
-                }
             }
             yield return null;
         }

@@ -9,6 +9,11 @@ TagManager:
   - Interactive
   - Tree
   - NPC
+  - Terrain
+  - Cow
+  - Pig
+  - Iron ore
+  - Barrel
   layers:
   - Default
   - TransparentFX
@@ -18,7 +23,7 @@ TagManager:
   - UI
   - Item
   - Weapon
-  - 
+  - Terrain
   - 
   - 
   - 

@@ -44,7 +44,7 @@ public class Pig : MonoBehaviour
     [SerializeField]
     private Rigidbody rigid;
     [SerializeField]
-    private CapsuleCollider capsulecol;
+    private BoxCollider boxcol;
     private AudioSource theAudio;
     [SerializeField]
     private AudioClip[] sound_pig_Normal;
@@ -173,11 +173,11 @@ public class Pig : MonoBehaviour
         anim.SetBool("Running", isRunning);
     }
 
-    public void Damage(int _dmg, Vector3 _targetPos)
+    public void Damage(Vector3 _targetPos)
     {
         if (!isDead)
         {
-            hp -= _dmg;
+            hp--;
 
             if (hp <= 0)
             {
