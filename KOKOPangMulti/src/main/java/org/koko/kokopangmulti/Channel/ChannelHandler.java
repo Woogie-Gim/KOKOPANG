@@ -114,6 +114,18 @@ public class ChannelHandler {
             case 1:
                 // 나간 사람이 방장인 경우
                 if (idx == 0) {
+                    for (int i = 0; i < 6; i++) {
+                        if (sic.getIsExisted().get(i) == 1) {
+                            sic.setFalseIsExisted(i);
+                            sic.setTrueIsExisted(0);
+
+                            String leftUser = channel.getIdxToName().get(i);
+
+                            channel.getIdxToName().remove(i);
+                            channel.getIdxToName().put(0, userName);
+                            channel.getNameToIdx().put(userName, 0);
+                        }
+                    }
                     // 남은 사람의 정보 파싱 =>  맵에서 남아 있는 유저의 정보를 파싱...? how???
                     // 남은 사람의 idx를 0번으로 이동하는 작업
                     // isExisted, utoi, itou 전부 변경
@@ -152,4 +164,4 @@ public class ChannelHandler {
 ////                .flatMap(session -> session.getConnection().outbound().sendString(Mono.just(message)).then())
 ////                .then();
 ////    }
-}
+
