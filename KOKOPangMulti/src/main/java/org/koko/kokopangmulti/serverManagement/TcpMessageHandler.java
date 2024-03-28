@@ -51,10 +51,10 @@ public class TcpMessageHandler {
 
                                         // 들어갔는지 확인용 로그
                                         System.out.println(Session.getSessionList());
-                                        // 유저에게 현재 채널 정보 브로드캐스팅
-//                                        out.sendString()
-                                    });
 
+                                        // 유저에게 현재 채널 정보 브로드캐스팅
+                                        connection.outbound().sendString(Mono.just(ToJson.channelListToJson())).then().subscribe();
+                                    });
 
                                     // 로비에 유저목록 브로드캐스팅
                                     BroadcastToLobby.broadcastLobby(ToJson.lobbySessionsToJson()).subscribe();
