@@ -21,11 +21,8 @@ public class ToJson {
             jsonObject.put("userName", entry.getKey());
             jsonObject.put("userId", entry.getValue());
 
-            try {
-                jsonArray.add(objectMapper.writeValueAsString(jsonObject));
-            } catch (JsonProcessingException e) {
-                throw new RuntimeException(e);
-            }
+            System.out.println(jsonObject);
+            jsonArray.add(jsonObject);
         }
 
         data.put("type", "sessionList");
