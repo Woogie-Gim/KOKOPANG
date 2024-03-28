@@ -10,6 +10,7 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class ChannelHandler {
     private static final Logger log = LoggerFactory.getLogger(ChannelHandler.class);
@@ -78,6 +79,30 @@ public class ChannelHandler {
 
         for (String key : ChannelList.getChannelInfo(channelIndex).getNameToIdx().keySet()) {
             System.out.println(String.format("[userName:%s], [idx:%s]", key, ChannelList.getChannelInfo(channelIndex).getNameToIdx().get(key)));
+        }
+
+    }
+
+    public static void isReady(String userName, int channelIndex) {
+
+        Channel channel = ChannelList.getChannelInfo(channelIndex);
+        int idx = channel.getNameToIdx().get(userName);
+        ArrayList<Boolean> isReady = channel.getSessionsInChannel().getIsReady();
+
+        if (isReady.get(idx)) {
+            isReady.set(idx, false);
+            log.info("[userName:{}] NOT READY, channelName:{}", userName, ChannelList.getChannelInfo(channelIndex).getChannelName());
+
+        } else {
+            isReady.set(idx, true);
+            log.info("[userName:{}] READY, channelName:{}", userName, ChannelList.getChannelInfo(channelIndex).getChannelName());
+
+        }
+
+        // 동작 확인
+        Iterator ready = ChannelList.getChannelInfo(channelIndex).getSessionsInChannel().getIsReady().iterator();
+        while(ready.hasNext()) {
+            System.out.println(ready.next());
         }
 
     }
