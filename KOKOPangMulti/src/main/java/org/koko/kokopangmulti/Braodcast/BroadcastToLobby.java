@@ -9,7 +9,6 @@ import reactor.netty.Connection;
 public class BroadcastToLobby {
     // 브로드캐스트
     public static Mono<Void> broadcastLobby(String json) {
-        System.out.println("hi");
         return Flux.fromIterable(ChannelList.getLobby().getSessionList().keySet())
                 .flatMap(userName -> Session.getSessionList().get(userName).outbound().sendString(Mono.just(json)).then())
                 .then();

@@ -53,7 +53,7 @@ public class TcpMessageHandler {
                                         System.out.println(Session.getSessionList());
 
                                         // 유저에게 현재 채널 정보 브로드캐스팅
-                                        BroadcastToLobby.broadcastPrivate(connection, ToJson.lobbySessionsToJson()).subscribe();
+                                        BroadcastToLobby.broadcastPrivate(connection, ToJson.channelListToJson()).subscribe();
                                         // 로비에 유저목록 브로드캐스팅
                                         BroadcastToLobby.broadcastLobby(ToJson.lobbySessionsToJson()).subscribe();
                                     });
