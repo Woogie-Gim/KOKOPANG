@@ -11,24 +11,21 @@ import java.util.*;
 public class ToJson {
     // 로비 유저목록
     public static String lobbySessionsToJson() {
+        ObjectMapper objectMapper = new ObjectMapper();
+        Map<String, Object> data = new LinkedHashMap<>();
+        List<Map<String, Object>> jsonArray = new ArrayList<>();
+
+        for (Map.Entry<String, Integer> entry : ChannelList.getLobby().getSessionList().entrySet()) {
+            Map<String, Object> session = new HashMap<>();
+            session.put(entry.getKey(), entry.getValue());
+            jsonArray.add(session);
+        }
+
+        data.put("type", "channelList");
+        data.put("data", jsonArray);
+
         try {
-            ObjectMapper objectMapper = new ObjectMapper();
-            Map<String, Object> data = new LinkedHashMap<>();
-            data.put("type", "channelList");
-
-            List<Map<String, Object>> jsonArray = new ArrayList<>();
-
-            for(Map.Entry<String, Integer> entry : ChannelList.getLobby().getSessionList().entrySet()) {
-                Map<String, Object> session = new HashMap<>();
-                session.put(entry.getKey(), entry.getValue());
-                jsonArray.add(session);
-            }
-
-            data.put("data", jsonArray);
-
-            String jsonString = objectMapper.writeValueAsString(data) + '\n';
-
-            return jsonString;
+            return objectMapper.writeValueAsString(data) + '\n';
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
@@ -36,8 +33,8 @@ public class ToJson {
 
     // 채널목록
     public static String channelListToJson() {
-        JSONObject jsonObject = new JSONObject();
-
+        ObjectMapper objectMapper = new ObjectMapper();
+        Map<String, Object> data = new LinkedHashMap<>();
         List<Object> jsonArray = new ArrayList<>();
 
         for (Map.Entry<Integer, Channel> entry : ChannelList.getChannelList().entrySet()) {
@@ -50,9 +47,13 @@ public class ToJson {
             jsonArray.add(temp);
         }
 
-        jsonObject.put("type", "channelList");
-        jsonObject.put("data", jsonArray);
+        data.put("type", "channelList");
+        data.put("data", jsonArray);
 
-        return jsonObject.toString() + '\n';
+        try {
+            return objectMapper.writeValueAsString(data) + '\n';
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
