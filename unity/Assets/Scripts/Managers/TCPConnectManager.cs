@@ -80,9 +80,10 @@ public class TCPConnectManager : MonoBehaviour
 
             string json =   "{" +
                 "\"channel\":\"lobby\"," +
-                "\"userName\":\"asd\"," +
+                "\"userName\":\"010101\"," +
                 "\"userId\":0" +
             "}";
+
             
             SendMessageToServer(json);
 
@@ -143,7 +144,7 @@ public class TCPConnectManager : MonoBehaviour
 
         string json = "{" +
             "\"channel\":\"lobby\"," +
-            "\"userName\":\"ㅁㄴㅇㄹ\"," +
+            "\"userName\":\"010101\"," +
             "\"data\":{" +
                 "\"type\":\"chat\"," +
                 "\"message\":" + "\"" + message + "\"" +

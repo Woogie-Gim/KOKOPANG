@@ -21,7 +21,7 @@ public class ToJson {
             jsonArray.add(session);
         }
 
-        data.put("type", "channelList");
+        data.put("type", "sessionList");
         data.put("data", jsonArray);
 
         try {
