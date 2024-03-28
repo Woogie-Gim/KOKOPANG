@@ -65,6 +65,6 @@ public class ChannelList {
 
         jsonObject.put("data", jsonArray);
 
-        return jsonObject.toString();
+        return jsonObject.toString() + '\n';
     }
 }
