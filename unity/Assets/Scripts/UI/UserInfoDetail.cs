@@ -6,11 +6,11 @@ using TMPro;
 
 public class UserInfoDetail : MonoBehaviour
 {
-    public TMP_Text detailUserNameText;
-    public TMP_Text detailEmailText;
-    public Button addFriendBtn;
-    public TMP_Text addFriendText;
-    public Button detailCloseBtn;
+    public TMP_Text DetailUserNameText;
+    //public TMP_Text DetailEmailText;
+    public Button AddFriendBtn;
+    public TMP_Text AddFriendText;
+    public Button DetailCloseBtn;
 
     private int id;
     private string email;
@@ -55,7 +55,7 @@ public class UserInfoDetail : MonoBehaviour
     private void Start()
     {
         // 이벤트 붙이기
-        detailCloseBtn.onClick.AddListener(clickCloseBtn);
+        DetailCloseBtn.onClick.AddListener(clickCloseBtn);
     }
 
     // 유저 상세 페이지 닫기 버튼 클릭 시

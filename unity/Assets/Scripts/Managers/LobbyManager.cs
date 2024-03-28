@@ -9,6 +9,7 @@ public class LobbyManager : MonoBehaviour
 {
     [Header("Commons")]
     public LoginManager loginManagerScript; // 로그인 매니저 스크립트
+    public TCPConnectManager TCPConnectManagerScript;   // TCP 통신 관련 스트립트
 
     [Header("Lobby")]
     public TMP_Text LobbyMyName;    // 내정보 이름
@@ -20,15 +21,16 @@ public class LobbyManager : MonoBehaviour
     public GameObject UserInfoDetail;   // 유저 리스트에서 누르면 등장하는 유저 상세정보 창
 
 
-    private string url = "http://localhost:8080";   // 요청 URL
+    private string url = "http://j10c211.p.ssafy.io:8080";   // 요청 URL
 
 
     /* ======================== 로비 ======================== */
     // 로비 입장 시 데이터 초기화(사용자 정보 등)
-    public void LobbyInit(string name)
+    public void LobbyInit(string name, int id)
     {
-        LobbyMyName.text = name;
+        LobbyMyName.text = name + " #" + id;
         setAllUsers();
+        setFriendUsers();
     }
 
     // 전체 유저 불러오기
@@ -76,38 +78,44 @@ public class LobbyManager : MonoBehaviour
             userListElementScript.Name = userList[i].Name;
             userListElementScript.UserInfoDetail = UserInfoDetail;
             // 데이터 보이기
-            userListElementScript.userNameText.text = userList[i].Name;
+            userListElementScript.UserNameText.text = userList[i].Name;
         }
     }
 
     // 친구 리스트 불러오기
     private void setFriendUsers()
     {
+        // 현재 친구 유저 데이터 불러오기
+        StartCoroutine(getFriendList((User[] userList) =>
+        {
+            // 친구가 있으면
+            if (userList != null)
+            {
+                // 친구 리스트 들어갈 스크롤뷰(설정할 부모)
+                Transform content = ScrollViewFriendList.transform.Find("ScrollView/Viewport/Content");
 
-    }
+                // 친구 리스트에 들어갈 각각의 컴포넌트 생성
+                GameObject[] userListElements = new GameObject[userList.Length];
 
-    // 방 리스트 불러오기
-    public void setChannelList()
-    {
-
-    }
-
-    // 방 만들기
-    public void createChannel()
-    {
-
-    }
-
-    // 빠른입장
-    public void quickEnter()
-    {
-
-    }
-
-    // 참가
-    public void participate()
-    {
-
+                // 유저 리스트 각각의 컴포넌트에 들어갈 데이터
+                //GameObject[] activeUserData = new GameObject[userList.Length];
+                for (int i = 0; i < userList.Length; i++)
+                {
+                    // 요소 생성 및 부모 설정
+                    userListElements[i] = Instantiate(UserListElement);
+                    userListElements[i].transform.SetParent(content, false);
+                    // 유저 데이터 초기화
+                    UserListElement userListElementScript = userListElements[i].GetComponent<UserListElement>();
+                    userListElementScript.Id = userList[i].Id;
+                    userListElementScript.Email = userList[i].Email;
+                    userListElementScript.Name = userList[i].Name;
+                    userListElementScript.UserInfoDetail = UserInfoDetail;
+                    // 데이터 보이기
+                    userListElementScript.UserNameText.text = userList[i].Name;
+                }
+            }
+        }));
+        
     }
 
     // 전체 유저 목록 / 친구 목록 버튼 클릭 시
@@ -118,6 +126,60 @@ public class LobbyManager : MonoBehaviour
 
         ScrollViewLobbyList.SetActive(!ScrollViewLobbyList.activeSelf);
         ScrollViewFriendList.SetActive(!ScrollViewFriendList.activeSelf);
+    }
+
+    [System.Serializable]
+    class Friend
+    {
+        public int friendId;
+        public string friendName;
+    }
+    [System.Serializable]
+    class FriendList
+    {
+        public Friend[] friends;
+    }
+    // 친구 목록 불러오기
+    private IEnumerator getFriendList(System.Action<User[]> callback)
+    {
+        int userId = loginManagerScript.loginUserInfo.Id;
+
+        string requestUrl = url + "/friend/list?userId=" + userId ;
+
+        using (UnityWebRequest friendCheckRequest = UnityWebRequest.Get(requestUrl))
+        {
+            friendCheckRequest.SetRequestHeader("Authorization", loginManagerScript.accessToken);
+            yield return friendCheckRequest.SendWebRequest();
+
+            // 요청 실패 시
+            if (friendCheckRequest.result != UnityWebRequest.Result.Success)
+            {
+                Debug.Log(friendCheckRequest.error);
+                yield break;
+            }
+            // 요청 성공 시
+            else
+            {
+                string result = friendCheckRequest.downloadHandler.text;
+                Debug.Log(result);
+                string wrappedJson = "{ \"friends\": " + result + "}";
+                FriendList friendList = JsonUtility.FromJson<FriendList>(wrappedJson);
+
+                int i = 0;
+                User[] userList = new User[friendList.friends.Length];
+                foreach(Friend friend in friendList.friends)
+                {
+                    Debug.Log("id: " + friend.friendId + ", Name: " + friend.friendName);
+                    userList[i++] = new User
+                    {
+                        Id = friend.friendId,
+                        Name = friend.friendName
+                    };
+                }
+
+                callback(userList);
+            }
+        }
     }
 
     // 친구인지, 대기중인지 여부 확인
@@ -142,7 +204,7 @@ public class LobbyManager : MonoBehaviour
             else
             {
                 string result = friendCheckRequest.downloadHandler.text;
-                Debug.Log(result);
+                //Debug.Log(result);
                 callback(result);
             }
         }
@@ -160,7 +222,7 @@ public class LobbyManager : MonoBehaviour
                                         "\"friendId\": " + friendId + 
                                     "}";
 
-        Debug.Log(jsonRequestBody);
+        //Debug.Log(jsonRequestBody);
         byte[] bodyRaw = System.Text.Encoding.UTF8.GetBytes(jsonRequestBody);
 
         // 요청 생성
@@ -182,8 +244,46 @@ public class LobbyManager : MonoBehaviour
             // 요청 성공 시
             else
             {
-                string result = addFriendRequest.downloadHandler.text;
-                Debug.Log(result);
+                setFriendUsers();
+                //string result = addFriendRequest.downloadHandler.text;
+                //Debug.Log(result);
+            }
+        }
+    }
+
+    // 수락 버튼 클릭 시
+    public IEnumerator acceptFriend(int friendId)
+    {
+        int userId = loginManagerScript.loginUserInfo.Id;
+
+        string requestUrl = url + "/friend/accept";
+
+        // DB에서 보면 요청한 사람: userId, 받는 사람: friendId임
+        // 이 기준으로 봤을 때 수락하는 사람(로그인 한 사람)은 friendId이고, 로그인 한 정보는 userId에 들어있으므로
+        // 둘을 바꿔서 요청 보내야 한다.
+        string jsonRequestBody =    "{" +
+                                        "\"userId\": " + friendId + "," +
+                                        "\"friendId\": " + userId +
+                                    "}";
+
+        //Debug.Log(jsonRequestBody);
+        byte[] bodyRaw = System.Text.Encoding.UTF8.GetBytes(jsonRequestBody);
+
+        // 요청 생성
+        using (UnityWebRequest acceptFriendRequest = new UnityWebRequest(requestUrl, "POST"))
+        {
+            acceptFriendRequest.uploadHandler = new UploadHandlerRaw(bodyRaw);
+            acceptFriendRequest.downloadHandler = new DownloadHandlerBuffer();
+            acceptFriendRequest.SetRequestHeader("Content-Type", "application/json");
+            acceptFriendRequest.SetRequestHeader("Authorization", loginManagerScript.accessToken);
+
+            yield return acceptFriendRequest.SendWebRequest();
+
+            // 요청 실패 시
+            if (acceptFriendRequest.result != UnityWebRequest.Result.Success)
+            {
+                Debug.Log(acceptFriendRequest.error);
+                yield break;
             }
         }
     }
