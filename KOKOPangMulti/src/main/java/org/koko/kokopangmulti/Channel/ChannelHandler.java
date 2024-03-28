@@ -163,14 +163,6 @@ public class ChannelHandler {
         for (String key : ChannelList.getChannelInfo(channelIndex).getNameToIdx().keySet()) {
             System.out.println(String.format("[userName:%s], [idx:%s]", key, ChannelList.getChannelInfo(channelIndex).getNameToIdx().get(key)));
         }
-
-    }
-
-    // 채널 내 모든 세션에 메시지 브로드캐스트
-    public static Mono<Void> broadcastMessage(int channelIndex, String json) {
-        return Flux.fromIterable(ChannelList.getChannelInfo(channelIndex).getSessionList().keySet())
-                .flatMap(userName -> Session.getSessionList().get(userName).outbound().sendString(Mono.just(json)).then())
-                .then();
     }
 }
 

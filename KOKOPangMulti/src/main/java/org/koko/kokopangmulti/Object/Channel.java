@@ -73,21 +73,4 @@ public class Channel {
     public Boolean getOnGame() {
         return isOnGame;
     }
-
-    public String toJson() {
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put("type", "sessionList");
-
-        List<Map<String, Object>> jsonArray = new ArrayList<>();
-
-        for(Map.Entry<String, Integer> entry : sessionList.entrySet()) {
-            Map<String, Object> session = new HashMap<>();
-            session.put(entry.getKey(), entry.getValue());
-            jsonArray.add(session);
-        }
-
-        jsonObject.put("data", jsonArray);
-
-        return jsonObject.toString() + '\n';
-    }
 }

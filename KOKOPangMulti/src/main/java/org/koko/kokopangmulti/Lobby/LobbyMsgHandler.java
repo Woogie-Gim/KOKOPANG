@@ -3,12 +3,10 @@ package org.koko.kokopangmulti.Lobby;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.koko.kokopangmulti.Object.ChannelList;
-import org.koko.kokopangmulti.Object.Session;
-import reactor.core.publisher.Flux;
-import reactor.core.publisher.Mono;
 
 import java.util.HashMap;
+
+import static org.koko.kokopangmulti.Braodcast.BroadcastToLobby.broadcastLobby;
 
 public class LobbyMsgHandler {
 
@@ -39,11 +37,5 @@ public class LobbyMsgHandler {
         }
     }
 
-    // 브로드캐스트
-    public static Mono<Void> broadcastLobby(String json) {
-        System.out.println("hi");
-        return Flux.fromIterable(ChannelList.getLobby().getSessionList().keySet())
-                .flatMap(userName -> Session.getSessionList().get(userName).outbound().sendString(Mono.just(json)).then())
-                .then();
-    }
+
 }

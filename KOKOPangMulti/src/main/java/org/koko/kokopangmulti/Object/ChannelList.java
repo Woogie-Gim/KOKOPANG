@@ -45,26 +45,4 @@ public class ChannelList {
     public static Channel getLobby() {
         return lobby;
     }
-
-    // 채널목록 Json화
-    public String toJson() {
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put("type", "channelList");
-
-        List<Object> jsonArray = new ArrayList<>();
-
-        for (Map.Entry<Integer, Channel> entry : channelList.entrySet()) {
-            JSONObject temp = new JSONObject();
-            temp.put("channelIndex", entry.getKey());
-            temp.put("channelName", entry.getValue().getChannelName());
-            temp.put("cnt", entry.getValue().getSessionsInChannel().getCnt());
-            temp.put("isOnGame", entry.getValue().getOnGame());
-
-            jsonArray.add(temp);
-        }
-
-        jsonObject.put("data", jsonArray);
-
-        return jsonObject.toString() + '\n';
-    }
 }
