@@ -1,9 +1,7 @@
 using System;
 using System.IO;
-using System.Text;
 using System.Net.Sockets;
 using System.Collections;
-using System.Collections.Generic;
 
 using UnityEngine;
 using UnityEngine.UI;
@@ -23,7 +21,7 @@ public class TCPConnectManager : MonoBehaviour
     private StreamReader reader;
     private StreamWriter writer;
 
-    private string hostname = "192.168.100.82";
+    private string hostname = "localhost";
     private int port = 1370;
 
     private void Start()
@@ -42,18 +40,19 @@ public class TCPConnectManager : MonoBehaviour
             if(type == "chat")  // 채팅 메시지
             {
                 showMessage(response);
+                Debug.Log(response);
             }
             else if(type == "channelList")  // 전체 생성된 방 목록
             {
-
+                Debug.Log(response);
             }
             else if(type == "sessionList")  // 전체 접속한 유저 목록
             {
-
+                Debug.Log(response);
             }
             else if(type == "channelSessionList")   // 방 안의 유저 목록
             {
-
+                Debug.Log(response);
             }
         }
 
