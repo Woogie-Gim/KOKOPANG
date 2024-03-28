@@ -35,7 +35,9 @@ public class TcpConnectionHandler implements Consumer<Connection> {
              */
             @Override
             public void handlerRemoved(ChannelHandlerContext ctx) {
+//                String userName = Session.getSessionList().entrySet().
                 Session.getSessionList().entrySet().removeIf(entry -> entry.getValue().equals(conn));
+
                 log.info("client removed");
 
             }

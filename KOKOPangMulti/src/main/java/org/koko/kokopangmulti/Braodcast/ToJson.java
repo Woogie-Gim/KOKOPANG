@@ -21,7 +21,6 @@ public class ToJson {
             jsonObject.put("userName", entry.getKey());
             jsonObject.put("userId", entry.getValue());
 
-            System.out.println(jsonObject);
             jsonArray.add(jsonObject);
         }
 
@@ -42,7 +41,8 @@ public class ToJson {
         List<Object> jsonArray = new ArrayList<>();
 
         for (Map.Entry<Integer, Channel> entry : ChannelList.getChannelList().entrySet()) {
-            JSONObject temp = new JSONObject();
+            Map<String, Object> temp = new LinkedHashMap<>();
+
             temp.put("channelIndex", entry.getKey());
             temp.put("channelName", entry.getValue().getChannelName());
             temp.put("cnt", entry.getValue().getSessionsInChannel().getCnt());

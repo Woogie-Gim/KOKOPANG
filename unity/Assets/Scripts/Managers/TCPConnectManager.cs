@@ -21,7 +21,7 @@ public class TCPConnectManager : MonoBehaviour
     private StreamReader reader;
     private StreamWriter writer;
 
-    private string hostname = "localhost";
+    private string hostname = "192.168.100.82";
     private int port = 1370;
 
     private void Start()
