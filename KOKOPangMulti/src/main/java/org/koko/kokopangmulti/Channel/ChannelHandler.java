@@ -22,7 +22,7 @@ public class ChannelHandler {
         ChannelList.getLobby().getSessionList().remove(userName);
 
         // 3) ChannelList에 channel 추가
-        int channelIdx = ChannelList.addChannel(channel);
+        int channelIndex = ChannelList.addChannel(channel);
 
         // 4) BroadCasting
 
@@ -30,21 +30,9 @@ public class ChannelHandler {
         System.out.println("channel.sessionsInChannel.cnt = " + channel.getSessionsInChannel().getCnt());
         System.out.println("channel.sessionsInChannel.isExisted = " + channel.getSessionsInChannel().getIsExisted());
 
-        channel.getSessionsInChannel().plusCnt();
-        System.out.println("channel.sessionsInChannel.cnt = " + channel.getSessionsInChannel().getCnt());
-
-        channel.getSessionsInChannel().minusCnt();
-        System.out.println("channel.sessionsInChannel.cnt = " + channel.getSessionsInChannel().getCnt());
-
-        channel.getSessionsInChannel().setTrueIsExisted(0);
-        System.out.println("channel.sessionsInChannel.isExisted = " + channel.getSessionsInChannel().getIsExisted());
-
-        channel.getSessionsInChannel().setFalseIsExisted(6);
-        System.out.println("channel.sessionsInChannel.isExisted = " + channel.getSessionsInChannel().getIsExisted());
-
-        System.out.println("Lobby: " + ChannelList.getLobby().getSessionList());
-        System.out.println(channelName + ": " + ChannelList.getChannelInfo(channelIdx).getSessionList());
-
+        for (String key : ChannelList.getChannelInfo(channelIndex).getNameToIdx().keySet()) {
+            System.out.println(String.format("[userName:%s], [idx:%s]", key, ChannelList.getChannelInfo(channelIndex).getNameToIdx().get(key)));
+        }
     }
 
     public static void joinChannel(String userName, int channelIndex) {
@@ -90,69 +78,58 @@ public class ChannelHandler {
         Boolean flag = false;
         Channel channel = ChannelList.getChannelInfo(channelIndex);
         SessionsInChannel sic = channel.getSessionsInChannel();
-        int cnt = sic.getCnt();
 
-        // 1. channel의 nameToIdx
-        int idx = channel.getIdx(userName);
-        channel.getNameToIdx().remove(userName);
+        int idx = channel.getIdx(userName);         // 나가는 [userName]의 idx 정보
 
-        // 2. channel의 idxToName
-        channel.getIdxToName().remove(idx);
+        // 1. 나가는 [userName] 삭제
+        channel.getNameToIdx().remove(userName);    // nameToIdx
+        channel.getIdxToName().remove(idx);         // idxToName
+        sic.minusCnt();                             // cnt
+        sic.setFalseIsExisted(idx);                 // isExist
 
-        // 3. channel의 sessionsInChannel
-        sic.minusCnt();
-        sic.setFalseIsExisted(idx);
-
-        switch (cnt) {
-            // 4. cnt == 0
+        switch (sic.getCnt()) {
+            // 2. 방이 없어지는 경우
             case 0:
                 ChannelList.getChannelList().remove(channelIndex);
                 channel = null;
                 flag = true;
                 break;
-            // 5. cnt == 1
-            case 1:
-                // 나간 사람이 방장인 경우
+
+
+            // 3. 방이 유지되는 경욷
+            default :
+                // 방장이 나간 경우 : 새로운 방장 설정
                 if (idx == 0) {
-                    for (int i = 0; i < 6; i++) {
-                        if (sic.getIsExisted().get(i) == 1) {
+                    ArrayList<Integer> isExisted = sic.getIsExisted();
+                    for (int i = 1; i < isExisted.size(); i++) {
+                        if (isExisted.get(i) == 1) {
                             sic.setFalseIsExisted(i);
                             sic.setTrueIsExisted(0);
 
-                            String leftUser = channel.getIdxToName().get(i);
+                            String leftUserName = channel.getIdxToName().get(i);
 
                             channel.getIdxToName().remove(i);
-                            channel.getIdxToName().put(0, userName);
-                            channel.getNameToIdx().put(userName, 0);
-                        }
-                    }
-                    // 남은 사람의 정보 파싱 =>  맵에서 남아 있는 유저의 정보를 파싱...? how???
-                    // 남은 사람의 idx를 0번으로 이동하는 작업
-                    // isExisted, utoi, itou 전부 변경
-                }
-                break;
-            // 6. cnt > 1
-            default:
-                if (sic.getIsExisted().get(0) == 0) {
-                    ArrayList<Integer> isExisted = sic.getIsExisted();
-
-                    // 해당 value의 인덱스값을 할당하기 위해 foreach 대신 for문 사용
-                    for (int i = 0; i < isExisted.size(); i++) {
-                        if (isExisted.get(i) == 1) {
-                            idx = i;
+                            channel.getIdxToName().put(0, leftUserName);
+                            channel.getNameToIdx().put(leftUserName, 0);
                             break;
                         }
                     }
                 }
 
-                sic.setFalseIsExisted(idx);
-                sic.setTrueIsExisted(0);
-
-                channel.getIdxToName().remove(idx);
-                channel.getIdxToName().put(0, userName);
-
-                break;
         }
+
+        // 4) LOGGING LEAVE
+        log.info("[userName:{}] CHANNEL LEAVED, channelName:{}", userName, ChannelList.getChannelInfo(channelIndex).getChannelName());
+
+
+        // 동작 확인
+        System.out.println("channel.sessionsInChannel.cnt = " + channel.getSessionsInChannel().getCnt());
+        System.out.println("channel.sessionsInChannel.isExisted = " + channel.getSessionsInChannel().getIsExisted());
+
+        for (String key : ChannelList.getChannelInfo(channelIndex).getNameToIdx().keySet()) {
+            System.out.println(String.format("[userName:%s], [idx:%s]", key, ChannelList.getChannelInfo(channelIndex).getNameToIdx().get(key)));
+        }
+
     }
 }
 
