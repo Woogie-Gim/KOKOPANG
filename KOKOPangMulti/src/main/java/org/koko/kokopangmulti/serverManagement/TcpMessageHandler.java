@@ -48,6 +48,9 @@ public class TcpMessageHandler {
 
                                         // 들어갔는지 확인용 로그
                                         System.out.println(Session.getSessionList());
+
+                                        // 테스트
+                                        System.out.println(Session.getSessionList().size());
                                     });
                                 } else {
                                     JSONObject data = json.getJSONObject("data");
