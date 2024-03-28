@@ -124,6 +124,7 @@ public class ChannelHandler {
                             channel.getIdxToName().remove(i);
                             channel.getIdxToName().put(0, userName);
                             channel.getNameToIdx().put(userName, 0);
+                            break;
                         }
                     }
                     // 남은 사람의 정보 파싱 =>  맵에서 남아 있는 유저의 정보를 파싱...? how???
