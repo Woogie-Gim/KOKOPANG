@@ -31,7 +31,11 @@ public class SessionsInChannel {
         return this.isExisted;
     }
 
-    public ArrayList<Boolean> getIsReady() {
+    public Boolean getIsReady(int idx) {
+        return this.isReady.get(idx);
+    }
+
+    public ArrayList<Boolean> getIsReadyList() {
         return this.isReady;
     }
 
