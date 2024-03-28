@@ -32,14 +32,8 @@ public class TcpConfig {
     }
 
     @Bean
-    public ChannelHandler channelHandler() {
-        return new ChannelHandler();
-    }
-
-    @Bean
     public ChannelMsgHandler channelMsgHandler() {
         return new ChannelMsgHandler();
     }
-
 
 }
