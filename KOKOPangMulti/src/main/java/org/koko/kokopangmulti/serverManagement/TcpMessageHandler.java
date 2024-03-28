@@ -47,20 +47,13 @@ public class TcpMessageHandler {
                                         Session.getSessionList().put(userName, connection);
                                         ChannelList.getLobby().getSessionList().put(userName, userId);
 
-                                        // 로비에 유저목록 브로드캐스팅
-                                        LobbyMsgHandler.broadcastLobby(ChannelList.getLobby().toJson());
-
-                                        // 유저에게 현재 채널 정보 브로드캐스팅
-
                                         // 들어갔는지 확인용 로그
                                         System.out.println(Session.getSessionList());
-
-                                        // json 출력 테스트
-                                        System.out.println(ChannelList.getLobby().toJson());
-
-                                        // 테스트
-                                        System.out.println(Session.getSessionList().size());
                                     });
+                                    // 유저에게 현재 채널 정보 브로드캐스팅
+
+                                    // 로비에 유저목록 브로드캐스팅
+                                    LobbyMsgHandler.broadcastLobby(ChannelList.getLobby().toJson()).subscribe();
                                 } else {
                                     JSONObject data = json.getJSONObject("data");
                                     lobbyMsgHandler.filterData(userName, data);

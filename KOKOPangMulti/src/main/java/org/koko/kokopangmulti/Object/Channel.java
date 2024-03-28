@@ -88,6 +88,6 @@ public class Channel {
 
         jsonObject.put("data", jsonArray);
 
-        return jsonObject.toString();
+        return jsonObject.toString() + '\n';
     }
 }
