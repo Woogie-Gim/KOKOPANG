@@ -12,12 +12,12 @@ import reactor.core.publisher.Mono;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import static org.koko.kokopangmulti.Braodcast.BroadcastToChannel.broadcastMessage;
+import static org.koko.kokopangmulti.Braodcast.ToJson.channelSessionListToJSON;
+
 public class ChannelHandler {
     private static final Logger log = LoggerFactory.getLogger(ChannelHandler.class);
-
     public static void createChannel(String userName, String channelName) {
-
-        log.info("[userName:{}] CHANNEL CREATED, channelName:{}", userName, channelName);
 
         // 1) Channel 인스턴스 생성
         Channel channel = new Channel(channelName, userName);
@@ -33,6 +33,10 @@ public class ChannelHandler {
         channel.getSessionList().put(userName, userId);
 
         // 4) BroadCasting
+        broadcastMessage(channelIndex, channelSessionListToJSON(channel)).subscribe();
+
+        // 5) LOGGING CREATE
+        log.info("[userName:{}] CHANNEL CREATED, channelName:{}", userName, channelName);
 
         // 동작 확인
         System.out.println("channel.sessionsInChannel.cnt = " + channel.getSessionsInChannel().getCnt());
@@ -72,6 +76,7 @@ public class ChannelHandler {
         log.info("[userName:{}] CHANNEL JOINED, channelName:{}", userName, ChannelList.getChannelInfo(channelIndex).getChannelName());
 
         // 6) Broadcasting
+        broadcastMessage(channelIndex, channelSessionListToJSON(channel)).subscribe();
 
         // 동작 확인
         System.out.println("channel.sessionsInChannel.cnt = " + channel.getSessionsInChannel().getCnt());
@@ -87,7 +92,7 @@ public class ChannelHandler {
 
         Channel channel = ChannelList.getChannelInfo(channelIndex);
         int idx = channel.getNameToIdx().get(userName);
-        ArrayList<Boolean> isReady = channel.getSessionsInChannel().getIsReady();
+        ArrayList<Boolean> isReady = channel.getSessionsInChannel().getIsReadyList();
 
         if (isReady.get(idx)) {
             isReady.set(idx, false);
@@ -99,8 +104,11 @@ public class ChannelHandler {
 
         }
 
+        // Broadcasting
+        broadcastMessage(channelIndex, channelSessionListToJSON(channel)).subscribe();
+
         // 동작 확인
-        Iterator ready = ChannelList.getChannelInfo(channelIndex).getSessionsInChannel().getIsReady().iterator();
+        Iterator ready = ChannelList.getChannelInfo(channelIndex).getSessionsInChannel().getIsReadyList().iterator();
         while(ready.hasNext()) {
             System.out.println(ready.next());
         }
@@ -108,7 +116,7 @@ public class ChannelHandler {
     }
 
     public static void leaveChannel(String userName, int channelIndex) {
-        Boolean flag = false;
+        Boolean flag = true;
         Channel channel = ChannelList.getChannelInfo(channelIndex);
         SessionsInChannel sic = channel.getSessionsInChannel();
 
@@ -126,7 +134,7 @@ public class ChannelHandler {
             case 0:
                 ChannelList.getChannelList().remove(channelIndex);
                 channel = null;
-                flag = true;
+                flag = false;
                 break;
 
 
@@ -145,6 +153,7 @@ public class ChannelHandler {
                             channel.getIdxToName().remove(i);
                             channel.getIdxToName().put(0, leftUserName);
                             channel.getNameToIdx().put(leftUserName, 0);
+
                             break;
                         }
                     }
@@ -155,6 +164,10 @@ public class ChannelHandler {
         // 4) LOGGING LEAVE
         log.info("[userName:{}] CHANNEL LEAVED, channelName:{}", userName, ChannelList.getChannelInfo(channelIndex).getChannelName());
 
+        // 5) broadcasting : 방이 사라지지 않은 경우에만
+        if (flag) {
+            broadcastMessage(channelIndex, channelSessionListToJSON(channel)).subscribe();
+        }
 
         // 동작 확인
         System.out.println("channel.sessionsInChannel.cnt = " + channel.getSessionsInChannel().getCnt());
