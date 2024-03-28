@@ -70,6 +70,10 @@ public class Channel {
         return idxToName;
     }
 
+    public Boolean getOnGame() {
+        return isOnGame;
+    }
+
     public String toJson() {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("type", "sessionList");

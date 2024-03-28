@@ -2,9 +2,12 @@ package org.koko.kokopangmulti.Channel;
 
 import org.koko.kokopangmulti.Object.Channel;
 import org.koko.kokopangmulti.Object.ChannelList;
+import org.koko.kokopangmulti.Object.Session;
 import org.koko.kokopangmulti.Object.SessionsInChannel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 import java.util.ArrayList;
 
@@ -137,14 +140,13 @@ public class ChannelHandler {
         }
 
     }
+    
+    // 채널 내 모든 세션에 메시지 브로드캐스트
+    public static Mono<Void> broadcastMessage(int channelIndex, String json) {
+        return Flux.fromIterable(ChannelList.getChannelInfo(channelIndex).getSessionList().keySet())
+                .flatMap(userName -> Session.getSessionList().get(userName).outbound().sendString(Mono.just(json)).then())
+                .then();
+    }
 }
 
-//    // 채널 내 모든 세션에 메시지 브로드캐스트
-////    public static Mono<Void> broadcastMessage(int channelIndex, String userName, String message) {
-////        HashMap<String, Connection> channel = ChannelList.getChannelInfo(channelIndex).getSessionList();
-////
-////        return Flux.fromIterable(ChannelList.getChannelInfo(channelIndex).getSessionList())
-////                .flatMap(session -> session.getConnection().outbound().sendString(Mono.just(message)).then())
-////                .then();
-////    }
 

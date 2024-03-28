@@ -1,6 +1,11 @@
 package org.koko.kokopangmulti.Object;
 
+import org.json.JSONObject;
+
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class ChannelList {
 
@@ -39,5 +44,27 @@ public class ChannelList {
     // LOBBY 채널 반환
     public static Channel getLobby() {
         return lobby;
+    }
+
+    // 채널목록 Json화
+    public String toJson() {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("type", "channelList");
+
+        List<Object> jsonArray = new ArrayList<>();
+
+        for (Map.Entry<Integer, Channel> entry : channelList.entrySet()) {
+            JSONObject temp = new JSONObject();
+            temp.put("channelIndex", entry.getKey());
+            temp.put("channelName", entry.getValue().getChannelName());
+            temp.put("cnt", entry.getValue().getSessionsInChannel().getCnt());
+            temp.put("isOnGame", entry.getValue().getOnGame());
+
+            jsonArray.add(temp);
+        }
+
+        jsonObject.put("data", jsonArray);
+
+        return jsonObject.toString();
     }
 }
