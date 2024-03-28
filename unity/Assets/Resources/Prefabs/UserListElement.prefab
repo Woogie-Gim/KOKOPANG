@@ -308,13 +308,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3bb5e4d111ee7294ab834dde1e969e9a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  UserInfoDetail: {fileID: 0}
-  userNameText: {fileID: 4834511095472767199}
-  detailBtn: {fileID: 5816683995936593429}
-  detailUserNameText: {fileID: 0}
-  detailEmailText: {fileID: 0}
-  addFriendBtn: {fileID: 0}
-  detailCloseBtn: {fileID: 0}
+  UserInfoDetail: {fileID: 2042014739958249370, guid: 0082b8c8713c2da4cace0860aa2101de, type: 3}
+  lobbyManagerScript: {fileID: 0}
+  UserNameText: {fileID: 4834511095472767199}
+  DetailBtn: {fileID: 5816683995936593429}
 --- !u!1 &4834511097089316510
 GameObject:
   m_ObjectHideFlags: 0
