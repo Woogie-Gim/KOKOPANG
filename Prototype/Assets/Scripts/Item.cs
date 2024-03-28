@@ -24,6 +24,7 @@ public class Item : ScriptableObject
         Equipment,
         Used,
         Ingredient,
+        Hammer,
         ETC
     }
 

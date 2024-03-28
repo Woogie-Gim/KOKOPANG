@@ -1700,7 +1700,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 2.19, y: 1.32, z: 2.47}
+  m_Size: {x: 2.54, y: 1.32, z: 2.47}
   m_Center: {x: 0, y: 0.53, z: 0}
 --- !u!114 &4582834973060580199
 MonoBehaviour:
@@ -1720,6 +1720,7 @@ MonoBehaviour:
   go_rock: {fileID: 5276846858744420082}
   go_debris: {fileID: 780785012919089370}
   go_effect_prefabs: {fileID: 272479887383336613, guid: 71c79e1d0f79d104988f232237e85e22, type: 3}
+  go_rock_item_prefab: {fileID: 0}
   audioSource: {fileID: 4582834973060580192}
   effect_sound: {fileID: 8300000, guid: a8e8bc3bc96fbde4ca94443c4ed5b35e, type: 3}
   effect_sound2: {fileID: 8300000, guid: 8ef31b2d80e6659489b686f4e72aa91a, type: 3}
