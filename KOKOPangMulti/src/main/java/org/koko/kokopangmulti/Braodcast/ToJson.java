@@ -1,31 +1,37 @@
 package org.koko.kokopangmulti.Braodcast;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.json.JSONObject;
 import org.koko.kokopangmulti.Object.Channel;
 import org.koko.kokopangmulti.Object.ChannelList;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class ToJson {
     // 로비 유저목록
     public static String lobbySessionsToJson() {
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put("type", "sessionList");
+        try {
+            ObjectMapper objectMapper = new ObjectMapper();
+            Map<String, Object> data = new LinkedHashMap<>();
+            data.put("type", "channelList");
 
-        List<Map<String, Object>> jsonArray = new ArrayList<>();
+            List<Map<String, Object>> jsonArray = new ArrayList<>();
 
-        for(Map.Entry<String, Integer> entry : ChannelList.getLobby().getSessionList().entrySet()) {
-            Map<String, Object> session = new HashMap<>();
-            session.put(entry.getKey(), entry.getValue());
-            jsonArray.add(session);
+            for(Map.Entry<String, Integer> entry : ChannelList.getLobby().getSessionList().entrySet()) {
+                Map<String, Object> session = new HashMap<>();
+                session.put(entry.getKey(), entry.getValue());
+                jsonArray.add(session);
+            }
+
+            data.put("data", jsonArray);
+
+            String jsonString = objectMapper.writeValueAsString(data) + '\n';
+
+            return jsonString;
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
         }
-
-        jsonObject.put("data", jsonArray);
-
-        return jsonObject.toString() + '\n';
     }
 
     // 채널목록
