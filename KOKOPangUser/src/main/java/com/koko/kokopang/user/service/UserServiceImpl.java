@@ -63,7 +63,7 @@ public class UserServiceImpl implements UserService {
         userDTO.setRating(user.getRating());
         UserProfile img = userProfileService.getUserProfile(user.getId());
         if (img != null) {
-            String imgUrl = "http://localhost:8080/profile/getImg/"
+            String imgUrl = "http://j10c211.p.ssafy.io:8080/profile/getImg/"
                     + img.getSaveFolder() + "/" + img.getOriginalName() + "/" + img.getSaveName();
             userDTO.setProfileImg(imgUrl);
         }
@@ -122,7 +122,7 @@ public class UserServiceImpl implements UserService {
             reUser.setRating(user.getRating());
             UserProfile img = userProfileService.getUserProfile(user.getId());
             if (img != null) {
-                String imgUrl = "http://localhost:8080/profile/getImg/"
+                String imgUrl = "http://j10c211.p.ssafy.io:8080/profile/getImg/"
                         + img.getSaveFolder() + "/" + img.getOriginalName() + "/" + img.getSaveName();
                 reUser.setProfileImg(imgUrl);
             }

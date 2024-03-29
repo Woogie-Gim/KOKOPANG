@@ -72,7 +72,7 @@ public class FriendshipServiceImpl implements FriendshipService{
             UserProfile friendProfile = userProfileService
                     .getUserProfile(userId == friendship.getFriendId() ? friendship.getUser().getId() : friendship.getFriendId());
             if (friendProfile != null) {
-                friend.setFriendProfileImg("http://localhost:8080/profile/getImg/" + friendProfile.getSaveFolder() + "/" + friendProfile.getOriginalName() + "/" + friendProfile.getSaveName());
+                friend.setFriendProfileImg("http://j10c211.p.ssafy.io:8080/profile/getImg/" + friendProfile.getSaveFolder() + "/" + friendProfile.getOriginalName() + "/" + friendProfile.getSaveName());
             }
             userFriendsList.add(friend);
         }
