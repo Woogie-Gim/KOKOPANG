@@ -49,7 +49,7 @@ public class CommentController {
     /**
      * 댓글 삭제
      */
-    @GetMapping("/delete")
+    @DeleteMapping("/delete")
     public ResponseEntity<?> deleteComment(@RequestParam Long commentId) {
         commentService.deleteComment(commentId);
         return new ResponseEntity<String>("댓글 삭제 성공", HttpStatus.OK);
