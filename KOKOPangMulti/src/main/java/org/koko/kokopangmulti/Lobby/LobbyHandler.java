@@ -1,7 +1,6 @@
 package org.koko.kokopangmulti.Lobby;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.json.JSONObject;
 import org.koko.kokopangmulti.Braodcast.BroadcastToLobby;
 import org.koko.kokopangmulti.Braodcast.ToJson;
 import org.koko.kokopangmulti.Object.ChannelList;

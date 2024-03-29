@@ -1,10 +1,5 @@
 package org.koko.kokopangmulti.serverManagement;
 
-import org.koko.kokopangmulti.Braodcast.BroadcastToLobby;
-import org.koko.kokopangmulti.Braodcast.ToJson;
-import org.koko.kokopangmulti.Lobby.LobbyHandler;
-import org.koko.kokopangmulti.Object.ChannelList;
-import org.koko.kokopangmulti.Object.Session;
 import org.koko.kokopangmulti.Ingame.IngameMsgHandler;
 import org.koko.kokopangmulti.Lobby.LobbyMsgHandler;
 import org.koko.kokopangmulti.Channel.ChannelMsgHandler;
@@ -46,7 +41,6 @@ public class TcpMessageHandler {
                                 lobbyMsgHandler.filterData(in, userName, json.getJSONObject("data"));
                                 break;
                             case "channel" :
-                                // 룸 msg핸들러 호출
                                 channelMsgHandler.filterData(userName, json.getJSONObject("data"));
                                 break;
                             case "inGame" :

@@ -3,13 +3,18 @@ package org.koko.kokopangmulti.serverManagement;
 import io.netty.channel.ChannelHandlerAdapter;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.LineBasedFrameDecoder;
+import org.koko.kokopangmulti.Braodcast.BroadcastToLobby;
+import org.koko.kokopangmulti.Braodcast.ToJson;
 import org.koko.kokopangmulti.Object.Channel;
 import org.koko.kokopangmulti.Channel.ChannelHandler;
+import org.koko.kokopangmulti.Object.ChannelList;
 import org.koko.kokopangmulti.Object.Session;
+import org.koko.kokopangmulti.Object.SessionsInChannel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import reactor.netty.Connection;
 
+import java.util.Map;
 import java.util.function.Consumer;
 
 public class TcpConnectionHandler implements Consumer<Connection> {
@@ -35,12 +40,58 @@ public class TcpConnectionHandler implements Consumer<Connection> {
              */
             @Override
             public void handlerRemoved(ChannelHandlerContext ctx) {
-                // 소켓 연결이 끊길 때 전체 세션 목록에서 정보 삭제
-                Session.getSessionList().entrySet().removeIf(entry -> entry.getValue().equals(conn));
+                // 연결이 끊길 때 userName파싱
+                String userName = null;
+                boolean isLeave = false;
 
-                // 현재 참가 중인 채널에서 정보 삭제
+                for (Map.Entry<String, Connection> entry : Session.getSessionList().entrySet()) {
+                    if (entry.getValue().equals(conn)) {
+                        userName = entry.getKey();
+                        break;
+                    }
+                }
 
-                log.info("client removed");
+                // Session목록에서 session제거
+                Session.getSessionList().remove(userName);
+
+                // Lobby 확인
+                if (ChannelList.getLobby().getSessionList().get(userName) != null) {
+                    isLeave = true;
+
+                    // 로비 유저 목록에서 세션 제거
+                    ChannelList.getLobby().getSessionList().remove(userName);
+
+                    // 로비에 접속 유저 목록 변동 사항 브로드캐스팅
+                    BroadcastToLobby.broadcastLobby(ToJson.lobbySessionsToJson()).subscribe();
+                    log.info("Client remove from Lobby");
+                }
+
+                // 채널목록 확인
+                if (!isLeave) {
+                    for (Channel channel : ChannelList.getChannelList().values()) {
+                        for (String sessionName : channel.getSessionList().keySet()) {
+                            if (sessionName.equals(userName)) {
+                                isLeave = true;
+
+                                SessionsInChannel sic = channel.getSessionsInChannel();
+                                int idx = channel.getIdx(userName);
+
+                                channel.getNameToIdx().remove(userName);
+                                channel.getIdxToName().remove(idx);
+                                channel.getSessionList().remove(userName);
+                                sic.minusCnt();
+                                sic.setFalseIsExisted(idx);
+
+                                log.info("Client remove from Channel");
+                                break;
+                            }
+                        }
+
+                        if (isLeave) {
+                            break;
+                        }
+                    }
+                }
             }
 
             /*
