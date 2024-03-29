@@ -2,15 +2,21 @@ package org.koko.kokopangmulti.Channel;
 
 import org.koko.kokopangmulti.Object.Channel;
 import org.koko.kokopangmulti.Object.ChannelList;
+import org.koko.kokopangmulti.Object.Session;
 import org.koko.kokopangmulti.Object.SessionsInChannel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import reactor.netty.Connection;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 import static org.koko.kokopangmulti.Braodcast.BroadcastToChannel.broadcastMessage;
-import static org.koko.kokopangmulti.Braodcast.ToJson.channelSessionListToJSON;
+import static org.koko.kokopangmulti.Braodcast.BroadcastToLobby.broadcastLobby;
+import static org.koko.kokopangmulti.Braodcast.BroadcastToLobby.broadcastPrivate;
+import static org.koko.kokopangmulti.Braodcast.ToJson.*;
 
 public class ChannelHandler {
     private static final Logger log = LoggerFactory.getLogger(ChannelHandler.class);
@@ -30,7 +36,14 @@ public class ChannelHandler {
         channel.getSessionList().put(userName, userId);
 
         // 4) BroadCasting
+        // 4-1) channel 내 sessions
         broadcastMessage(channelIndex, channelSessionListToJSON(channel)).subscribe();
+        // 4-2) lobby 내 sessions : channelList UPDATE
+        broadcastLobby(channelListToJson()).subscribe();
+        // 4-3) lobby 내 sessions : sessionList UPDATE
+        for (Map.Entry<String, Integer> entry : ChannelList.getLobby().getSessionList().entrySet()) {
+            broadcastPrivate(Session.getSessionList().get(entry.getKey()), lobbySessionsToJson()).subscribe();
+        }
 
         // 5) LOGGING CREATE
         log.info("[userName:{}] CHANNEL CREATED, channelName:{}", userName, channelName);
@@ -73,7 +86,14 @@ public class ChannelHandler {
         log.info("[userName:{}] CHANNEL JOINED, channelName:{}", userName, ChannelList.getChannelInfo(channelIndex).getChannelName());
 
         // 6) Broadcasting
+        // 6-1) channel 내 sessions
         broadcastMessage(channelIndex, channelSessionListToJSON(channel)).subscribe();
+        // 6-2) lobby 내 sessions : channelList UPDATE
+        broadcastLobby(channelListToJson()).subscribe();
+        // 6-3) lobby 내 sessions : sessionList UPDATE
+        for (Map.Entry<String, Integer> entry : ChannelList.getLobby().getSessionList().entrySet()) {
+            broadcastPrivate(Session.getSessionList().get(entry.getKey()), lobbySessionsToJson()).subscribe();
+        }
 
         // 동작 확인
         System.out.println("channel.sessionsInChannel.cnt = " + channel.getSessionsInChannel().getCnt());
@@ -87,21 +107,25 @@ public class ChannelHandler {
 
     public static void isReady(String userName, int channelIndex) {
 
+        // 1) channel data
         Channel channel = ChannelList.getChannelInfo(channelIndex);
         int idx = channel.getNameToIdx().get(userName);
         ArrayList<Boolean> isReady = channel.getSessionsInChannel().getIsReadyList();
 
+        // 2) ready 상태 변경
         if (isReady.get(idx)) {
+            // 준비 -> 준비 안 됨
             isReady.set(idx, false);
             log.info("[userName:{}] NOT READY, channelName:{}", userName, ChannelList.getChannelInfo(channelIndex).getChannelName());
 
         } else {
+            // 준비 안 됨 -> 준비
             isReady.set(idx, true);
             log.info("[userName:{}] READY, channelName:{}", userName, ChannelList.getChannelInfo(channelIndex).getChannelName());
 
         }
 
-        // Broadcasting
+        // 3) Broadcasting : channel 내 sessions
         broadcastMessage(channelIndex, channelSessionListToJSON(channel)).subscribe();
 
         // 동작 확인
@@ -113,29 +137,44 @@ public class ChannelHandler {
     }
 
     public static void leaveChannel(String userName, int channelIndex) {
-        Boolean flag = true;
+
+        // 1) channel 정보
+        Boolean flag = true;                                         // channel 유무
         Channel channel = ChannelList.getChannelInfo(channelIndex);
         SessionsInChannel sic = channel.getSessionsInChannel();
 
-        int idx = channel.getIdx(userName);         // 나가는 [userName]의 idx 정보
+        // 2) 나가는 [userName] 정보
+        int idx = channel.getIdx(userName);                     // 나가는 [userName]의 idx 정보
+        int userId = channel.getSessionList().get(userName);    // 나가는 [userName]의 userId
 
-        // 1. 나가는 [userName] 삭제
+        // 3) 나가는 [userName] 삭제
         channel.getNameToIdx().remove(userName);    // nameToIdx
         channel.getIdxToName().remove(idx);         // idxToName
         channel.getSessionList().remove(userName);  // sessionList
         sic.minusCnt();                             // cnt
-        sic.setFalseIsExisted(idx);                 // isExist
+        sic.setFalseIsExisted(idx);                 // isExisted
+
+        // 4) 나가는 [userName] lobby에 추가
+        ChannelList.getLobby().getSessionList().put(userName, userId);
+
+        // 5) LOGGING LEAVE
+        log.info("[userName:{}] CHANNEL LEAVED, channelName:{}", userName, ChannelList.getChannelInfo(channelIndex).getChannelName());
+
 
         switch (sic.getCnt()) {
-            // 2. 방이 없어지는 경우
+
+            // 6) 방이 없어지는 경우
             case 0:
+                // 6-1) channelList에서 channel 제거
                 ChannelList.getChannelList().remove(channelIndex);
+                // 6-2) channel 객체 제거
                 channel = null;
+                // 6-3) 방 제거 flag 설정
                 flag = false;
                 break;
 
 
-            // 3. 방이 유지되는 경욷
+            // 7) 방이 유지되는 경우
             default :
                 // 방장이 나간 경우 : 새로운 방장 설정
                 if (idx == 0) {
@@ -158,20 +197,29 @@ public class ChannelHandler {
 
         }
 
-        // 4) LOGGING LEAVE
-        log.info("[userName:{}] CHANNEL LEAVED, channelName:{}", userName, ChannelList.getChannelInfo(channelIndex).getChannelName());
 
-        // 5) broadcasting : 방이 사라지지 않은 경우에만
+        // 8) broadcasting :
+        // 8-1) channel 내 sessions : 방이 사라지지 않은 경우
         if (flag) {
             broadcastMessage(channelIndex, channelSessionListToJSON(channel)).subscribe();
         }
+        // 8-2) lobby 내 sessions : channelList UPDATE
+        broadcastLobby(channelListToJson()).subscribe();
+        // 8-3) lobby 내 sessions : sessionList UPDATE
+        for (Map.Entry<String, Integer> entry : ChannelList.getLobby().getSessionList().entrySet()) {
+            broadcastPrivate(Session.getSessionList().get(entry.getKey()), lobbySessionsToJson()).subscribe();
+        }
 
         // 동작 확인
-        System.out.println("channel.sessionsInChannel.cnt = " + channel.getSessionsInChannel().getCnt());
-        System.out.println("channel.sessionsInChannel.isExisted = " + channel.getSessionsInChannel().getIsExisted());
+        if(flag) {
 
-        for (String key : ChannelList.getChannelInfo(channelIndex).getNameToIdx().keySet()) {
-            System.out.println(String.format("[userName:%s], [idx:%s]", key, ChannelList.getChannelInfo(channelIndex).getNameToIdx().get(key)));
+            System.out.println("channel.sessionsInChannel.cnt = " + channel.getSessionsInChannel().getCnt());
+            System.out.println("channel.sessionsInChannel.isExisted = " + channel.getSessionsInChannel().getIsExisted());
+
+            for (String key : ChannelList.getChannelInfo(channelIndex).getNameToIdx().keySet()) {
+                System.out.println(String.format("[userName:%s], [idx:%s]", key, ChannelList.getChannelInfo(channelIndex).getNameToIdx().get(key)));
+            }
+
         }
     }
 }
