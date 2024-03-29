@@ -35,11 +35,12 @@ public class TcpConnectionHandler implements Consumer<Connection> {
              */
             @Override
             public void handlerRemoved(ChannelHandlerContext ctx) {
-//                String userName = Session.getSessionList().entrySet().
+                // 소켓 연결이 끊길 때 전체 세션 목록에서 정보 삭제
                 Session.getSessionList().entrySet().removeIf(entry -> entry.getValue().equals(conn));
 
-                log.info("client removed");
+                // 현재 참가 중인 채널에서 정보 삭제
 
+                log.info("client removed");
             }
 
             /*
