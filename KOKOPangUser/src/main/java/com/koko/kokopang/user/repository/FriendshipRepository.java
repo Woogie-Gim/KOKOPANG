@@ -20,4 +20,5 @@ public interface FriendshipRepository extends JpaRepository<Friendship,Integer> 
 
     Friendship findByUserIdAndFriendId(int userId, int friendId);
 
+    List<Friendship> findFriendshipsByFriendIdAndIsWaiting(int friendId, boolean isWaiting);
 }

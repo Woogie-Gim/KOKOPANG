@@ -3,7 +3,9 @@ package com.koko.kokopang.user.service;
 import com.koko.kokopang.user.controller.UserProfileController;
 import com.koko.kokopang.user.dto.FriendDTO;
 import com.koko.kokopang.user.dto.FriendshipDTO;
+import com.koko.kokopang.user.dto.UserDTO;
 import com.koko.kokopang.user.model.Friendship;
+import com.koko.kokopang.user.model.User;
 import com.koko.kokopang.user.model.UserProfile;
 import com.koko.kokopang.user.repository.FriendshipRepository;
 import com.koko.kokopang.user.repository.UserRepository;
@@ -99,5 +101,21 @@ public class FriendshipServiceImpl implements FriendshipService{
         }
 
         return "notFriend";
+    }
+
+    @Override
+    public List<UserDTO> getWaitingFriends(int userId) {
+        List<Friendship> waitingFriends = friendshipRepository.findFriendshipsByFriendIdAndIsWaiting(userId, true);
+
+        List<UserDTO> userList = new ArrayList<UserDTO>();
+        UserDTO userDTO = new UserDTO();
+
+        for(Friendship f : waitingFriends) {
+            userDTO.setUserId(f.getUser().getId());
+            userDTO.setName(f.getUser().getName());
+            userList.add(userDTO);
+        }
+
+        return userList;
     }
 }
