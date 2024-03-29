@@ -2,6 +2,7 @@ package org.koko.kokopangmulti.serverManagement;
 
 import org.koko.kokopangmulti.Braodcast.BroadcastToLobby;
 import org.koko.kokopangmulti.Braodcast.ToJson;
+import org.koko.kokopangmulti.Lobby.LobbyHandler;
 import org.koko.kokopangmulti.Object.ChannelList;
 import org.koko.kokopangmulti.Object.Session;
 import org.koko.kokopangmulti.Ingame.IngameMsgHandler;
@@ -42,32 +43,14 @@ public class TcpMessageHandler {
 
                         switch(channelName) {
                             case "lobby" :
-                                // 최초 접속 시 userName, connection 정보 Session 해쉬맵, 로비에 등록
-                                if (Session.getSessionList().get(userName) == null) {
-                                    int userId = json.getInt("userId");
-                                    in.withConnection(connection -> {
-                                        Session.getSessionList().put(userName, connection);
-                                        ChannelList.getLobby().getSessionList().put(userName, userId);
-
-                                        // 유저에게 현재 채널 정보 브로드캐스팅
-                                        BroadcastToLobby.broadcastPrivate(connection, ToJson.channelListToJson()).subscribe();
-
-                                        // 로비에 유저목록 브로드캐스팅
-                                        BroadcastToLobby.broadcastLobby(ToJson.lobbySessionsToJson()).subscribe();
-                                    });
-
-                                } else {
-                                    JSONObject data = json.getJSONObject("data");
-                                    lobbyMsgHandler.filterData(userName, data);
-                                }
+                                lobbyMsgHandler.filterData(in, userName, json.getJSONObject("data"));
                                 break;
                             case "channel" :
-                                JSONObject data = json.getJSONObject("data");
                                 // 룸 msg핸들러 호출
-                                channelMsgHandler.filterData(userName, data);
+                                channelMsgHandler.filterData(userName, json.getJSONObject("data"));
                                 break;
-                            case "ingame" :
-//                                ingameMsgHandler.printData(data);
+                            case "inGame" :
+                                ingameMsgHandler.filterData(json.getJSONObject("data"));
                                 break;
                         }
 
