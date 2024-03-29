@@ -8,7 +8,7 @@ const LoginBox = styled.div`
   margin-left: 10px;
   border: 0;
   border-radius: 10px;
-  background-color: white;
+  background-color: whitesmoke;
 `;
 
 const UserLogin = styled.input`
@@ -33,11 +33,25 @@ const LoginButton = styled.input`
   border: 1px solid lightgray;
   border-radius: 10px;
   background-color: pink;
-  &:hover {
-    cursor: pointer;
-    transition: 0.2s;
-    background-color: lightcoral;
-  }
+  cursor: pointer;
+  font-size: 20px;
+`;
+
+const SignUpBtn = styled.div`
+  transition: 0.2s;
+  width: 77%;
+  height: 40px;
+  padding: 5px;
+  margin: 0 auto;
+  border: 1px solid lightgray;
+  border-radius: 10px;
+  background-color: #f18798;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  font-size: 20px;
 `;
 
 const UserBox = styled.div`
@@ -79,8 +93,26 @@ const ProfileBox = styled.div`
     width: 100%;
     height: auto;
     font-size: 25px;
-  }
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    .logout {
+      font-size: 15px;
+      font-weight: 0;
+      color: gray;
+      cursor: pointer;
+      border: 3px solid lightgray;
+      padding: 3px;
+      border-radius: 5px;
 
+      &:hover {
+        background-color: gray;
+        color: white;
+        border: 0;
+      }
+    }
+  }
 `
 
 const DownLoadBox = styled.div`
@@ -159,4 +191,4 @@ const FriendsBox = styled.div`
   }
 `
 
-export { LoginBox, UserLogin, LoginButton, UserBox, ProfileBox, DownLoadBox, FriendsBox };
+export { LoginBox, UserLogin, LoginButton, UserBox, ProfileBox, DownLoadBox, FriendsBox, SignUpBtn };

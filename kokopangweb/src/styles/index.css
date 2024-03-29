@@ -1,8 +1,10 @@
 * {
     font-family: "bitbit";
-    font-weight: normal;
+    font-weight: 0;
 }
 
 body {
+    padding: 0;
+    margin: 0;
     background-image: url("../assets/bodyimg.png");
 }

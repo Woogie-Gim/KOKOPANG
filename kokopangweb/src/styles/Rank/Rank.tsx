@@ -33,11 +33,11 @@ const UserRankBox = styled.div`
     width: 70%;
     margin: 0 auto;
     height: auto; 
-    border: 1px solid lightgray;
+    border: 3px solid lightgray;
     border-radius: 5px;
     display: flex;
     flex-direction: column;
-    background-color: white;
+    background-color: whitesmoke;
 
     .container {
       display: flex;

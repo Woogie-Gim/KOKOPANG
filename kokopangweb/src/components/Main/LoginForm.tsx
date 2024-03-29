@@ -1,10 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { LoginBox, UserLogin, LoginButton, UserBox, ProfileBox, DownLoadBox, FriendsBox } from '../../styles/Main/LoginForm'
+import { LoginBox, UserLogin, LoginButton, UserBox, ProfileBox, DownLoadBox, FriendsBox, SignUpBtn } from '../../styles/Main/LoginForm'
 import axios from 'axios';
 import { useShallow } from "zustand/react/shallow";
 import useAuthStore from '../../stores/AuthStore';
 import useUserStore from '../../stores/UserStore';
 import { useNavigate } from 'react-router-dom';
+import subImg from "../../assets/koko_logo1.png"
 
 interface Profile {
   id: null | number;
@@ -27,8 +28,9 @@ const LoginForm = () => {
   const [oldProfile, setOldProfile] = useState<Profile>();
   const [profileFile, setProfileFile] = useState<null | string>(null);
   const fileInput = useRef<HTMLInputElement>(null);
+  const navigate = useNavigate();
 
-  const { isLogin, login, PATH, token, setToken, setTokenExpireTime } =
+  const { isLogin, login, PATH, token, setToken, setTokenExpireTime,logout } =
     useAuthStore(
       useShallow((state) => ({
         isLogin: state.isLogIn,
@@ -37,6 +39,7 @@ const LoginForm = () => {
         setToken: state.setToken,
         token: state.token,
         setTokenExpireTime: state.setTokenExpireTime,
+        logout: state.logout,
       }))
     );
 
@@ -71,7 +74,8 @@ const LoginForm = () => {
       // 토큰 저장
       setToken(authorization, refreshtoken);
       setTokenExpireTime(new Date().getTime());
-
+      setPassword("")
+      setUsername("")
       // 사용자 프로필 요청
       const profileRes = await axios.get(`${PATH}/user/profile?email=${username}`, {
         headers: {
@@ -96,6 +100,7 @@ const LoginForm = () => {
     
 
     } catch (error: any) {
+      alert("아이디 또는 비밀번호를 확인해주세요!")
       console.log(error.response || error);
     }
   };
@@ -266,7 +271,10 @@ const LoginForm = () => {
             }} className='btn'>프로필 이미지 변경</div>}
           </div>
           <ProfileBox>
-            <div className='name_box'>{name} 님</div>
+            <div className='name_box'>
+              <div>{name} 님</div>
+              <div className='logout' onClick={logout}>로그아웃</div>
+            </div>
             <div>Rating: {user.rating}</div>
           </ProfileBox>
         </UserBox>
@@ -295,10 +303,12 @@ const LoginForm = () => {
       </LoginBox> : <LoginBox>
         <div style={{ fontSize: "25px", width: "80%", margin: "20px auto", fontWeight: "700" }}>코코팡 로그인</div>
         <form style={{ margin: "0 auto", width: "80%" }} onSubmit={Login}>
-          <UserLogin placeholder='id' value={username} onChange={changeUsername} />
-          <UserLogin placeholder='password' type='password' value={password} onChange={changePassword} />
+          <UserLogin placeholder='Email' value={username} onChange={changeUsername} />
+          <UserLogin placeholder='Password' type='password' value={password} onChange={changePassword} />
           <LoginButton type='submit' value='로그인' />
         </form>
+        <SignUpBtn onClick={() => navigate("/signup")}>회원가입</SignUpBtn>
+        <img src={subImg} alt="심심이미지" style={{ width:"200px", height: "200px", margin: "0 auto", marginTop: "30px"}}/>
       </LoginBox>}
     </>
   )
