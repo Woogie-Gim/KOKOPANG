@@ -104,6 +104,11 @@ const Rank = () => {
       <TextBox>KOKOPang 전체 랭킹</TextBox>
       <UserRankBox>
         <RankTable>
+          <div className='container2'>
+            <div className='item2'>등수</div>
+            <div className='item2'>유저</div>
+            <div className='item2'>레이팅</div>
+          </div>
           {currentItems.map((user,idx) => (
             <div key={idx} className='container'>
               <div className='item'>{idx + 1 + (currentPage - 1)*10}</div>

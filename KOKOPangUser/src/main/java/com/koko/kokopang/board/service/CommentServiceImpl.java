@@ -1,9 +1,11 @@
 package com.koko.kokopang.board.service;
 
+import com.koko.kokopang.board.dto.BoardDTO;
 import com.koko.kokopang.board.dto.CommentDTO;
 import com.koko.kokopang.board.dto.CommentListDTO;
 import com.koko.kokopang.board.model.Board;
 import com.koko.kokopang.board.model.Comment;
+import com.koko.kokopang.board.repository.BoardRepository;
 import com.koko.kokopang.board.repository.CommentRepository;
 import com.koko.kokopang.user.dto.UserDTO;
 import com.koko.kokopang.user.model.User;
@@ -19,11 +21,13 @@ public class CommentServiceImpl implements CommentService{
 
     public final CommentRepository commentRepository;
     public final BoardService boardService;
+    public final BoardRepository boardRepository;
     public final UserService userService;
 
-    public CommentServiceImpl(CommentRepository commentRepository, BoardService boardService, UserService userService) {
+    public CommentServiceImpl(CommentRepository commentRepository, BoardService boardService, BoardRepository boardRepository, UserService userService) {
         this.commentRepository = commentRepository;
         this.boardService = boardService;
+        this.boardRepository = boardRepository;
         this.userService = userService;
     }
 
@@ -31,7 +35,7 @@ public class CommentServiceImpl implements CommentService{
     public void createComment(CommentDTO commentDTO) {
         Comment newComment = new Comment();
 
-        Board board = boardService.readBoard(commentDTO.getBoardId());
+        Board board = boardRepository.findBoardById(commentDTO.getBoardId());
         newComment.setBoard(board);
         newComment.setContent(commentDTO.getContent());
         newComment.setUserEmail(commentDTO.getUserEmail());
@@ -41,7 +45,7 @@ public class CommentServiceImpl implements CommentService{
 
     @Override
     public List<CommentListDTO> getCommentAll(int boardId) {
-        Board board = boardService.readBoard(boardId);
+        Board board = boardRepository.findBoardById(boardId);
         List<Comment> comments = commentRepository.findByBoard(board);
 
         List<CommentListDTO> commentList = new ArrayList<>();
