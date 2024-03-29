@@ -10,8 +10,8 @@ public class UserListElement : MonoBehaviour
 
     public LobbyManager lobbyManagerScript;
 
-    public TMP_Text userNameText;
-    public Button detailBtn;
+    public TMP_Text UserNameText;
+    public Button DetailBtn;
 
     private int id;
     private string email;
@@ -58,7 +58,7 @@ public class UserListElement : MonoBehaviour
     private void Start()
     {
         // 이벤트 붙이기
-        detailBtn.onClick.AddListener(clickOpenUserDetailBtn);
+        DetailBtn.onClick.AddListener(clickOpenUserDetailBtn);
 
         lobbyManagerScript = GameObject.Find("LobbyManager").GetComponent<LobbyManager>();
     }
@@ -73,8 +73,8 @@ public class UserListElement : MonoBehaviour
         script.Name = Name;
         script.Id = Id;
 
-        script.detailUserNameText.text = Name;
-        script.detailEmailText.text = Email;
+        script.DetailUserNameText.text = Name + " #" + Id;
+        //script.DetailEmailText.text = Email;
 
         // 친구인지 확인 후 친구추가 버튼 바꾸기
         StartCoroutine(setFriendStatus());
@@ -91,31 +91,32 @@ public class UserListElement : MonoBehaviour
         // 현재 친구
         if (result == "friend")
         {
-            Debug.Log("friend");
-            userInfoDetailScript.addFriendBtn.interactable = false;
-            userInfoDetailScript.addFriendText.text = "친구";
+            //Debug.Log("friend");
+            userInfoDetailScript.AddFriendBtn.interactable = false;
+            userInfoDetailScript.AddFriendText.text = "친구";
         }
         // 내가 요청 보내서 수락 받기 대기중
         else if(result == "waiting")
         {
-            Debug.Log("waiting");
-            userInfoDetailScript.addFriendBtn.interactable = false;
-            userInfoDetailScript.addFriendText.text = "수락대기";
+            //Debug.Log("waiting");
+            userInfoDetailScript.AddFriendBtn.interactable = false;
+            userInfoDetailScript.AddFriendText.text = "수락대기";
         }
         // 친구 요청이 들어와서 수락 누를 수 있는 상태
         else if(result == "accept")
         {
-            Debug.Log("accept");
-            userInfoDetailScript.addFriendBtn.interactable = true;
-            userInfoDetailScript.addFriendText.text = "수락";
+            //Debug.Log("accept");
+            userInfoDetailScript.AddFriendBtn.interactable = true;
+            userInfoDetailScript.AddFriendText.text = "수락";
+            userInfoDetailScript.AddFriendBtn.onClick.AddListener(() => StartCoroutine(clickAcceptFriendBtn()));
         }
         // 아무 상태도 아님
         else if(result == "notFriend")
         {
-            Debug.Log("notFriendㅋㅋ");
-            userInfoDetailScript.addFriendBtn.interactable = true;
-            userInfoDetailScript.addFriendText.text = "친구추가";
-            userInfoDetailScript.addFriendBtn.onClick.AddListener(() => StartCoroutine(clickAddFriendBtn()));
+            //Debug.Log("notFriendㅋㅋ");
+            userInfoDetailScript.AddFriendBtn.interactable = true;
+            userInfoDetailScript.AddFriendText.text = "친구추가";
+            userInfoDetailScript.AddFriendBtn.onClick.AddListener(() => StartCoroutine(clickAddFriendBtn()));
         }
     }
 
@@ -128,9 +129,12 @@ public class UserListElement : MonoBehaviour
         StartCoroutine(setFriendStatus());
     }
 
-    // TODO: 친구 수락 호출
-    private IEnumerator clickAcceptFriend()
+    // 친구 수락 호출
+    private IEnumerator clickAcceptFriendBtn()
     {
-        yield break;
+        yield return StartCoroutine(lobbyManagerScript.acceptFriend(Id));
+
+        // 친구인지 확인 후 친구추가 버튼 바꾸기
+        StartCoroutine(setFriendStatus());
     }
 }

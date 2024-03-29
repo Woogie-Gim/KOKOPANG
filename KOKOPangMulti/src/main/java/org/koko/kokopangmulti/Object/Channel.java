@@ -1,17 +1,23 @@
 package org.koko.kokopangmulti.Object;
 
-import org.koko.kokopangmulti.Object.Session;
-import reactor.netty.Connection;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.json.JSONObject;
 
-import java.util.ArrayDeque;
-import java.util.Deque;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class Channel {
 
     private String channelName;
-    private HashMap<String, Connection> sessionList;
-    private Deque q;
+    private HashMap<String, Integer> nameToIdx;
+    private HashMap<Integer, String> idxToName;
+    private SessionsInChannel sessionsInChannel;
+    private Boolean isOnGame;
+    private HashMap<String, Integer> sessionList;
+
+    private static final ObjectMapper objectMapper = new ObjectMapper();
 
     // LOBBY CHANNEL
     public Channel(String channelName) {
@@ -19,13 +25,16 @@ public class Channel {
         this.sessionList = new HashMap<>();
     }
 
-    // GAME CHANNEL
-    public Channel(String channelName, String userName, Connection conn) {
+    // GAME CHANNEL 생성자
+    public Channel(String channelName, String userName) {
         this.channelName = channelName;
+        this.nameToIdx = new HashMap<>();
+        this.nameToIdx.put(userName, 0);
+        this.idxToName = new HashMap<>();
+        this.idxToName.put(0, userName);
+        this.sessionsInChannel = new SessionsInChannel();   // cnt=1, isExisted=[1,0,0,0,0,0]
+        this.isOnGame = false;
         this.sessionList = new HashMap<>();
-        this.sessionList.put(userName, conn);
-        this.q = new ArrayDeque<String>();
-        q.addLast(userName); // 들어온 순서대로 기록
     }
     public Channel() {
 
@@ -38,12 +47,30 @@ public class Channel {
         return channelName;
     }
 
-    public HashMap<String, Connection> getSessionList() {
+    public HashMap<String, Integer> getNameToIdx() {
+        return this.nameToIdx;
+    }
+
+    public void addSession(String userName, Integer idx) {
+        this.nameToIdx.put(userName, idx);
+        this.idxToName.put(idx, userName);
+    }
+
+    public SessionsInChannel getSessionsInChannel() {
+        return this.sessionsInChannel;
+    }
+
+    public HashMap<String, Integer> getSessionList() {
         return this.sessionList;
     }
 
-    public Deque<String> getUsers() {
-        return this.q;
+    public int getIdx(String userName) { return this.nameToIdx.get(userName); }
+
+    public HashMap<Integer, String> getIdxToName() {
+        return idxToName;
     }
 
+    public Boolean getOnGame() {
+        return isOnGame;
+    }
 }

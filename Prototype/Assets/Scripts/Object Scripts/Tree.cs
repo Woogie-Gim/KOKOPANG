@@ -65,7 +65,6 @@ public class Tree : MonoBehaviour
         for (int i = 0; i < randomItemNum; i++)
         {
             Instantiate(go_tree_item_prefab, spawnPosition, Quaternion.identity);
-            Instantiate(go_leaf_item_prefab, spawnPosition, Quaternion.identity);
         }
 
         Destroy(go_tree);

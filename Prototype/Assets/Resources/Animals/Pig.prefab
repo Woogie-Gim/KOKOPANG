@@ -424,13 +424,13 @@ GameObject:
   - component: {fileID: 2861487560695279222}
   - component: {fileID: 2861487560695279221}
   - component: {fileID: 2861487560695279220}
-  - component: {fileID: 2861487560695279223}
+  - component: {fileID: 2289013395846209323}
   - component: {fileID: 7124315851090842752}
   - component: {fileID: 7124315851090842754}
   - component: {fileID: 7124315851090842753}
   m_Layer: 0
   m_Name: Pig
-  m_TagString: NPC
+  m_TagString: Pig
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -507,8 +507,8 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!136 &2861487560695279223
-CapsuleCollider:
+--- !u!65 &2289013395846209323
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -517,10 +517,9 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.31
-  m_Height: 1.29
-  m_Direction: 2
-  m_Center: {x: -0.00035232306, y: 0.32, z: 0.09673458}
+  serializedVersion: 2
+  m_Size: {x: 1, y: 0.52, z: 1.09}
+  m_Center: {x: 0, y: 0.26, z: 0}
 --- !u!54 &7124315851090842752
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -558,7 +557,7 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 5
-  MaxDistance: 30
+  MaxDistance: 5.05
   Pan2D: 0
   rolloffMode: 2
   BypassEffects: 0
@@ -655,15 +654,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animalName: Pig
-  hp: 2
+  hp: 3
   walkSpeed: 3
   runSpeed: 6
   walkTime: 6
-  waitTime: 4
+  waitTime: 3
   runTime: 3
   anim: {fileID: 2861487560695279220}
   rigid: {fileID: 7124315851090842752}
-  capsulecol: {fileID: 0}
+  boxcol: {fileID: 2289013395846209323}
   sound_pig_Normal:
   - {fileID: 8300000, guid: bc31feeffb6ebaa44ab86a7219dba60c, type: 3}
   - {fileID: 8300000, guid: 9a93819dfb655b841977018f4b44a0e4, type: 3}

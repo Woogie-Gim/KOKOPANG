@@ -100,7 +100,7 @@ public class PlayerMovement : MonoBehaviour
     private void Update()
     {
         Movement();
-        if (!Inventory.inventoryActivated)
+        if (!Inventory.inventoryActivated && !CraftManual.isActivated)
         {
             MouseLook();
         }

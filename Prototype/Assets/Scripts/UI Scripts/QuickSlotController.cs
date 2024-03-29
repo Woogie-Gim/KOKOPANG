@@ -120,6 +120,10 @@ public class QuickSlotController : MonoBehaviour
             {
                 ChangeHand(quickSlots[selectedSlot].item);
             }
+            else if (quickSlots[selectedSlot].item.itemType == Item.ItemType.Hammer)
+            {
+                ChangeHand(quickSlots[selectedSlot].item);
+            }
             else
             {
                 ChangeHand();
@@ -152,5 +156,18 @@ public class QuickSlotController : MonoBehaviour
         go_HandItem.tag = "Untagged";
         go_HandItem.layer = 7;
         go_HandItem.transform.SetParent(tf_ItemPos);
+    }
+
+    public void EatItem()
+    {
+        if (quickSlots[selectedSlot].item.itemType != Item.ItemType.Hammer)
+        {
+            quickSlots[selectedSlot].SetSlotCount(-1);
+
+            if (quickSlots[selectedSlot].itemCount <= 0)
+            {
+                Destroy(go_HandItem);
+            }
+        }
     }
 }

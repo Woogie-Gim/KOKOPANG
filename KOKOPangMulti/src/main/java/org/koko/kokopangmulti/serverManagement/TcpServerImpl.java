@@ -13,7 +13,15 @@ public class TcpServerImpl implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        System.out.println("run");
-        tcpServerInitializer.initializeTcpServer().onDispose().block();
+        System.out.println("Starting TCP Server...");
+        tcpServerInitializer.initializeTcpServer().subscribe(
+                disposableServer -> {
+                    System.out.println("TCP Server started on port: " + disposableServer.port());
+                },
+                error -> {
+                    System.err.println("Failed to start TCP Server: " + error.getMessage());
+                }
+        );
     }
+
 }

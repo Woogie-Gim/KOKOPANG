@@ -15,7 +15,7 @@ public abstract class CloseWeaponController : MonoBehaviour
     protected RaycastHit hitInfo;
     protected void TryAttack()
     {
-        if (!Inventory.inventoryActivated)
+        if (!Inventory.inventoryActivated && !CraftManual.isActivated)
         {
             if (Input.GetButton("Fire1"))
             {

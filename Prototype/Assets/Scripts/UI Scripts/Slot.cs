@@ -32,9 +32,10 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
     // 인벤토리 영역
     [SerializeField]
     private RectTransform baseRect;
-    //퀵 슬롯의 영역
+    // 퀵 슬롯의 영역
     [SerializeField]
     private RectTransform quickSlotBaseRect;
+
     private InputNumber theInputNumber;
     private SlotToolTip theSlotToolTip;
     private QuickSlotController theQuickSlotController;
@@ -146,21 +147,24 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
     public void OnEndDrag(PointerEventData eventData)
     {
         // 인벤토리 최대, 최소 영역을 벗어났을 때
-        if (!((DragSlot.instance.transform.localPosition.x > baseRect.rect.xMin && DragSlot.instance.transform.localPosition.x < baseRect.rect.xMax 
-            && DragSlot.instance.transform.localPosition.y > baseRect.rect.yMin && DragSlot.instance.transform.localPosition.y < baseRect.rect.yMax)
-            ||
-            (DragSlot.instance.transform.localPosition.x > quickSlotBaseRect.rect.xMin && DragSlot.instance.transform.localPosition.x < quickSlotBaseRect.rect.xMax &&
-            DragSlot.instance.transform.localPosition.y > quickSlotBaseRect.transform.localPosition.y - quickSlotBaseRect.rect.yMax - baseRect.localPosition.y && DragSlot.instance.transform.localPosition.y < quickSlotBaseRect.transform.localPosition.y - quickSlotBaseRect.rect.yMin - baseRect.localPosition.y)))
+        if (DragSlot.instance != null && DragSlot.instance.dragSlot != null)
         {
-            if (DragSlot.instance.dragSlot != null)
+            if (!((DragSlot.instance.transform.localPosition.x > baseRect.rect.xMin && DragSlot.instance.transform.localPosition.x < baseRect.rect.xMax 
+                && DragSlot.instance.transform.localPosition.y > baseRect.rect.yMin && DragSlot.instance.transform.localPosition.y < baseRect.rect.yMax)
+                ||
+                (DragSlot.instance.transform.localPosition.x > quickSlotBaseRect.rect.xMin && DragSlot.instance.transform.localPosition.x < quickSlotBaseRect.rect.xMax &&
+                DragSlot.instance.transform.localPosition.y > quickSlotBaseRect.transform.localPosition.y - quickSlotBaseRect.rect.yMax - baseRect.localPosition.y && DragSlot.instance.transform.localPosition.y < quickSlotBaseRect.transform.localPosition.y - quickSlotBaseRect.rect.yMin - baseRect.localPosition.y)))
             {
-                theInputNumber.Call();
+                if (DragSlot.instance.dragSlot != null)
+                {
+                    theInputNumber.Call();
+                }
             }
-        }
-        else
-        {
-            DragSlot.instance.SetColor(0);
-            DragSlot.instance.dragSlot = null;
+            else
+            {
+                DragSlot.instance.SetColor(0);
+                DragSlot.instance.dragSlot = null;
+            }
         }
     }
 

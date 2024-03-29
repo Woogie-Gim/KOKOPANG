@@ -24,12 +24,19 @@ public class AxeController : CloseWeaponController
                 {
                     hitInfo.transform.GetComponent<Tree>().Felling();
                 }
-                else if (hitInfo.transform.tag == "NPC")
+                if (hitInfo.transform.tag == "Barrel")
                 {
-                    hitInfo.transform.GetComponent<Pig>().Damage(currentArms.damage, transform.position);
+                    hitInfo.transform.GetComponent<Barrel>().Felling();
+                }
+                else if (hitInfo.transform.tag == "Pig")
+                {
+                    hitInfo.transform.GetComponent<Pig>().Damage(transform.position);
+                }
+                else if (hitInfo.transform.tag == "Cow")
+                {
+                    hitInfo.transform.GetComponent<Cow>().Damage(transform.position);
                 }
                 isSwing = false;
-                Debug.Log(hitInfo.transform.name);
             }
             yield return null;
         }
