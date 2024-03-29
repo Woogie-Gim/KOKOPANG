@@ -16,7 +16,7 @@ interface AuthStore {
 const useAuthStore = create(
   persist<AuthStore>(
     (set, get) => ({
-      PATH: "http://j10c211.p.ssafy.io:8080",
+      PATH: "https://j10c211.p.ssafy.io:8080",
       // PATH: "http://localhost:8080",
       token: null,
       refToken: null,
