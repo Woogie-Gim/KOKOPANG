@@ -38,6 +38,7 @@ const UserRankBox = styled.div`
     display: flex;
     flex-direction: column;
     background-color: whitesmoke;
+    margin-bottom: 50px;
 
     .container {
       display: flex;
@@ -72,18 +73,46 @@ const UserRankBox = styled.div`
 `
 
 const RankTable = styled.div`
-    width: 100%;
-    height: auto;
-    display: flex;
-    flex-direction: column;
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: column;
 
-    .no_result {
-      width: 100%;
-      font-size: 30px;
-      text-align: center;
-      padding: 30px;
-      color: gray;
-    }
+  .no_result {
+    width: 100%;
+    font-size: 30px;
+    text-align: center;
+    padding: 30px;
+    color: gray;
+  }
+
+  .container2 {
+    padding: 10px;
+    display: flex;
+    flex-direction: row;
+    background-color: lightgray;
+    border-bottom: 1px solid gray;
+    text-align: center;
+    padding: 20px;
+  }
+
+  .item2 {
+    flex: 1;
+    text-align: center;
+    font-size: 20px;
+  }
+
+  .item2:nth-child(1) {
+    flex: 15%;
+  }
+
+  .item2:nth-child(2) {
+    flex: 50%;
+  }
+
+  .item2:nth-child(3) {
+    flex: 35%;
+  }
 `
 
 const TextBox = styled.div`
