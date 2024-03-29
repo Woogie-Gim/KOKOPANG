@@ -14,8 +14,8 @@ const NaviBar = () => {
         </LogoBox>
         <Menu onClick={() => navigate("/notice")}>공지사항</Menu>
         <Menu onClick={() => navigate("/rank")}>랭킹</Menu>
-        <Menu onClick={() => navigate("/comunity")}>커뮤니티</Menu>
-        <Menu onClick={() => navigate("/iteminfo")}>게임 가이드</Menu>
+        <Menu onClick={() => navigate("/community")}>커뮤니티</Menu>
+        <Menu onClick={() => navigate("/gameGuide/story")}>게임 가이드</Menu>
       </MenuBox>
     </Hme>
   )

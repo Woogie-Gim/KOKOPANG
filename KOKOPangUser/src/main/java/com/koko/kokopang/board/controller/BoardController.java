@@ -1,5 +1,6 @@
 package com.koko.kokopang.board.controller;
 
+import com.koko.kokopang.board.dto.BoardDTO;
 import com.koko.kokopang.board.dto.BoardListDTO;
 import com.koko.kokopang.board.model.Board;
 import com.koko.kokopang.board.service.BoardService;
@@ -37,12 +38,12 @@ public class BoardController {
      */
     @GetMapping("/read")
     public ResponseEntity<?> readBoard(@RequestParam int boardId) {
-        Board board = boardService.readBoard(boardId);
+        BoardDTO board = boardService.readBoard(boardId);
         if (board == null) {
             return new ResponseEntity<String>("게시글 조회 실패", HttpStatus.BAD_REQUEST);
         }
 
-        return new ResponseEntity<Board>(board,HttpStatus.OK);
+        return new ResponseEntity<BoardDTO>(board,HttpStatus.OK);
     }
 
     @GetMapping("/all")

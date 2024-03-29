@@ -43,11 +43,12 @@ const LoginForm = () => {
       }))
     );
 
-  const { setUser, name } =
+  const { setUser, name, setProfileImage } =
     useUserStore(
       useShallow((state) => ({
         setUser: state.setUser,
         name: state.name,
+        setProfileImage: state.setProfileImage
       }))
     )
 
@@ -85,7 +86,8 @@ const LoginForm = () => {
 
       console.log(profileRes);
       setUser(profileRes.data);
-
+      setProfileImage(profileRes.data.profileImg);
+      setAvatar(profileRes.data.profileImg === null ? defaultProfile: profileRes.data.profileImg)
         // 친구 목록 요청
       const friendsRes = await axios.get(`${PATH}/friend/list?userId=${profileRes.data.userId}`, {
         headers: {
@@ -96,9 +98,7 @@ const LoginForm = () => {
       user.setFriendsList(sortedFriendsList.slice(0, 10));
 
       login();
-      setRefRef(prevRefRef => !prevRefRef);
-    
-
+      setRefRef(!refRef);
     } catch (error: any) {
       alert("아이디 또는 비밀번호를 확인해주세요!")
       console.log(error.response || error);
@@ -216,7 +216,9 @@ const LoginForm = () => {
           },
         })
         .then((response) => {
+          console.log(user.userId, user.profileImage)
           if (!response.data) return;
+          console.log(response.data,"라라라랄라ㅏ")
           const image = response.data;
           if (image) {
             setAvatar(

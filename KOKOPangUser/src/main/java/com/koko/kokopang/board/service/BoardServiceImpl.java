@@ -1,14 +1,18 @@
 package com.koko.kokopang.board.service;
 
+import com.koko.kokopang.board.dto.BoardDTO;
 import com.koko.kokopang.board.dto.BoardListDTO;
 import com.koko.kokopang.board.model.Board;
 import com.koko.kokopang.board.repository.BoardRepository;
 import com.koko.kokopang.user.dto.UserDTO;
+import com.koko.kokopang.user.model.User;
 import com.koko.kokopang.user.service.UserService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -34,8 +38,19 @@ public class BoardServiceImpl implements BoardService{
     }
 
     @Override
-    public Board readBoard(int boardId) {
-        return boardRepository.findBoardById(boardId);
+    public BoardDTO readBoard(int boardId) {
+        Board board = boardRepository.findBoardById(boardId);
+
+        BoardDTO boardDTO = new BoardDTO();
+        boardDTO.setTitle(board.getTitle());
+        boardDTO.setContent(board.getContent());
+        boardDTO.setBoardId(board.getId());
+
+        UserDTO user = userService.getProfile(board.getUserEmail());
+        boardDTO.setProfileImg(user.getProfileImg());
+        boardDTO.setName(user.getName());
+
+        return boardDTO;
     }
 
     @Override

@@ -1,5 +1,6 @@
 package com.koko.kokopang.board.service;
 
+import com.koko.kokopang.board.dto.BoardDTO;
 import com.koko.kokopang.board.dto.BoardListDTO;
 import com.koko.kokopang.board.model.Board;
 import org.springframework.transaction.annotation.Transactional;
@@ -9,7 +10,7 @@ import java.util.List;
 public interface BoardService {
     void createBoard(Board board);
 
-    Board readBoard(int boardId);
+    BoardDTO readBoard(int boardId);
 
     List<BoardListDTO> getBoardAll();
 
