@@ -1,6 +1,8 @@
 import styled from "styled-components";
 
-const UpBox = styled.div`
+const UpBox = styled.div``
+
+const DownBox = styled.div`
     display: flex;
     width: 80%;
     margin: 0 auto;
@@ -22,15 +24,21 @@ const Header = styled.div`
     margin-bottom: 30px;
 `
 
+const Hme = styled.div`
+    width: 100%;
+    background-color:whitesmoke;
+    height: auto;
+    margin-bottom: 50px;
+`
+
 const MenuBox = styled.div`
     width: 70%;
-    margin: 30px auto;
+    margin: 0 auto;
     height: auto;
     display: flex;
     justify-content: space-between;
     align-items: center;
     flex-direction: row;
-    color: white;
 `
 
 const LogoBox = styled.div`
@@ -66,22 +74,21 @@ const Menu = styled.div`
     }
 `
 
-
 const NoticeHeader = styled.div`
-    width: 80%;
+    width: auto;
     margin: 0 auto;
     font-size: 30px;
-    margin-bottom: 20px;
     color: white;
 `
 
 const NoticeBox = styled.div`
-    width: 80%;
+    width: 90%;
     height: 30px;
     overflow: hidden;
     margin: 0 auto;
-    margin-bottom: 50px;
+    font-size: 30px;
     color: white;
+    
 `
 
-export { InfoBox, UpBox, Header, MenuBox, Menu,LogoBox, NoticeBox, NoticeHeader};
+export { InfoBox, UpBox, DownBox, Header, MenuBox, Menu,LogoBox, NoticeBox, NoticeHeader, Hme};
