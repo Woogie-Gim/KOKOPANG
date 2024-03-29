@@ -57,7 +57,9 @@ public class SecurityConfig {
 
                         CorsConfiguration configuration = new CorsConfiguration();
 
-                        configuration.setAllowedOrigins(Collections.singletonList("http://j10c211.p.ssafy.io"));
+                        List<String> allowedOrigins = Arrays.asList("http://j10c211.p.ssafy.io", "https://j10c211.p.ssafy.io");
+						
+						configuration.setAllowedOrigins(allowedOrigins);
                         configuration.setAllowedMethods(Collections.singletonList("*"));
                         configuration.setAllowCredentials(true);
                         configuration.setAllowedHeaders(Collections.singletonList("*"));
