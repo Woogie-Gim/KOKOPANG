@@ -2,8 +2,11 @@ package com.koko.kokopang.user.controller;
 
 import com.koko.kokopang.user.dto.FriendDTO;
 import com.koko.kokopang.user.dto.FriendshipDTO;
+import com.koko.kokopang.user.dto.UserDTO;
 import com.koko.kokopang.user.model.Friendship;
+import com.koko.kokopang.user.model.User;
 import com.koko.kokopang.user.service.FriendshipService;
+import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -62,5 +65,15 @@ public class FriendshipController {
     public ResponseEntity<?> getFriendInfo(@RequestParam int userId, @RequestParam int friendId) {
         String result = friendshipService.getFriendProfile(userId,friendId);
         return new ResponseEntity<String>(result,HttpStatus.OK);
+    }
+
+    /**
+     * 내가 받은 친구 요청 목록(친구 대기 상태)
+     */
+    @GetMapping("/waiting")
+    public ResponseEntity<?> getWaitingFriends(@RequestParam int userId) {
+        List<UserDTO> list = friendshipService.getWaitingFriends(userId);
+
+        return new ResponseEntity<List<UserDTO>>(list, HttpStatus.OK);
     }
 }
