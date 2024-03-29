@@ -34,7 +34,7 @@ public class LoginManager : MonoBehaviour
     public string refreshToken;    // refresh token
     public User loginUserInfo;
 
-    private string url = "http://j10c211.p.ssafy.io:8080";   // 요청 URL
+    private string url = "https://j10c211.p.ssafy.io:8080";   // 요청 URL
 
 
     /* ======================== 회원가입 ======================== */
@@ -193,11 +193,11 @@ public class LoginManager : MonoBehaviour
                     // 정보 요청 성공 시
                     else
                     {
-                        //Debug.Log(userProfileRequest.downloadHandler.text);
+                        Debug.Log(userProfileRequest.downloadHandler.text);
                         loginUserInfo = JsonUtility.FromJson<User>(userProfileRequest.downloadHandler.text);
 
-                        // 로비 데이터 초기화 호출
-                        LobbyManagerScript.LobbyInit(loginUserInfo.Name, loginUserInfo.Id);
+                        // 로비 데이터 초기화 호출 -> 로비매니저 awake
+                        LobbyManagerScript.LobbyInit();
                         //Debug.Log(userProfile.Id);
                     }
                 }

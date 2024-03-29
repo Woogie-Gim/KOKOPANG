@@ -21,64 +21,67 @@ public class LobbyManager : MonoBehaviour
     public GameObject UserInfoDetail;   // 유저 리스트에서 누르면 등장하는 유저 상세정보 창
 
 
-    private string url = "http://j10c211.p.ssafy.io:8080";   // 요청 URL
+    private string url = "https://j10c211.p.ssafy.io:8080";   // 요청 URL
+
+    private void Awake()
+    {
+        //LobbyInit();
+        //setAllUsers();
+        //setFriendUsers();
+    }
 
 
     /* ======================== 로비 ======================== */
     // 로비 입장 시 데이터 초기화(사용자 정보 등)
-    public void LobbyInit(string name, int id)
+    public void LobbyInit()
     {
+        Debug.Log("LobbyInit");
+        string name = loginManagerScript.loginUserInfo.Name;
+        int id = loginManagerScript.loginUserInfo.UserId;
+
         LobbyMyName.text = name + " #" + id;
-        setAllUsers();
+
+        // TCP연결 시작
+        TCPConnectManagerScript.gameObject.SetActive(true);
+        // 친구 설정
         setFriendUsers();
     }
 
     // 전체 유저 불러오기
-    private void setAllUsers()
+    public void setAllUsers(string response)
     {
         // 현재 접속한 유저 데이터 불러오기
-        // TODO: 더미데이터 서버에서 받아온걸로 변경
-        User[] userList = new User[3];
-        userList[0] = new User
-        {
-            Id = 30,
-            Email = "ww",
-            Name = "더블유"
-        };
-        userList[1] = new User
-        {
-            Id = 31,
-            Email = "ee",
-            Name = "이이"
-        };
-        userList[2] = new User
-        {
-            Id = 29,
-            Email = "qq",
-            Name = "큐큐"
-        };
+        User[] userList = TCPConnectManagerScript.getConnectedUsers(response);
 
-        // 유저 리스트 들어갈 스크롤뷰(설정할 부모)
-        Transform content = ScrollViewLobbyList.transform.Find("ScrollView/Viewport/Content");
-
-        // 유저 리스트에 들어갈 각각의 컴포넌트 생성
-        GameObject[] userListElements = new GameObject[userList.Length];
-
-        // 유저 리스트 각각의 컴포넌트에 들어갈 데이터
-        //GameObject[] activeUserData = new GameObject[userList.Length];
-        for (int i = 0; i < userList.Length; i++)
+        if(userList != null)
         {
-            // 요소 생성 및 부모 설정
-            userListElements[i] = Instantiate(UserListElement);
-            userListElements[i].transform.SetParent(content, false);
-            // 유저 데이터 초기화
-            UserListElement userListElementScript = userListElements[i].GetComponent<UserListElement>();
-            userListElementScript.Id = userList[i].Id;
-            userListElementScript.Email = userList[i].Email;
-            userListElementScript.Name = userList[i].Name;
-            userListElementScript.UserInfoDetail = UserInfoDetail;
-            // 데이터 보이기
-            userListElementScript.UserNameText.text = userList[i].Name;
+            // 유저 리스트 들어갈 스크롤뷰(설정할 부모)
+            Transform content = ScrollViewLobbyList.transform.Find("ScrollView/Viewport/Content");
+            // 기존 리스트 제거
+            // TODO: 오브젝트 풀링
+            foreach(Transform child in content) {
+                Destroy(child.gameObject);
+            }
+
+            // 유저 리스트에 들어갈 각각의 컴포넌트 생성
+            GameObject[] userListElements = new GameObject[userList.Length];
+
+            // 유저 리스트 각각의 컴포넌트에 들어갈 데이터
+            //GameObject[] activeUserData = new GameObject[userList.Length];
+            for (int i = 0; i < userList.Length; i++)
+            {
+                // 요소 생성 및 부모 설정
+                userListElements[i] = Instantiate(UserListElement);
+                userListElements[i].transform.SetParent(content, false);
+                // 유저 데이터 초기화
+                UserListElement userListElementScript = userListElements[i].GetComponent<UserListElement>();
+                userListElementScript.Id = userList[i].UserId;
+                userListElementScript.Email = userList[i].Email;
+                userListElementScript.Name = userList[i].Name;
+                userListElementScript.UserInfoDetail = UserInfoDetail;
+                // 데이터 보이기
+                userListElementScript.UserNameText.text = userList[i].Name + " #" + userList[i].UserId;
+            }
         }
     }
 
@@ -106,7 +109,7 @@ public class LobbyManager : MonoBehaviour
                     userListElements[i].transform.SetParent(content, false);
                     // 유저 데이터 초기화
                     UserListElement userListElementScript = userListElements[i].GetComponent<UserListElement>();
-                    userListElementScript.Id = userList[i].Id;
+                    userListElementScript.Id = userList[i].UserId;
                     userListElementScript.Email = userList[i].Email;
                     userListElementScript.Name = userList[i].Name;
                     userListElementScript.UserInfoDetail = UserInfoDetail;
@@ -142,7 +145,7 @@ public class LobbyManager : MonoBehaviour
     // 친구 목록 불러오기
     private IEnumerator getFriendList(System.Action<User[]> callback)
     {
-        int userId = loginManagerScript.loginUserInfo.Id;
+        int userId = loginManagerScript.loginUserInfo.UserId;
 
         string requestUrl = url + "/friend/list?userId=" + userId ;
 
@@ -172,7 +175,7 @@ public class LobbyManager : MonoBehaviour
                     Debug.Log("id: " + friend.friendId + ", Name: " + friend.friendName);
                     userList[i++] = new User
                     {
-                        Id = friend.friendId,
+                        UserId = friend.friendId,
                         Name = friend.friendName
                     };
                 }
@@ -185,7 +188,7 @@ public class LobbyManager : MonoBehaviour
     // 친구인지, 대기중인지 여부 확인
     public IEnumerator FriendCheckRequest(int friendId, System.Action<string> callback)
     {
-        int userId = loginManagerScript.loginUserInfo.Id;
+        int userId = loginManagerScript.loginUserInfo.UserId;
 
         string requestUrl = url + "/friend/profile?userId=" + userId + "&friendId=" + friendId;
 
@@ -213,7 +216,7 @@ public class LobbyManager : MonoBehaviour
     // 친구 추가 버튼 클릭 시
     public IEnumerator addFriend(int friendId)
     {
-        int userId = loginManagerScript.loginUserInfo.Id;
+        int userId = loginManagerScript.loginUserInfo.UserId;
 
         string requestUrl = url + "/friend/add";
 
@@ -254,7 +257,7 @@ public class LobbyManager : MonoBehaviour
     // 수락 버튼 클릭 시
     public IEnumerator acceptFriend(int friendId)
     {
-        int userId = loginManagerScript.loginUserInfo.Id;
+        int userId = loginManagerScript.loginUserInfo.UserId;
 
         string requestUrl = url + "/friend/accept";
 

@@ -3,20 +3,21 @@ using UnityEngine;
 [System.Serializable]
 public class User
 {
-    [SerializeField] private int id;
+    [SerializeField] private int userId;
     [SerializeField] private string email;
     [SerializeField] private string password;
     [SerializeField] private string name;
+    [SerializeField] private string profileImg;
 
-    public int Id
+    public int UserId
     {
         get
         {
-            return id;
+            return userId;
         }
         set
         {
-            id = value;
+            userId = value;
         }
     }
 
@@ -53,6 +54,18 @@ public class User
         set
         {
             name = value;
+        }
+    }
+
+    public string ProfileImg
+    {
+        get
+        {
+            return profileImg;
+        }
+        set
+        {
+            profileImg = value;
         }
     }
 
