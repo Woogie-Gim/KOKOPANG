@@ -10,4 +10,5 @@ export const Wrapper = styled.div`
   box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.3);
   background-color: white;
   opacity: 0.8;
+  font-size: 25px;
 `;
