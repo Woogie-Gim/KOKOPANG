@@ -303,13 +303,15 @@ const LoginForm = () => {
           </div>
         </FriendsBox>
       </LoginBox> : <LoginBox>
-        <div style={{ fontSize: "25px", width: "80%", margin: "20px auto", fontWeight: "700" }}>코코팡 로그인</div>
-        <form style={{ margin: "0 auto", width: "80%" }} onSubmit={Login}>
-          <UserLogin placeholder='Email' value={username} onChange={changeUsername} />
-          <UserLogin placeholder='Password' type='password' value={password} onChange={changePassword} />
-          <LoginButton type='submit' value='로그인' />
-        </form>
-        <SignUpBtn onClick={() => navigate("/signup")}>회원가입</SignUpBtn>
+        <div style={{ fontSize: "25px", width: "80%", margin: "20px auto"}}>코코팡 로그인</div>
+        <div style={{ margin: "0 auto", width: "80%" }} >
+          <form onSubmit={Login}>
+            <UserLogin placeholder='Email' value={username} onChange={changeUsername} />
+            <UserLogin placeholder='Password' type='password' value={password} onChange={changePassword} />
+            <LoginButton type='submit' value='로그인' />
+            <SignUpBtn onClick={() => navigate("/signup")} value="회원가입" />
+          </form>
+        </div>
         <img src={subImg} alt="심심이미지" style={{ width:"200px", height: "200px", margin: "0 auto", marginTop: "30px"}}/>
       </LoginBox>}
     </>

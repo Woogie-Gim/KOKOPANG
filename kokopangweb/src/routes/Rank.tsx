@@ -101,7 +101,7 @@ const Rank = () => {
         <SearchInput placeholder='닉네임을 검색해보세요!' value={search} onChange={changeSearch}></SearchInput>
         <SearchBtn>검색</SearchBtn>
       </SearchBox>
-      <TextBox>KOKOPang 전체 랭킹</TextBox>
+      <TextBox>🏆 KOKOPang 전체 랭킹</TextBox>
       <UserRankBox>
         <RankTable>
           <div className='container2'>

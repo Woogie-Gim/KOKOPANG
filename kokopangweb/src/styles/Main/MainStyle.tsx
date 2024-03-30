@@ -4,7 +4,7 @@ const UpBox = styled.div``
 
 const DownBox = styled.div`
     display: flex;
-    width: 80%;
+    width: 65%;
     margin: 0 auto;
     flex-direction: row;
     margin-bottom: 20px;
@@ -85,10 +85,8 @@ const NoticeBox = styled.div`
     width: 90%;
     height: 30px;
     overflow: hidden;
-    margin: 0 auto;
     font-size: 30px;
     color: white;
-    
 `
 
 export { InfoBox, UpBox, DownBox, Header, MenuBox, Menu,LogoBox, NoticeBox, NoticeHeader, Hme};

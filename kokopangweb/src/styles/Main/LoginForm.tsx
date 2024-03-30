@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 const LoginBox = styled.div`
-  width: 100%;
+  width: auto;
   height: 600px;
   display: flex;
   flex-direction: column;
@@ -12,9 +12,10 @@ const LoginBox = styled.div`
 `;
 
 const UserLogin = styled.input`
-  width: 95%;
+  width: 98.3%;
   height: 40px;
-  padding: 5px;
+  padding-top: 5px;
+  padding-bottom: 5px;
   margin: 5px auto;
   border: 1px solid lightgray;
   border-radius: 10px;
@@ -25,10 +26,10 @@ const UserLogin = styled.input`
 `;
 
 const LoginButton = styled.input`
-  transition: 0.2s;
   width: 100%;
   height: 50px;
-  padding: 5px;
+  padding-top: 3px;
+  padding-bottom: 3px;
   margin: 10px auto;
   border: 1px solid lightgray;
   border-radius: 10px;
@@ -37,21 +38,18 @@ const LoginButton = styled.input`
   font-size: 20px;
 `;
 
-const SignUpBtn = styled.div`
-  transition: 0.2s;
-  width: 77%;
-  height: 40px;
-  padding: 5px;
+const SignUpBtn = styled.input`
+  width: 98.3%;
+  height: 45px;
+  padding-top: 3px;
+  padding-bottom: 3px;
   margin: 0 auto;
   border: 1px solid lightgray;
   border-radius: 10px;
-  background-color: #f18798;
-  text-align: center;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  background-color: #f8a2b0;
   cursor: pointer;
   font-size: 20px;
+  text-align: center;
 `;
 
 const UserBox = styled.div`
@@ -99,7 +97,6 @@ const ProfileBox = styled.div`
     align-items: center;
     .logout {
       font-size: 15px;
-      font-weight: 0;
       color: gray;
       cursor: pointer;
       border: 3px solid lightgray;
