@@ -6,11 +6,9 @@ import org.koko.kokopangmulti.Object.Session;
 import org.koko.kokopangmulti.Object.SessionsInChannel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import reactor.netty.Connection;
 
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.LinkedHashMap;
 import java.util.Map;
 
 import static org.koko.kokopangmulti.Braodcast.BroadcastToChannel.broadcastMessage;
@@ -176,16 +174,23 @@ public class ChannelHandler {
 
             // 7) 방이 유지되는 경우
             default :
+
                 // 방장이 나간 경우 : 새로운 방장 설정
                 if (idx == 0) {
                     ArrayList<Integer> isExisted = sic.getIsExisted();
                     for (int i = 1; i < isExisted.size(); i++) {
                         if (isExisted.get(i) == 1) {
+                            // UPDATE : channel 내 idx (i -> 0)
                             sic.setFalseIsExisted(i);
                             sic.setTrueIsExisted(0);
 
-                            String leftUserName = channel.getIdxToName().get(i);
+                            // UPDATE : Ready 상태
+                            Boolean isReady = sic.getIsReady(i);    // 새로운 방장의 Ready 상태
+                            sic.setIsReady(0, isReady);         // 방장 idx에 ready 상태 동기화
+                            sic.setIsReady(i, false);       // 기존 idx의 ready 상태 초기화
 
+                            // UPDATE : idxToName, nameToIdx
+                            String leftUserName = channel.getIdxToName().get(i);    // 새로운 방장의 userName
                             channel.getIdxToName().remove(i);
                             channel.getIdxToName().put(0, leftUserName);
                             channel.getNameToIdx().put(leftUserName, 0);
@@ -193,6 +198,12 @@ public class ChannelHandler {
                             break;
                         }
                     }
+                }
+
+                // 팀원이 나간 경우
+                else {
+                    // ready 상태 초기화
+                    sic.setIsReady(idx, false);
                 }
 
         }
