@@ -42,7 +42,7 @@ const Main = () => {
       <TokenCheker />
       <NaviBar />
       <UpBox>
-        <div style={{ width: "80%" , margin: "0 auto", display: "flex", flexDirection: "row", marginBottom: "20px"}}>
+        <div style={{ width: "65%" , margin: "0 auto", display: "flex", flexDirection: "row", marginBottom: "20px"}}>
           <div style={{ fontSize: "20px"}}>📢</div>
           <NoticeBox>
             <div style={{
@@ -50,7 +50,6 @@ const Main = () => {
               transition: "transform 1s ease",
               display: "flex",
               flexDirection: "column",
-              justifyContent: "center"
             }}>
               {Notices.map((content,idx) => (
                 <div key={idx} style={{ height: "50px", flex: "0 0 auto", cursor:"pointer"}} >
