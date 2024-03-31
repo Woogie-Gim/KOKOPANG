@@ -49,13 +49,6 @@ public class ChannelHandler {
         // 5) LOGGING CREATE
         log.info("[userName:{}] CHANNEL CREATED, channelName:{}", userName, channelName);
 
-        // 동작 확인
-        System.out.println("channel.sessionsInChannel.cnt = " + channel.getSessionsInChannel().getCnt());
-        System.out.println("channel.sessionsInChannel.isExisted = " + channel.getSessionsInChannel().getIsExisted());
-
-        for (String key : ChannelList.getChannelInfo(channelIndex).getNameToIdx().keySet()) {
-            System.out.println(String.format("[userName:%s], [idx:%s]", key, ChannelList.getChannelInfo(channelIndex).getNameToIdx().get(key)));
-        }
     }
 
     public static void joinChannel(String userName, int channelIndex) {
@@ -97,14 +90,6 @@ public class ChannelHandler {
         // 6-3) lobby 내 sessions : sessionList UPDATE
         broadcastLobby(lobbySessionsToJson()).subscribe();
 
-        // 동작 확인
-        System.out.println("channel.sessionsInChannel.cnt = " + channel.getSessionsInChannel().getCnt());
-        System.out.println("channel.sessionsInChannel.isExisted = " + channel.getSessionsInChannel().getIsExisted());
-
-        for (String key : ChannelList.getChannelInfo(channelIndex).getNameToIdx().keySet()) {
-            System.out.println(String.format("[userName:%s], [idx:%s]", key, ChannelList.getChannelInfo(channelIndex).getNameToIdx().get(key)));
-        }
-
     }
 
     public static void isReady(String userName, int channelIndex) {
@@ -129,12 +114,6 @@ public class ChannelHandler {
 
         // 3) Broadcasting : channel 내 sessions
         broadcastMessage(channelIndex, channelSessionListToJSON(channel)).subscribe();
-
-        // 동작 확인
-        Iterator ready = ChannelList.getChannelInfo(channelIndex).getSessionsInChannel().getIsReadyList().iterator();
-        while(ready.hasNext()) {
-            System.out.println(ready.next());
-        }
 
     }
 
@@ -227,17 +206,6 @@ public class ChannelHandler {
         // 8-3) lobby 내 sessions : sessionList UPDATE
         broadcastLobby(lobbySessionsToJson()).subscribe();
 
-        // 동작 확인
-        if(flag) {
-
-            System.out.println("channel.sessionsInChannel.cnt = " + channel.getSessionsInChannel().getCnt());
-            System.out.println("channel.sessionsInChannel.isExisted = " + channel.getSessionsInChannel().getIsExisted());
-
-            for (String key : ChannelList.getChannelInfo(channelIndex).getNameToIdx().keySet()) {
-                System.out.println(String.format("[userName:%s], [idx:%s]", key, ChannelList.getChannelInfo(channelIndex).getNameToIdx().get(key)));
-            }
-
-        }
     }
 }
 
