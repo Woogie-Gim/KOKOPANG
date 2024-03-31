@@ -2,8 +2,9 @@ package org.koko.kokopangmulti.Channel;
 
 import org.koko.kokopangmulti.Object.Channel;
 import org.koko.kokopangmulti.Object.ChannelList;
-import org.koko.kokopangmulti.Object.Session;
 import org.koko.kokopangmulti.Object.SessionsInChannel;
+import org.koko.kokopangmulti.session.Session;
+import org.koko.kokopangmulti.session.SessionState;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,6 +15,7 @@ import java.util.Map;
 import static org.koko.kokopangmulti.Braodcast.BroadcastToChannel.broadcastMessage;
 import static org.koko.kokopangmulti.Braodcast.BroadcastToLobby.broadcastLobby;
 import static org.koko.kokopangmulti.Braodcast.BroadcastToLobby.broadcastPrivate;
+import static org.koko.kokopangmulti.session.Session.getSessionList;
 import static org.koko.kokopangmulti.Braodcast.ToJson.*;
 
 public class ChannelHandler {
@@ -27,6 +29,9 @@ public class ChannelHandler {
         int userId = ChannelList.getLobby().getSessionList().get(userName);
         ChannelList.getLobby().getSessionList().remove(userName);
 
+        // 2-1) SessionInfo 수정
+        getSessionList().get(userName).setSessionState(channel.getChannelIdx());
+
         // 3) ChannelList에 channel 추가
         int channelIndex = ChannelList.addChannel(channel);
 
@@ -39,9 +44,7 @@ public class ChannelHandler {
         // 4-2) lobby 내 sessions : channelList UPDATE
         broadcastLobby(channelListToJson()).subscribe();
         // 4-3) lobby 내 sessions : sessionList UPDATE
-        for (Map.Entry<String, Integer> entry : ChannelList.getLobby().getSessionList().entrySet()) {
-            broadcastPrivate(Session.getSessionList().get(entry.getKey()), lobbySessionsToJson()).subscribe();
-        }
+        broadcastLobby(lobbySessionsToJson()).subscribe();
 
         // 5) LOGGING CREATE
         log.info("[userName:{}] CHANNEL CREATED, channelName:{}", userName, channelName);
@@ -68,6 +71,9 @@ public class ChannelHandler {
         // 3) Lobby에서 [userName] 제거
         int userId = ChannelList.getLobby().getSessionList().get(userName);
         ChannelList.getLobby().getSessionList().remove(userName);
+
+        // 3-1) sessionInfo 수정
+        Session.getSessionList().get(userName).setSessionState(channelIndex);
 
         // 4) channel 안 [userName]의 idx 탐색
         for (int i = 0; i < 6; i++) {
@@ -152,6 +158,9 @@ public class ChannelHandler {
 
         // 4) 나가는 [userName] lobby에 추가
         ChannelList.getLobby().getSessionList().put(userName, userId);
+
+        // 4-1) sessionInfo수정
+        Session.getSessionList().get(userName).setSessionState(0);
 
         // 5) LOGGING LEAVE
         log.info("[userName:{}] CHANNEL LEAVED, channelName:{}", userName, ChannelList.getChannelInfo(channelIndex).getChannelName());
