@@ -1,5 +1,7 @@
 package org.koko.kokopangmulti.Channel;
 
+import org.koko.kokopangmulti.Braodcast.BroadcastToChannel;
+import org.koko.kokopangmulti.Braodcast.BroadcastToLobby;
 import org.koko.kokopangmulti.Braodcast.ToJson;
 import org.koko.kokopangmulti.Object.Channel;
 import org.koko.kokopangmulti.Object.ChannelList;
@@ -215,6 +217,17 @@ public class ChannelHandler {
         // 8-3) lobby 내 sessions : sessionList UPDATE
         broadcastLobby(lobbySessionsToJson()).subscribe();
 
+    }
+
+    public static void startGame(int channelIndex) {
+        // 현재 채널의 상태를 게임중으로 변경
+        ChannelList.getChannelInfo(channelIndex).setOnGame();
+
+        // 채널 상태 업데이트 로비에 브로드캐스팅
+        BroadcastToLobby.broadcastLobby(channelListToJson()).subscribe();
+
+        // 접속 중인 인원들에게 정보 업데이트
+        BroadcastToChannel.broadcastMessage(channelIndex, channelInfoToJson(channelIndex)).subscribe();
     }
 }
 
