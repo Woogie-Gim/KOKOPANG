@@ -19,15 +19,30 @@ public class LobbyManager : MonoBehaviour
     public GameObject ScrollViewLobbyList;  // 모든 유저 리스트 보일 스크롤뷰
     public GameObject ScrollViewFriendList; // 친구 리스트 보일 스크롤뷰
     public GameObject UserInfoDetail;   // 유저 리스트에서 누르면 등장하는 유저 상세정보 창
+    public TMP_Text ConnectedUserCount; // 접속 유저 카운트
+    public GameObject CreateChannel;    // 방 만들기 팝업
+
+    [Header("Channel")]
+
 
 
     private string url = "https://j10c211.p.ssafy.io:8080";   // 요청 URL
 
-    private void Awake()
+    private void OnDisable()
     {
-        //LobbyInit();
-        //setAllUsers();
-        //setFriendUsers();
+        // 접속 유저 리스트 지우기
+        //Transform content = ScrollViewLobbyList.transform.Find("ScrollView/Viewport/Content");
+        //List<GameObject> children = new List<GameObject>();
+        //foreach(Transform child in content)
+        //{
+        //    children.Add(child.gameObject);
+        //}
+        //foreach(GameObject child in children)
+        //{
+        //    Destroy(child);
+        //} 
+
+
     }
 
 
@@ -70,6 +85,13 @@ public class LobbyManager : MonoBehaviour
             //GameObject[] activeUserData = new GameObject[userList.Length];
             for (int i = 0; i < userList.Length; i++)
             {
+
+                // 자기 자신은 건너뛰기
+                if(userList[i].UserId == loginManagerScript.loginUserInfo.UserId)
+                {
+                    continue;
+                }
+
                 // 요소 생성 및 부모 설정
                 userListElements[i] = Instantiate(UserListElement);
                 userListElements[i].transform.SetParent(content, false);
@@ -79,23 +101,36 @@ public class LobbyManager : MonoBehaviour
                 userListElementScript.Email = userList[i].Email;
                 userListElementScript.Name = userList[i].Name;
                 userListElementScript.UserInfoDetail = UserInfoDetail;
+          
                 // 데이터 보이기
                 userListElementScript.UserNameText.text = userList[i].Name + " #" + userList[i].UserId;
             }
+
+            // 유저 접속 인원 텍스트 업데이트
+            ConnectedUserCount.text = "접속 인원: " + userList.Length;
         }
     }
 
     // 친구 리스트 불러오기
     private void setFriendUsers()
     {
+        Debug.Log("GetFriends");
+
         // 현재 친구 유저 데이터 불러오기
-        StartCoroutine(getFriendList((User[] userList) =>
+        StartCoroutine(getFriendList((Friendship[] userList) =>
         {
             // 친구가 있으면
             if (userList != null)
             {
                 // 친구 리스트 들어갈 스크롤뷰(설정할 부모)
                 Transform content = ScrollViewFriendList.transform.Find("ScrollView/Viewport/Content");
+
+                // 기존 리스트 제거
+                // TODO: 오브젝트 풀링
+                foreach (Transform child in content)
+                {
+                    Destroy(child.gameObject);
+                }
 
                 // 친구 리스트에 들어갈 각각의 컴포넌트 생성
                 GameObject[] userListElements = new GameObject[userList.Length];
@@ -107,18 +142,36 @@ public class LobbyManager : MonoBehaviour
                     // 요소 생성 및 부모 설정
                     userListElements[i] = Instantiate(UserListElement);
                     userListElements[i].transform.SetParent(content, false);
+                    
                     // 유저 데이터 초기화
                     UserListElement userListElementScript = userListElements[i].GetComponent<UserListElement>();
-                    userListElementScript.Id = userList[i].UserId;
-                    userListElementScript.Email = userList[i].Email;
-                    userListElementScript.Name = userList[i].Name;
+                    userListElementScript.Id = userList[i].FriendId;
+                    userListElementScript.Name = userList[i].FriendName;
                     userListElementScript.UserInfoDetail = UserInfoDetail;
+
+                    // 보여질 데이터
+                    string showData = userList[i].FriendName + " #" + userList[i].FriendId;
+
+                    // 나에게 들어온 요청 아직 수락 안한 경우
+                    if (userList[i].IsWaiting && !userList[i].IsFrom)
+                    {
+                        userListElements[i].transform.Find("Border").GetComponent<Outline>().effectColor = Color.red;
+                        // 데이터 보이기
+                        showData += "  (친구요청)";
+                    }
+                    // 내가 보낸 요청 아직 수락 안한 경우
+                    else if(userList[i].IsWaiting && userList[i].IsFrom)
+                    {
+                        userListElements[i].transform.Find("Border").GetComponent<Outline>().effectColor = Color.green;
+                        // 데이터 보이기
+                        showData += "  (수락대기)";
+                    }
+
                     // 데이터 보이기
-                    userListElementScript.UserNameText.text = userList[i].Name;
+                    userListElementScript.UserNameText.text = showData;
                 }
             }
         }));
-        
     }
 
     // 전체 유저 목록 / 친구 목록 버튼 클릭 시
@@ -129,21 +182,12 @@ public class LobbyManager : MonoBehaviour
 
         ScrollViewLobbyList.SetActive(!ScrollViewLobbyList.activeSelf);
         ScrollViewFriendList.SetActive(!ScrollViewFriendList.activeSelf);
+
+        setFriendUsers();
     }
 
-    [System.Serializable]
-    class Friend
-    {
-        public int friendId;
-        public string friendName;
-    }
-    [System.Serializable]
-    class FriendList
-    {
-        public Friend[] friends;
-    }
     // 친구 목록 불러오기
-    private IEnumerator getFriendList(System.Action<User[]> callback)
+    private IEnumerator getFriendList(System.Action<Friendship[]> callback)
     {
         int userId = loginManagerScript.loginUserInfo.UserId;
 
@@ -164,23 +208,10 @@ public class LobbyManager : MonoBehaviour
             else
             {
                 string result = friendCheckRequest.downloadHandler.text;
-                Debug.Log(result);
-                string wrappedJson = "{ \"friends\": " + result + "}";
-                FriendList friendList = JsonUtility.FromJson<FriendList>(wrappedJson);
 
-                int i = 0;
-                User[] userList = new User[friendList.friends.Length];
-                foreach(Friend friend in friendList.friends)
-                {
-                    Debug.Log("id: " + friend.friendId + ", Name: " + friend.friendName);
-                    userList[i++] = new User
-                    {
-                        UserId = friend.friendId,
-                        Name = friend.friendName
-                    };
-                }
-
-                callback(userList);
+                Friendship[] friendList = JsonArrParser.FromJson<Friendship>(result);
+            
+                callback(friendList);
             }
         }
     }
@@ -288,7 +319,22 @@ public class LobbyManager : MonoBehaviour
                 Debug.Log(acceptFriendRequest.error);
                 yield break;
             }
+
+            setFriendUsers();
         }
     }
 
+
+    // =================================센터바
+    // 방 만들기 버튼 클릭 시
+    public void CreateChannelBtnClicked()
+    {
+        CreateChannel.SetActive(true);
+    }
+
+    // 방 참가버튼 클릭 시
+    public void JoinChannelBtnClicked()
+    {
+        TCPConnectManagerScript.joinChannel();
+    }
 }

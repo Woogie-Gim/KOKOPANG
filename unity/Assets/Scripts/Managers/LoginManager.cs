@@ -193,7 +193,7 @@ public class LoginManager : MonoBehaviour
                     // 정보 요청 성공 시
                     else
                     {
-                        Debug.Log(userProfileRequest.downloadHandler.text);
+                        //Debug.Log(userProfileRequest.downloadHandler.text);
                         loginUserInfo = JsonUtility.FromJson<User>(userProfileRequest.downloadHandler.text);
 
                         // 로비 데이터 초기화 호출 -> 로비매니저 awake
