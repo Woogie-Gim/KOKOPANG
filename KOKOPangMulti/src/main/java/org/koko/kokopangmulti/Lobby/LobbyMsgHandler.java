@@ -3,6 +3,9 @@ package org.koko.kokopangmulti.Lobby;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.koko.kokopangmulti.Braodcast.BroadcastToLobby;
+import org.koko.kokopangmulti.Braodcast.ToJson;
+import org.koko.kokopangmulti.session.Session;
 import reactor.netty.NettyInbound;
 
 import java.util.HashMap;
@@ -20,6 +23,9 @@ public class LobbyMsgHandler {
             case "initial":
                 int userId = data.getInt("userId");
                 LobbyHandler.initialLogIn(in, userName, userId);
+                break;
+            case "refresh":
+                BroadcastToLobby.broadcastPrivate(Session.getSessionList().get(userName).getConnection(), ToJson.channelListToJson()).subscribe();
                 break;
             case "chat":
                 String message = data.getString("message");

@@ -44,6 +44,7 @@ public class Channel {
         this.sessionsInChannel = new SessionsInChannel();   // cnt=1, isExisted=[1,0,0,0,0,0]
         this.isOnGame = false;
         this.sessionList = new HashMap<>();
+        this.channelIdx = 0;
     }
     public Channel() {
 

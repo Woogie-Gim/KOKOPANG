@@ -1,5 +1,6 @@
 package org.koko.kokopangmulti.Channel;
 
+import org.koko.kokopangmulti.Braodcast.ToJson;
 import org.koko.kokopangmulti.Object.Channel;
 import org.koko.kokopangmulti.Object.ChannelList;
 import org.koko.kokopangmulti.Object.SessionsInChannel;
@@ -29,18 +30,20 @@ public class ChannelHandler {
         int userId = ChannelList.getLobby().getSessionList().get(userName);
         ChannelList.getLobby().getSessionList().remove(userName);
 
-        // 2-1) SessionInfo 수정
-        getSessionList().get(userName).setSessionState(channel.getChannelIdx());
-
         // 3) ChannelList에 channel 추가
         int channelIndex = ChannelList.addChannel(channel);
+
+        // 2-1) SessionInfo 수정
+        getSessionList().get(userName).setSessionState(channel.getChannelIdx());
 
         // sessionList해쉬맵에 이름, id값 추가
         channel.getSessionList().put(userName, userId);
 
         // 4) BroadCasting
-        // 4-1) channel 내 sessions
+        // 4-1) channel 내 sessionList 전송
         broadcastMessage(channelIndex, channelSessionListToJSON(channel)).subscribe();
+        broadcastPrivate(Session.getSessionList().get(userName).getConnection(), ToJson.channelInfoToJson(channelIndex)).subscribe();
+
         // 4-2) lobby 내 sessions : channelList UPDATE
         broadcastLobby(channelListToJson()).subscribe();
         // 4-3) lobby 내 sessions : sessionList UPDATE
@@ -58,6 +61,7 @@ public class ChannelHandler {
         // 2) channel 참가 인원 확인 : 이미 6명이라면 join 거절
         if (channel.getSessionsInChannel().getCnt() == 6) {
             log.warn("[JOIN REJECTED] ROOM IS FULL");
+            broadcastPrivate(Session.getSessionList().get(userName).getConnection(), "fail");
             return;
         }
 
@@ -85,6 +89,7 @@ public class ChannelHandler {
         // 6) Broadcasting
         // 6-1) channel 내 sessions
         broadcastMessage(channelIndex, channelSessionListToJSON(channel)).subscribe();
+
         // 6-2) lobby 내 sessions : channelList UPDATE
         broadcastLobby(channelListToJson()).subscribe();
         // 6-3) lobby 내 sessions : sessionList UPDATE
@@ -117,7 +122,7 @@ public class ChannelHandler {
 
     }
 
-    public static void leaveChannel(String userName, int channelIndex) {
+    public static void leaveChannel(String userName, int channelIndex, SessionState sessionState) {
 
         // 1) channel 정보
         boolean flag = true;                                         // channel 유무
@@ -135,11 +140,11 @@ public class ChannelHandler {
         sic.minusCnt();                             // cnt
         sic.setFalseIsExisted(idx);                 // isExisted
 
-        // 4) 나가는 [userName] lobby에 추가
-        ChannelList.getLobby().getSessionList().put(userName, userId);
-
-        // 4-1) sessionInfo수정
-        Session.getSessionList().get(userName).setSessionState(0);
+        // 4) 나가는 [userName] lobby에 추가 (정상적으로 나간 경우)
+        if (sessionState == SessionState.NORMAL) {
+            ChannelList.getLobby().getSessionList().put(userName, userId);
+            Session.getSessionList().get(userName).setSessionState(0);
+        }
 
         // 5) LOGGING LEAVE
         log.info("[userName:{}] CHANNEL LEAVED, channelName:{}", userName, ChannelList.getChannelInfo(channelIndex).getChannelName());
@@ -195,14 +200,15 @@ public class ChannelHandler {
 
         }
 
-
         // 8) broadcasting :
         // 8-1) channel 내 sessions : 방이 사라지지 않은 경우
         if (flag) {
             broadcastMessage(channelIndex, channelSessionListToJSON(channel)).subscribe();
         }
         // 8-2) lobby 내 sessions : channelList UPDATE
-        broadcastLobby(channelListToJson()).subscribe();
+        if (sessionState == SessionState.NORMAL) {
+            broadcastLobby(channelListToJson()).subscribe();
+        }
         // 8-3) lobby 내 sessions : sessionList UPDATE
         broadcastLobby(lobbySessionsToJson()).subscribe();
 
