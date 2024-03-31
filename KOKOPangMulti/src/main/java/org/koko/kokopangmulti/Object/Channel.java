@@ -80,6 +80,10 @@ public class Channel {
         return idxToName;
     }
 
+    public void setOnGame() {
+        isOnGame = true;
+    }
+
     public Boolean getOnGame() {
         return isOnGame;
     }

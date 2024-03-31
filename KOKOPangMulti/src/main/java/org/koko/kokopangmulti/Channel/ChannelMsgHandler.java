@@ -28,6 +28,9 @@ public class ChannelMsgHandler {
                 channelIndex = data.getInt("channelIndex");
                 ChannelHandler.leaveChannel(userName, channelIndex, SessionState.NORMAL);
                 break;
+            case "start":
+                channelIndex = data.getInt("channelIndex");
+                ChannelHandler.startGame(channelIndex);
         }
     }
 
