@@ -34,8 +34,6 @@ public class ChannelHandler {
 
         // 2-1) SessionInfo 수정
         getSessionList().get(userName).setSessionState(channel.getChannelIdx());
-        System.out.println("channel"+ channel.getChannelIdx());
-        System.out.println(getSessionList().get(userName).getSessionState());
 
         // sessionList해쉬맵에 이름, id값 추가
         channel.getSessionList().put(userName, userId);
