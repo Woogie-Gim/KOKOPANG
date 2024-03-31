@@ -1,5 +1,6 @@
 package org.koko.kokopangmulti.Channel;
 
+import org.koko.kokopangmulti.Braodcast.ToJson;
 import org.koko.kokopangmulti.Object.Channel;
 import org.koko.kokopangmulti.Object.ChannelList;
 import org.koko.kokopangmulti.Object.SessionsInChannel;
@@ -39,8 +40,10 @@ public class ChannelHandler {
         channel.getSessionList().put(userName, userId);
 
         // 4) BroadCasting
-        // 4-1) channel 내 sessions
+        // 4-1) channel 내 sessionList 전송
         broadcastMessage(channelIndex, channelSessionListToJSON(channel)).subscribe();
+        broadcastPrivate(Session.getSessionList().get(userName).getConnection(), ToJson.channelInfoToJson(channelIndex)).subscribe();
+
         // 4-2) lobby 내 sessions : channelList UPDATE
         broadcastLobby(channelListToJson()).subscribe();
         // 4-3) lobby 내 sessions : sessionList UPDATE
@@ -86,6 +89,7 @@ public class ChannelHandler {
         // 6) Broadcasting
         // 6-1) channel 내 sessions
         broadcastMessage(channelIndex, channelSessionListToJSON(channel)).subscribe();
+
         // 6-2) lobby 내 sessions : channelList UPDATE
         broadcastLobby(channelListToJson()).subscribe();
         // 6-3) lobby 내 sessions : sessionList UPDATE
