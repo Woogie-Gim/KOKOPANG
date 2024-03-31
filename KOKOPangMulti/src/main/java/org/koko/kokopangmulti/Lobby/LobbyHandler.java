@@ -18,6 +18,7 @@ public class LobbyHandler {
             SessionInfo sessionInfo = new SessionInfo(connection);
 
             Session.getSessionList().put(userName, sessionInfo);
+            Session.getConnectionList().put(connection, userName);
             ChannelList.getLobby().getSessionList().put(userName, userId);
 
             // 유저에게 현재 채널 정보 브로드캐스팅
