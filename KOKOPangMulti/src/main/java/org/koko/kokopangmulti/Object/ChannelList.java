@@ -19,6 +19,7 @@ public class ChannelList {
     public static synchronized int addChannel(Channel channel) {
         index++;                                // 인덱스값 +1
         channelList.put(index, channel);        // 인덱스를 키, 채널을 값으로 리스트에 추가
+        channelList.get(index).setChannelIdx(index);
         return index;                           // 인덱스 번호 리턴
     }
 

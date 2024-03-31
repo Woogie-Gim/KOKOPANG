@@ -4,7 +4,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.koko.kokopangmulti.Braodcast.BroadcastToLobby;
 import org.koko.kokopangmulti.Braodcast.ToJson;
 import org.koko.kokopangmulti.Object.ChannelList;
-import org.koko.kokopangmulti.Object.Session;
+import org.koko.kokopangmulti.session.Session;
+import org.koko.kokopangmulti.session.SessionInfo;
 import reactor.netty.NettyInbound;
 
 import java.util.HashMap;
@@ -13,7 +14,10 @@ import java.util.LinkedHashMap;
 public class LobbyHandler {
     public static void initialLogIn(NettyInbound in, String userName, int userId) {
         in.withConnection(connection -> {
-            Session.getSessionList().put(userName, connection);
+
+            SessionInfo sessionInfo = new SessionInfo(connection);
+
+            Session.getSessionList().put(userName, sessionInfo);
             ChannelList.getLobby().getSessionList().put(userName, userId);
 
             // 유저에게 현재 채널 정보 브로드캐스팅

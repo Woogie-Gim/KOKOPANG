@@ -16,6 +16,15 @@ public class Channel {
     private SessionsInChannel sessionsInChannel;
     private Boolean isOnGame;
     private HashMap<String, Integer> sessionList;
+    private int channelIdx;
+
+    public int getChannelIdx() {
+        return channelIdx;
+    }
+
+    public void setChannelIdx(int channelIdx) {
+        this.channelIdx = channelIdx;
+    }
 
     private static final ObjectMapper objectMapper = new ObjectMapper();
 
