@@ -49,52 +49,36 @@ public class TcpConnectionHandler implements Consumer<Connection> {
                     }
                 }
 
-                // Session목록에서 session제거
-                Session.getSessionList().remove(userName);
+                int channelIdx = Session.getSessionList().get(userName).getSessionState();
 
-                // Lobby 확인
-                if (ChannelList.getLobby().getSessionList().get(userName) != null) {
-                    isLeave = true;
+                switch (channelIdx) {
+                    case 0:
+                        // 로비 유저 목록에서 세션 제거
+                        ChannelList.getLobby().getSessionList().remove(userName);
 
-                    // 로비 유저 목록에서 세션 제거
-                    ChannelList.getLobby().getSessionList().remove(userName);
+                        // 로비에 접속 유저 목록 변동 사항 브로드캐스팅
+                        BroadcastToLobby.broadcastLobby(ToJson.lobbySessionsToJson()).subscribe();
+                        log.info("Client remove from Lobby");
+                        break;
 
-                    // 로비에 접속 유저 목록 변동 사항 브로드캐스팅
-                    BroadcastToLobby.broadcastLobby(ToJson.lobbySessionsToJson()).subscribe();
-                    log.info("Client remove from Lobby");
-                }
+                    default:
+                        Channel channel = ChannelList.getChannelInfo(channelIdx);
+                        SessionsInChannel sic = channel.getSessionsInChannel();
+                        int idx = channel.getIdx(userName);
 
-                // 채널목록 확인
-                if (!isLeave) {
-                    for (Channel channel : ChannelList.getChannelList().values()) {
-                        for (String sessionName : channel.getSessionList().keySet()) {
-                            if (sessionName.equals(userName)) {
-                                isLeave = true;
+                        channel.getNameToIdx().remove(userName);
+                        channel.getIdxToName().remove(idx);
+                        channel.getSessionList().remove(userName);
+                        sic.minusCnt();
+                        sic.setFalseIsExisted(idx);
 
-                                SessionsInChannel sic = channel.getSessionsInChannel();
-                                int idx = channel.getIdx(userName);
-
-                                channel.getNameToIdx().remove(userName);
-                                channel.getIdxToName().remove(idx);
-                                channel.getSessionList().remove(userName);
-                                sic.minusCnt();
-                                sic.setFalseIsExisted(idx);
-
-                                int channelIdx = channel.getChannelIdx();
-
-                                if (sic.getCnt() == 0) {
-                                    ChannelList.getChannelList().remove(channelIdx);
-                                }
-
-                                log.info("Client remove from Channel");
-                                break;
-                            }
+                        if (sic.getCnt() == 0) {
+                            ChannelList.getChannelList().remove(channelIdx);
+                            BroadcastToLobby.broadcastLobby(ToJson.channelListToJson()).subscribe();
                         }
 
-                        if (isLeave) {
-                            break;
-                        }
-                    }
+                        log.info("Client remove from Channel");
+                        break;
                 }
             }
 
