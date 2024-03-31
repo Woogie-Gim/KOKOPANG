@@ -7,13 +7,15 @@ import org.koko.kokopangmulti.Braodcast.BroadcastToLobby;
 import org.koko.kokopangmulti.Braodcast.ToJson;
 import org.koko.kokopangmulti.Object.*;
 import org.koko.kokopangmulti.session.Session;
-import org.koko.kokopangmulti.session.SessionInfo;
+import org.koko.kokopangmulti.session.SessionState;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import reactor.netty.Connection;
 
 import java.util.Map;
 import java.util.function.Consumer;
+
+import static org.koko.kokopangmulti.Channel.ChannelHandler.leaveChannel;
 
 public class TcpConnectionHandler implements Consumer<Connection> {
 
@@ -57,24 +59,7 @@ public class TcpConnectionHandler implements Consumer<Connection> {
                         break;
 
                     default:
-                        System.out.println("check");
-                        Channel channel = ChannelList.getChannelInfo(channelIdx);
-                        SessionsInChannel sic = channel.getSessionsInChannel();
-                        int idx = channel.getIdx(userName);
-
-                        channel.getNameToIdx().remove(userName);
-                        channel.getIdxToName().remove(idx);
-                        channel.getSessionList().remove(userName);
-                        sic.minusCnt();
-                        sic.setFalseIsExisted(idx);
-
-                        if (sic.getCnt() == 0) {
-                            ChannelList.getChannelList().remove(channelIdx);
-                            BroadcastToLobby.broadcastLobby(ToJson.channelListToJson()).subscribe();
-                            System.out.println(ChannelList.getChannelList());
-                        } else {
-                            // 남아있는 사람들에게 브로드캐스팅 해주는 로직 고민 필요!
-                        }
+                        leaveChannel(userName, channelIdx, SessionState.EXCEPTION);
 
                         log.info("Client remove from Channel");
                         break;
