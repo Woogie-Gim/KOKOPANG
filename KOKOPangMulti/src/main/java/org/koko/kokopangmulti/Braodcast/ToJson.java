@@ -99,4 +99,28 @@ public class ToJson {
             throw new RuntimeException(e);
         }
     }
+
+    public static String channelInfoToJson(int channelIndex) {
+        Channel channel = ChannelList.getChannelInfo(channelIndex);
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        Map<String, Object> temp = new LinkedHashMap<>();
+        Map<String, Object> data = new LinkedHashMap<>();
+
+        temp.put("type", "channelInfo");
+
+        data.put("channelIndex", channelIndex);
+        data.put("channelName", channel.getChannelName());
+        data.put("cnt", channel.getSessionsInChannel().getCnt());
+        data.put("isOnGame", channel.getOnGame());
+
+
+        temp.put("data", data);
+
+        try {
+            return objectMapper.writeValueAsString(temp) + '\n';
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
