@@ -5,11 +5,9 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.LineBasedFrameDecoder;
 import org.koko.kokopangmulti.Braodcast.BroadcastToLobby;
 import org.koko.kokopangmulti.Braodcast.ToJson;
-import org.koko.kokopangmulti.Object.Channel;
-import org.koko.kokopangmulti.Channel.ChannelHandler;
-import org.koko.kokopangmulti.Object.ChannelList;
-import org.koko.kokopangmulti.Object.Session;
-import org.koko.kokopangmulti.Object.SessionsInChannel;
+import org.koko.kokopangmulti.Object.*;
+import org.koko.kokopangmulti.session.Session;
+import org.koko.kokopangmulti.session.SessionInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import reactor.netty.Connection;
@@ -44,7 +42,7 @@ public class TcpConnectionHandler implements Consumer<Connection> {
                 String userName = null;
                 boolean isLeave = false;
 
-                for (Map.Entry<String, Connection> entry : Session.getSessionList().entrySet()) {
+                for (Map.Entry<String, SessionInfo> entry : Session.getSessionList().entrySet()) {
                     if (entry.getValue().equals(conn)) {
                         userName = entry.getKey();
                         break;
