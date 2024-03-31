@@ -13,59 +13,60 @@ using TMPro;
 public class TCPConnectManager : MonoBehaviour
 {
     [Header("Commons")]
+    public GameObject LobbyScene;
+    public GameObject ChannelScene;
     public LobbyManager lobbyManagerScript;
     public LoginManager loginManagerScript;
 
     [Header("Chat")]
-    public TMP_Text MessageElement;   // Ã¤ï¿½ï¿½ ï¿½Þ½ï¿½ï¿½ï¿½
-    public GameObject ChattingList; // Ã¤ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ®
-    public TMP_InputField InputText;  // ï¿½Ô·ï¿½ ï¿½Þ½ï¿½ï¿½ï¿½
+    public TMP_Text MessageElement;   // Ã¤ÆÃ ¸Þ½ÃÁö
+    public GameObject ChattingList; // Ã¤ÆÃ ¸®½ºÆ®
+    public TMP_InputField InputText;  // ÀÔ·Â ¸Þ½ÃÁö
+
+    [Header("Channel")]
+    public GameObject ScrollViewChannelList;    // Ã¤³Î ¸®½ºÆ®
+    public GameObject ChannelListElement;       // Ã¤³Î ¸®½ºÆ® Ç×¸ñ
+    public ChannelListElement SelectedChannel;  // ¼±ÅÃµÈ Ã¤³Î ¸®½ºÆ®
 
 
+
+    [Header("Connect")]
     private TcpClient _tcpClient;
     private NetworkStream _networkStream;
     private StreamReader reader;
     private StreamWriter writer;
     private User loginUserInfo;
 
-    private string hostname = "j10c211.p.ssafy.io";
+    //private string hostname = "j10c211.p.ssafy.io";
+    private string hostname = "172.30.1.4";
     private int port = 1370;
 
-    private void Awake()
+
+    private void OnEnable()
     {
+        // TCP Ã¹ ¿¬°á ÈÄ¿¡´Â ¿äÃ» 2¹ø ¹Þ¾Æ¼­ channel, session 2°¡Áö ¸ñ·ÏÀ» ¹Þ¾Æ¿Â´Ù.
         ConnectToServer();
+    }
+
+    private void OnDisable()
+    {
+        // Ã¤ÆÃ ³»¿ª Áö¿ì±â
+
+
+        // Á¢¼Ó°ü·Ã ¸Þ¸ð¸® ÇØÁ¦
+        OnApplicationQuit();
     }
 
     private void Update()
     {
-        // ï¿½ï¿½ï¿½ï¿½ï¿½Í°ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
+        // µ¥ÀÌÅÍ°¡ µé¾î¿Â °æ¿ì
         if(_networkStream.DataAvailable)
         {
             string response = ReadMessageFromServer();
-            string type = getType(response);
-
-            //Debug.Log(response);
-            //Debug.Log(type);
-            
-            if(type == "chat")  // Ã¤ï¿½ï¿½ ï¿½Þ½ï¿½ï¿½ï¿½
-            {
-                showMessage(response);
-            }
-            else if(type == "channelList")  // ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½
-            {
-
-            }
-            else if(type == "sessionList")  // ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
-            {
-                lobbyManagerScript.setAllUsers(response);
-            }
-            else if(type == "channelSessionList")   // ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
-            {
-
-            }
+            DispatchResponse(response);
         }
 
-        // Ã¤ï¿½ï¿½ ï¿½Ô·ï¿½ ï¿½ï¿½ï¿½ï¿½
+        // Ã¤ÆÃ ÀÔ·Â ¿£ÅÍ
         if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter))
         {
             if(InputText.text != "")
@@ -75,12 +76,42 @@ public class TCPConnectManager : MonoBehaviour
         }
     }
 
-    // ============================= ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ =============================
-    public void ConnectToServer()
+    // ¿äÃ» ºÐ¹èÇÏ±â
+    private void DispatchResponse(string response)
+    {
+        string type = getType(response);
+
+        //Debug.Log("response: " + response);
+        //Debug.Log("type: " + type);
+
+        if (type == "chat")  // Ã¤ÆÃ ¸Þ½ÃÁö
+        {
+            showMessage(response);
+        }
+        else if (type == "channelList")  // ÀüÃ¼ »ý¼ºµÈ ¹æ ¸ñ·Ï
+        {
+            setChannelList(response);
+        }
+        else if (type == "sessionList")  // ÀüÃ¼ Á¢¼ÓÇÑ À¯Àú ¸ñ·Ï
+        {
+            lobbyManagerScript.setAllUsers(response);
+        }
+        else if (type == "channelSessionList")   // ¹æ ¾ÈÀÇ À¯Àú ¸ñ·Ï
+        {
+            Debug.Log("Response ChannelSessionList");
+        }
+        else
+        {
+            Debug.Log("Response ELSE!!!");
+        }
+    }
+
+    // ============================= ¼­¹ö ¿¬°á °ü·Ã =============================
+    private void ConnectToServer()
     {
         try
         {
-            // TCP ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+            // TCP ¼­¹ö¿¡ ¿¬°á
             _tcpClient = new TcpClient(hostname, port);
             _networkStream = _tcpClient.GetStream();
             reader = new StreamReader(_networkStream);
@@ -99,58 +130,62 @@ public class TCPConnectManager : MonoBehaviour
                 "}";
             SendMessageToServer(json);
 
-
+            // channel, session ¸ñ·Ï ¹Þ¾Æ¿À±â
+            // TCP Ã¹ ¿¬°á ÈÄ¿¡´Â ¿äÃ» 2¹ø ¹Þ¾Æ¼­ channel, session 2°¡Áö ¸ñ·ÏÀ» ¹Þ¾Æ¿Â´Ù.
+            string response = ReadMessageFromServer();
+            DispatchResponse(response);
+            
             //string response = ReadMessageFromServer();
             //Debug.Log(response);
         }
         catch (Exception e)
         {
-            // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ß»ï¿½ ï¿½ï¿½
+            // ¿¬°á Áß ¿À·ù ¹ß»ý ½Ã
             Debug.Log($"Failed to connect to the server: {e.Message}");
         }
     }
 
-    // response ï¿½ï¿½ï¿½ï¿½ ï¿½Þ½ï¿½ï¿½ï¿½ Å¸ï¿½ï¿½ Ã¼Å©ï¿½Ï±ï¿½
+    // response ¹ÞÀº ¸Þ½ÃÁö Å¸ÀÔ Ã¼Å©ÇÏ±â
     private string getType(string response)
     {
         string[] words = response.Split('\"');
         return words[3];
     }
 
-    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Þ½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
-    public void SendMessageToServer(string message)
+    // ¼­¹ö·Î ¸Þ½ÃÁö º¸³»±â
+    private void SendMessageToServer(string message)
     {
         if (_tcpClient == null)
         {
             return;
         }
         writer.WriteLine(message);
-        writer.Flush(); // ï¿½Þ½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+        writer.Flush(); // ¸Þ½ÃÁö Áï½Ã Àü¼Û
     }
 
-    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Þ½ï¿½ï¿½ï¿½ ï¿½Ð±ï¿½
-    public string ReadMessageFromServer()
+    // ¼­¹ö¿¡¼­ ¸Þ½ÃÁö ÀÐ±â
+    private string ReadMessageFromServer()
     {
         if(_tcpClient == null)
         {
-            return "";
+            return null;
         }
 
         try
         {
-            // ï¿½ï¿½ï¿½ï¿½ï¿½Îºï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ð±ï¿½
+            // ¼­¹ö·ÎºÎÅÍ ÀÀ´ä ÀÐ±â
             string response = reader.ReadLine();
             return response;
         }
         catch(Exception e)
         {
-            Debug.Log("ï¿½ï¿½ï¿½ï¿½ ï¿½Ð±ï¿½ ï¿½ï¿½ï¿½ï¿½: " + e.Message);
-            return "";
+            Debug.Log("ÀÀ´ä ÀÐ±â ½ÇÆÐ: " + e.Message);
+            return null;
         }
     }
 
-    // ============================= Ã¤ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ =============================
-    // ï¿½Þ½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Æ° Å¬ï¿½ï¿½ ï¿½ï¿½
+    // ============================= Ã¤ÆÃ °ü·Ã =============================
+    // ¸Þ½ÃÁö Àü¼Û ¹öÆ° Å¬¸¯ ½Ã
     public void MessageSendBtnClicked()
     {
         string message = InputText.text;
@@ -177,11 +212,11 @@ public class TCPConnectManager : MonoBehaviour
     }
 
 
-    // ï¿½Þ½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
-    // TODO: ï¿½Þ½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® Ç®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï±ï¿½
+    // ¸Þ½ÃÁö µé¾î¿ÔÀ» ¶§
+    // TODO: ¸Þ½ÃÁö ¿ÀºêÁ§Æ® Ç®¸µ Àû¿ëÇÏ±â
     public void showMessage(string message)
     {
-        // ï¿½ï¿½ï¿½ï¿½ ï¿½Î¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®
+        // ºÙÀÏ ºÎ¸ð ¿ÀºêÁ§Æ®
         Transform content = ChattingList.transform.Find("Viewport/Content");
 
         ChatMessage chatMessage = JsonUtility.FromJson<ChatMessage>(message);
@@ -190,8 +225,8 @@ public class TCPConnectManager : MonoBehaviour
         temp1.text = chatMessage.UserName + ": " + chatMessage.Message;
         temp1.transform.SetParent(content, false);
 
-        // 20ï¿½ï¿½ ï¿½Ñ¾î°¡ï¿½ï¿½ Ã¤ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½
-        // TODO: ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® Ç®ï¿½ï¿½
+        // 20°³ ³Ñ¾î°¡¸é Ã¤ÆÃ À§¿¡¼­ºÎÅÍ Áö¿ì±â
+        // TODO: ¿ÀºêÁ§Æ® Ç®¸µ
         if(content.childCount >= 20)
         {
             Destroy(content.GetChild(1).gameObject);
@@ -200,53 +235,138 @@ public class TCPConnectManager : MonoBehaviour
         StartCoroutine(ScrollToBottom());
     }
 
-    // ï¿½ï¿½Å©ï¿½ï¿½ ï¿½ï¿½ ï¿½Æ·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    // ½ºÅ©·Ñ ¸Ç ¾Æ·¡·Î ³»¸®±â
     IEnumerator ScrollToBottom()
     {
-        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ù¸ï¿½
+        // ´ÙÀ½ ÇÁ·¹ÀÓ ±â´Ù¸²
         yield return null;
 
         Transform content = ChattingList.transform.Find("Viewport/Content");
 
-        // Layout Groupï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®
+        // Layout GroupÀ» °­Á¦·Î Áï½Ã ¾÷µ¥ÀÌÆ®
         LayoutRebuilder.ForceRebuildLayoutImmediate((RectTransform)content);
 
-        // ï¿½ï¿½Å©ï¿½ï¿½ ï¿½ï¿½ ï¿½Æ·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+        // ½ºÅ©·Ñ ¸Ç ¾Æ·¡·Î ³»¸²
         ChattingList.GetComponent<ScrollRect>().verticalNormalizedPosition = 0f;
     }
 
-    // ============================= ï¿½ï¿½(channel), ï¿½ï¿½ï¿½ï¿½(session) ï¿½ï¿½ï¿½ï¿½ =============================
-    // ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ® ï¿½Ò·ï¿½ï¿½ï¿½ï¿½ï¿½
-    public void setChannelList()
+    // ============================= ¹æ(channel), À¯Àú(session) °ü·Ã =============================
+    [Serializable]
+    class ChannelList
     {
+        public string type;
+        public ChannelInfo[] data;
+    }
+    [Serializable]
+    class ChannelInfo
+    {
+        public int channelIndex;
+        public string channelName;
+        public int cnt;
+        public bool isOnGame;
+    }
+    // ¹æ ¸®½ºÆ® ºÒ·¯¿À±â
+    public void setChannelList(string response)
+    {
+        Debug.Log("µé¾î¿È setChannelList");
+        // Ã¤³Î ¸®½ºÆ® µé¾î°¥ ½ºÅ©·Ñºä(¼³Á¤ÇÒ ºÎ¸ð)
+        Transform content = ScrollViewChannelList.transform.Find("Viewport/Content");
+        // ±âÁ¸ ¸®½ºÆ® Á¦°Å
+        // TODO: ¿ÀºêÁ§Æ® Ç®¸µ
+        foreach (Transform child in content)
+        {
+            Destroy(child.gameObject);
+        }
 
+        // JSON ÆÄ½Ì
+        ChannelList channelList = JsonUtility.FromJson<ChannelList>(response);
+
+        for(int i = 0; i < channelList.data.Length; i++)
+        {
+            // Âü°¡ ÀÎ¿ø ²ËÂ÷¸é ¾Èº¸ÀÌ°Ô ÇÏ±â
+            if(channelList.data[i].isOnGame)
+            {
+                continue;
+            }
+
+            //Debug.Log("¹æÀÌ¸§: " + channelList.data[i].channelName);
+            // ÇÁ¸®ÆÕ ¸¸µé±â
+            GameObject channelListElement = Instantiate(ChannelListElement);
+            ChannelListElement channelListElementScript = channelListElement.GetComponent<ChannelListElement>();
+            channelListElementScript.ChannelIndex = channelList.data[i].channelIndex;
+            channelListElementScript.ChannelName = channelList.data[i].channelName;
+            channelListElementScript.Cnt = channelList.data[i].cnt;
+            channelListElementScript.IsOnGame = channelList.data[i].isOnGame;
+
+            // ºÎ¸ð ºÙÀÌ±â
+            channelListElement.transform.SetParent(content, false);
+        }
     }
 
-    // TODO: ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½
-    public void createChannel(string roomName)
+    // ¹æ ¸¸µé±â
+    public void createChannel(string json)
     {
-        string json = "{" +
-            "\"channel\":\"room\"," +
-            $"\"userName\":\"{loginUserInfo.Name}\"," +
-            "\"data\":{" +
-                "\"type\":\"enter\"," +
-                $"\"channelName\":\"{roomName}\"" +
-            "}" +
-        "}";
-
+        //Debug.Log("Ã¤³Î ¸¸µé±â: " + json);
         SendMessageToServer(json);
+
+        LobbyScene.SetActive(false);
+        ChannelScene.SetActive(true);
     }
 
-    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    // ºü¸¥ÀÔÀå
     public void quickEnter()
     {
 
     }
 
-    // ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
-    public void participate()
+    // ¹æ ¼±ÅÃ ½Ã
+    public void participate(ChannelListElement channelListElementScript)
     {
+        // ±âÁ¸¿¡ ¼±ÅÃµÈ ¾Ö »ö±ò º¯°æ
+        if(SelectedChannel != null)
+        {
+            SelectedChannel.transform.Find("Border").GetComponent<Image>().color = Color.white;
+        }
 
+        // ¼±ÅÃµÈ Ã¤³Î
+        SelectedChannel = channelListElementScript;
+        SelectedChannel.transform.Find("Border").GetComponent<Image>().color = new Color(1f, 0.5707547f, 0.5707547f, 1f);
+
+        Debug.Log($"{SelectedChannel.channelIndex}, {SelectedChannel.channelName}, {SelectedChannel.cnt}, {SelectedChannel.isOnGame}");
+    }
+
+    // ¹æ Âü°¡ ½Ã
+    public void joinChannel()
+    {
+        string json = "{" +
+            "\"channel\":\"channel\"," +
+            $"\"userName\":\"{loginUserInfo.Name}\"," +
+            "\"data\": {" +
+                "\"type\":\"join\"," +
+                $"\"channelIndex\":\"{SelectedChannel.channelIndex}\"" +
+            "}" +
+        "}";
+
+        Debug.Log(json);
+
+        SendMessageToServer(json);
+
+        // TODO: ¹æ µé¾î°¡´Â°Å ¼º°ø ½Ã È­¸é ÀüÈ¯, ½ÇÆÐ ½Ã »ç¶÷ ²Ë Ã¡´Ù°í ¾Ë¸®¸ç ¹æ Âü°¡ ¸øÇÏ±â
+    }
+    
+
+    // ¹æ ³ª°¡±â
+    public void leaveChannel()
+    {
+        //string json =
+        //"{" +
+        //    "\"channel\":\"room\"," +
+        //    $"\"userName\":\"{loginManagerScript.loginUserInfo.Name}\"," +
+        //    "\"data\":{" +
+        //        "\"type\":\"join\"," +
+        //        $"\"channelIndex\":\"{}\"" +
+        //    "}" +
+        //"}";
     }
     
     [Serializable]
@@ -261,9 +381,10 @@ public class TCPConnectManager : MonoBehaviour
         public string userName;
         public int userId;
     }
-    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½Þ¾Æ¿ï¿½ï¿½ï¿½
+    // Á¢¼ÓÇÑ ÀüÃ¼ À¯Àú ¸ñ·Ï ¹Þ¾Æ¿À±â
     public User[] getConnectedUsers(string response)
     {
+        Debug.Log("GetAllConnectedUsers");
         //Debug.Log(response);
         SessionResponse sessionResponse = JsonUtility.FromJson<SessionResponse>(response);
 
@@ -275,7 +396,7 @@ public class TCPConnectManager : MonoBehaviour
             userList[i] = new User();
             userList[i].Name = sessinData.userName;
             userList[i].UserId = sessinData.userId;
-            Debug.Log(userList[i].Name + ", " + userList[i].UserId + ", " + response);
+            //Debug.Log(userList[i].Name + ", " + userList[i].UserId + ", " + response);
             i++;
         }
 
@@ -283,8 +404,8 @@ public class TCPConnectManager : MonoBehaviour
     }
 
 
-    // ============================= ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ =============================
-    // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
+    // ============================= Á¾·á °ü·Ã =============================
+    // Á¾·á ½Ã
     private void OnApplicationQuit()
     {
         if (_tcpClient != null)
@@ -295,7 +416,7 @@ public class TCPConnectManager : MonoBehaviour
 
     public void DisconnectFromServer()
     {
-        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+        // ¿¬°á Á¾·á
         _networkStream.Close();
         _tcpClient.Close();
     }
