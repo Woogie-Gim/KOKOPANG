@@ -39,17 +39,12 @@ public class TcpConnectionHandler implements Consumer<Connection> {
             @Override
             public void handlerRemoved(ChannelHandlerContext ctx) {
                 // 연결이 끊길 때 userName파싱
-                String userName = null;
-                boolean isLeave = false;
-
-                for (Map.Entry<String, SessionInfo> entry : Session.getSessionList().entrySet()) {
-                    if (entry.getValue().equals(conn)) {
-                        userName = entry.getKey();
-                        break;
-                    }
-                }
+                String userName = Session.getConnectionList().get(conn);
 
                 int channelIdx = Session.getSessionList().get(userName).getSessionState();
+
+                Session.getConnectionList().remove(conn);
+                Session.getSessionList().remove(userName);
 
                 switch (channelIdx) {
                     case 0:
@@ -75,6 +70,8 @@ public class TcpConnectionHandler implements Consumer<Connection> {
                         if (sic.getCnt() == 0) {
                             ChannelList.getChannelList().remove(channelIdx);
                             BroadcastToLobby.broadcastLobby(ToJson.channelListToJson()).subscribe();
+                        } else {
+                            // 남아있는 사람들에게 브로드캐스팅 해주는 로직 고민 필요!
                         }
 
                         log.info("Client remove from Channel");

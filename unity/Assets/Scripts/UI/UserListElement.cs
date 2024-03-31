@@ -81,7 +81,7 @@ public class UserListElement : MonoBehaviour
     }
 
     // 친구 상태별 버튼 바꾸기
-    private IEnumerator setFriendStatus()
+    public IEnumerator setFriendStatus()
     {
         string result = "";
         yield return StartCoroutine(lobbyManagerScript.FriendCheckRequest(Id, value => result = value));
