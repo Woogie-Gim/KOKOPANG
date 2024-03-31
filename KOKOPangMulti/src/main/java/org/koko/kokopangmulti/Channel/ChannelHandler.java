@@ -58,6 +58,7 @@ public class ChannelHandler {
         // 2) channel 참가 인원 확인 : 이미 6명이라면 join 거절
         if (channel.getSessionsInChannel().getCnt() == 6) {
             log.warn("[JOIN REJECTED] ROOM IS FULL");
+            broadcastPrivate(Session.getSessionList().get(userName).getConnection(), "fail");
             return;
         }
 

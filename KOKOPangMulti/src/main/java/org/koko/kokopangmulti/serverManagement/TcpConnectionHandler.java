@@ -57,6 +57,7 @@ public class TcpConnectionHandler implements Consumer<Connection> {
                         break;
 
                     default:
+                        System.out.println("check");
                         Channel channel = ChannelList.getChannelInfo(channelIdx);
                         SessionsInChannel sic = channel.getSessionsInChannel();
                         int idx = channel.getIdx(userName);
@@ -70,6 +71,7 @@ public class TcpConnectionHandler implements Consumer<Connection> {
                         if (sic.getCnt() == 0) {
                             ChannelList.getChannelList().remove(channelIdx);
                             BroadcastToLobby.broadcastLobby(ToJson.channelListToJson()).subscribe();
+                            System.out.println(ChannelList.getChannelList());
                         } else {
                             // 남아있는 사람들에게 브로드캐스팅 해주는 로직 고민 필요!
                         }
