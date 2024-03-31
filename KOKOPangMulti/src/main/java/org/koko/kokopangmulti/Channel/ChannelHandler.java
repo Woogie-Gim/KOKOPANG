@@ -6,11 +6,9 @@ import org.koko.kokopangmulti.Object.Session;
 import org.koko.kokopangmulti.Object.SessionsInChannel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import reactor.netty.Connection;
 
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.LinkedHashMap;
 import java.util.Map;
 
 import static org.koko.kokopangmulti.Braodcast.BroadcastToChannel.broadcastMessage;
@@ -91,9 +89,7 @@ public class ChannelHandler {
         // 6-2) lobby 내 sessions : channelList UPDATE
         broadcastLobby(channelListToJson()).subscribe();
         // 6-3) lobby 내 sessions : sessionList UPDATE
-        for (Map.Entry<String, Integer> entry : ChannelList.getLobby().getSessionList().entrySet()) {
-            broadcastPrivate(Session.getSessionList().get(entry.getKey()), lobbySessionsToJson()).subscribe();
-        }
+        broadcastLobby(lobbySessionsToJson()).subscribe();
 
         // 동작 확인
         System.out.println("channel.sessionsInChannel.cnt = " + channel.getSessionsInChannel().getCnt());
@@ -139,7 +135,7 @@ public class ChannelHandler {
     public static void leaveChannel(String userName, int channelIndex) {
 
         // 1) channel 정보
-        Boolean flag = true;                                         // channel 유무
+        boolean flag = true;                                         // channel 유무
         Channel channel = ChannelList.getChannelInfo(channelIndex);
         SessionsInChannel sic = channel.getSessionsInChannel();
 
@@ -165,10 +161,11 @@ public class ChannelHandler {
 
             // 6) 방이 없어지는 경우
             case 0:
-                // 6-1) channelList에서 channel 제거
-                ChannelList.getChannelList().remove(channelIndex);
-                // 6-2) channel 객체 제거
+                // 6-1) channel 객체 제거
                 channel = null;
+                // 6-2) channelList에서 channel 제거
+                ChannelList.getChannelList().remove(channelIndex);
+                System.out.println(ChannelList.getChannelList());
                 // 6-3) 방 제거 flag 설정
                 flag = false;
                 break;
@@ -206,9 +203,7 @@ public class ChannelHandler {
         // 8-2) lobby 내 sessions : channelList UPDATE
         broadcastLobby(channelListToJson()).subscribe();
         // 8-3) lobby 내 sessions : sessionList UPDATE
-        for (Map.Entry<String, Integer> entry : ChannelList.getLobby().getSessionList().entrySet()) {
-            broadcastPrivate(Session.getSessionList().get(entry.getKey()), lobbySessionsToJson()).subscribe();
-        }
+        broadcastLobby(lobbySessionsToJson()).subscribe();
 
         // 동작 확인
         if(flag) {

@@ -82,6 +82,12 @@ public class TcpConnectionHandler implements Consumer<Connection> {
                                 sic.minusCnt();
                                 sic.setFalseIsExisted(idx);
 
+                                int channelIdx = channel.getChannelIdx();
+
+                                if (sic.getCnt() == 0) {
+                                    ChannelList.getChannelList().remove(channelIdx);
+                                }
+
                                 log.info("Client remove from Channel");
                                 break;
                             }
@@ -93,6 +99,9 @@ public class TcpConnectionHandler implements Consumer<Connection> {
                     }
                 }
             }
+
+            // 1. 게임중?
+            // 2. 세션
 
             /*
              * 예외 처리 로직
