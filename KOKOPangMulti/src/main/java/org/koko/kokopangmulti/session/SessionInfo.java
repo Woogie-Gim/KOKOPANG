@@ -5,21 +5,21 @@ import reactor.netty.Connection;
 public class SessionInfo {
 
     private Connection conn;
-    private SessionState state;
+    private int state;
 
     public SessionInfo(Connection conn) {
         this.conn = conn;
-        this.state = SessionState.LOBBY;
+        this.state = 0;
     }
 
     public Connection getConnection() {
         return this.conn;
     }
-    public void setSessionState(SessionState state) {
-        this.state = state;
+    public void setSessionState(int idx) {
+        this.state = idx;
     }
 
-    public SessionState getSessionState() {
+    public int getSessionState() {
         return this.state;
     }
 
