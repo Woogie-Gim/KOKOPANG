@@ -12,7 +12,7 @@ public class BroadcastToLobby {
         return Flux.fromIterable(ChannelList.getLobby().getSessionList().keySet())
                 .flatMap(userName -> {
                     // 커넥션 정보가 없는 경우 일단 스킵하는 코드 추가(임시)
-                    if (Session.getSessionList().get(userName) == null) {
+                    if (Session.getSessionList().get(userName).getConnection() == null) {
                         return Mono.empty();
                     } else {
                         return Session.getSessionList().get(userName).getConnection().outbound().sendString(Mono.just(json)).then();
