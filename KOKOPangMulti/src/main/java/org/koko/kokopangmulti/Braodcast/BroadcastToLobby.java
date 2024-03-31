@@ -1,7 +1,7 @@
 package org.koko.kokopangmulti.Braodcast;
 
 import org.koko.kokopangmulti.Object.ChannelList;
-import org.koko.kokopangmulti.Object.Session;
+import org.koko.kokopangmulti.session.Session;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.netty.Connection;
@@ -15,7 +15,7 @@ public class BroadcastToLobby {
                     if (Session.getSessionList().get(userName) == null) {
                         return Mono.empty();
                     } else {
-                        return Session.getSessionList().get(userName).outbound().sendString(Mono.just(json)).then();
+                        return Session.getSessionList().get(userName).getConnection().outbound().sendString(Mono.just(json)).then();
                     }
                 })
                 .then();
