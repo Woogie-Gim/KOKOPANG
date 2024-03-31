@@ -42,7 +42,10 @@ public class ChannelHandler {
         // 4) BroadCasting
         // 4-1) channel 내 sessionList 전송
         broadcastMessage(channelIndex, channelSessionListToJSON(channel)).subscribe();
-        broadcastPrivate(Session.getSessionList().get(userName).getConnection(), ToJson.channelInfoToJson(channelIndex)).subscribe();
+
+        // 개인
+        System.out.println(ToJson.channelInfoToJson(channelIndex));
+        broadcastMessage(channelIndex, ToJson.channelInfoToJson(channelIndex)).subscribe();
 
         // 4-2) lobby 내 sessions : channelList UPDATE
         broadcastLobby(channelListToJson()).subscribe();
