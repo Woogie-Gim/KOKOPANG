@@ -105,6 +105,7 @@ public class ToJson {
 
         ObjectMapper objectMapper = new ObjectMapper();
         Map<String, Object> temp = new LinkedHashMap<>();
+        List<Object> list = new ArrayList<>();
         Map<String, Object> data = new LinkedHashMap<>();
 
         temp.put("type", "channelInfo");
@@ -114,8 +115,9 @@ public class ToJson {
         data.put("cnt", channel.getSessionsInChannel().getCnt());
         data.put("isOnGame", channel.getOnGame());
 
+        list.add(data);
 
-        temp.put("data", data);
+        temp.put("data", list);
 
         try {
             return objectMapper.writeValueAsString(temp) + '\n';
