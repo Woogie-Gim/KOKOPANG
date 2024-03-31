@@ -2,6 +2,7 @@ package org.koko.kokopangmulti.Channel;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.koko.kokopangmulti.session.SessionState;
 
 public class ChannelMsgHandler {
 
@@ -25,7 +26,7 @@ public class ChannelMsgHandler {
                 break;
             case "leave":
                 channelIndex = data.getInt("channelIndex");
-                ChannelHandler.leaveChannel(userName, channelIndex);
+                ChannelHandler.leaveChannel(userName, channelIndex, SessionState.NORMAL);
                 break;
         }
     }

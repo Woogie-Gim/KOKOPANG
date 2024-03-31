@@ -118,7 +118,7 @@ public class ChannelHandler {
 
     }
 
-    public static void leaveChannel(String userName, int channelIndex) {
+    public static void leaveChannel(String userName, int channelIndex, SessionState sessionState) {
 
         // 1) channel 정보
         boolean flag = true;                                         // channel 유무
@@ -136,11 +136,11 @@ public class ChannelHandler {
         sic.minusCnt();                             // cnt
         sic.setFalseIsExisted(idx);                 // isExisted
 
-        // 4) 나가는 [userName] lobby에 추가
-        ChannelList.getLobby().getSessionList().put(userName, userId);
-
-        // 4-1) sessionInfo수정
-        Session.getSessionList().get(userName).setSessionState(0);
+        // 4) 나가는 [userName] lobby에 추가 (정상적으로 나간 경우)
+        if (sessionState == SessionState.NORMAL) {
+            ChannelList.getLobby().getSessionList().put(userName, userId);
+            Session.getSessionList().get(userName).setSessionState(0);
+        }
 
         // 5) LOGGING LEAVE
         log.info("[userName:{}] CHANNEL LEAVED, channelName:{}", userName, ChannelList.getChannelInfo(channelIndex).getChannelName());
@@ -196,14 +196,15 @@ public class ChannelHandler {
 
         }
 
-
         // 8) broadcasting :
         // 8-1) channel 내 sessions : 방이 사라지지 않은 경우
         if (flag) {
             broadcastMessage(channelIndex, channelSessionListToJSON(channel)).subscribe();
         }
         // 8-2) lobby 내 sessions : channelList UPDATE
-        broadcastLobby(channelListToJson()).subscribe();
+        if (sessionState == SessionState.NORMAL) {
+            broadcastLobby(channelListToJson()).subscribe();
+        }
         // 8-3) lobby 내 sessions : sessionList UPDATE
         broadcastLobby(lobbySessionsToJson()).subscribe();
 
