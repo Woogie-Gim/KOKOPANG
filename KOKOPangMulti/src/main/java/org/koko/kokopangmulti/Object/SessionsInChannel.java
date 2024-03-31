@@ -39,6 +39,10 @@ public class SessionsInChannel {
         return this.isReady;
     }
 
+    public void setIsReady(int idx, Boolean isReady) {
+        this.isReady.set(idx, isReady);
+    }
+
     public void plusCnt() {
         this.cnt+=1;
     }
