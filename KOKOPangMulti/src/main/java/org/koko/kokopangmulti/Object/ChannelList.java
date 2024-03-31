@@ -15,6 +15,10 @@ public class ChannelList {
     // 채널 생성시 채널에 부여할 채널 인덱스
     private static Integer index = 0;
 
+    public static Integer getIndex() {
+        return index;
+    }
+
     // 생성된 채널을 채널 목록에 추가
     public static synchronized int addChannel(Channel channel) {
         index++;                                // 인덱스값 +1
