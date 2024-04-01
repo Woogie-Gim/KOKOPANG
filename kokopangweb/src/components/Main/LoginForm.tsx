@@ -265,7 +265,7 @@ const LoginForm = () => {
               style={{ display: "none" }}
             />
             <img src={avatar} alt="프로필 이미지" />
-            {!deung ? <div className='btn' onClick={profileUpload}>등록</div> : <div onClick={() => {
+            {!deung ? <div className='btn' onClick={profileUpload} style={{ fontSize: "20px", color: "blue"}}>등록</div> : <div onClick={() => {
               if (fileInput.current) {
                 fileInput.current.click();
               }
@@ -277,7 +277,11 @@ const LoginForm = () => {
               <div>{name} 님</div>
               <div className='logout' onClick={logout}>로그아웃</div>
             </div>
-            <div>Rating: {user.rating}</div>
+            <div style={{ fontSize: "30px", marginTop: "10px"}}>내 점수</div>
+            <div style={{ width: "90%", height: "100%", padding: "5%", margin: "10px auto",
+              display: "flex", justifyContent: "center" , alignItems: "center",
+              fontSize: "25px", border: "1px solid lightgray", borderRadius: "5px"
+             }}>{user.rating}</div>
           </ProfileBox>
         </UserBox>
         <DownLoadBox onClick={downloadApp}>DOWNLOAD</DownLoadBox>

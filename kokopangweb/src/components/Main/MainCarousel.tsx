@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { CarouselContainer,SlideContainer,Slide,Image,IndicatorContainer,Indicator } from '../../styles/Main/MainCarousel';
+import { CarouselContainer, SlideContainer, Slide, Image, IndicatorContainer, Indicator, LeftArrow, RightArrow } from '../../styles/Main/MainCarousel';
 import carouselImage1 from "../../assets/myedit_ai_image_0318142911.jpg";
 import carouselImage2 from "../../assets/myedit_ai_image_0318143148.jpg";
 import carouselImage3 from "../../assets/myedit_ai_image_0318143150.jpg";
@@ -24,8 +24,13 @@ const MainCarousel = () => {
     setCurrentSlide((prevSlide) => (prevSlide + 1) % images.length);
   };
 
+  const goToPreviousSlide = () => {
+    setCurrentSlide((prevSlide) => (prevSlide === 0 ? images.length - 1 : prevSlide - 1));
+  };
+
   return (
     <CarouselContainer>
+      <LeftArrow onClick={goToPreviousSlide}>&lt;</LeftArrow>
       <SlideContainer
         style={{
           transform: `translateX(-${currentSlide * 100}%)`,
@@ -34,13 +39,14 @@ const MainCarousel = () => {
       >
         {images.map((image, index) => (
           <Slide key={index}>
-            <Image src={image} alt={`Slide ${index}`}/>
+            <Image src={image} alt={`Slide ${index}`} />
           </Slide>
         ))}
       </SlideContainer>
+      <RightArrow onClick={goToNextSlide}>&gt;</RightArrow>
       <IndicatorContainer>
         {images.map((_, index) => (
-          <Indicator key={index} onClick={() => setCurrentSlide(index)} style={{ backgroundColor: index === currentSlide ? 'white':'darkgray'}}/>
+          <Indicator key={index} onClick={() => setCurrentSlide(index)} style={{ backgroundColor: index === currentSlide ? 'white' : 'darkgray' }} />
         ))}
       </IndicatorContainer>
     </CarouselContainer>

@@ -65,21 +65,25 @@ const Title = styled.input`
   border: 1px solid lightgray;
   border-radius: 5px;
   font-size: 20px;
-    /* &:focus {
-    outline-color: pink;
-  } */
+
+  &:focus {
+    outline-color: lightgray;
+  }
 `
 
 const Content = styled.textarea`
-  width: 200px;
-  min-height: 100%;
+  width: 90%;
+  min-height: 200px;
   height: auto;
   padding: 5px;
   border: 1px solid lightgray;
   border-radius: 5px;
   resize: none;
   font-size: 20px;
-`
 
+  &:focus {
+    outline-color: lightgray;
+  }
+`
 
 export {BoardBox, Title, Content};

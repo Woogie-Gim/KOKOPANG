@@ -4,7 +4,7 @@ import { useLocation, useNavigate, useParams } from 'react-router-dom'
 import useAuthStore from '../stores/AuthStore';
 import { useShallow } from 'zustand/react/shallow';
 import NaviBar from './NaviBar';
-import { BoardBox,Title, Content, BtnBox, Comment, CreateBtn, CommentBox } from '../styles/Community/CommunityDeatil';
+import { BoardBox,Title, Content, BtnBox, Comment, CreateBtn, CommentBox,CommentSubBtn } from '../styles/Community/CommunityDeatil';
 import useUserStore from '../stores/UserStore';
 
 interface Board {
@@ -22,7 +22,6 @@ const CommunityDetail = () => {
   const [commentList, setCommentList] = useState([]);
   const [comment, setComment] = useState("");
   const [refe,setRefe] = useState(true);
-
   const defaultProfile =
     "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png";
     
@@ -61,12 +60,13 @@ const CommunityDetail = () => {
     navigate(`/community/${boardInfo?.boardId}/update`,{ state: { boardInfo } })
   }
 
-  const changeComment = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setComment(event.target.value);
-  }
-
   const createComment = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+
+    if (comment === "") {
+      alert("내용을 입력해주세요")
+      return
+    }
 
     axios.post(`${PATH}/comment/create`,{
       userEmail: email,
@@ -84,11 +84,21 @@ const CommunityDetail = () => {
     })
     .catch((error: any) => {
       console.log(error)
+      alert("로그인이 필요합니다!")
+      navigate("/")
     })
   }
 
-  const updateComment = () => {
+  const maxLineCount = 4; // 최대 줄바꿈 횟수
 
+  const changeComment= (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+    let lineCount = (event.target.value.match(/\n/g) || []).length + 1; // 줄바꿈 개수 계산
+
+    if (lineCount > maxLineCount) {
+      setComment(event.target.value.substring(0, event.target.value.lastIndexOf('\n'))); // 마지막 줄 삭제
+    } else {
+      setComment(event.target.value);
+    }
   }
 
   const deleteComment = (commentId: Number) => {
@@ -99,6 +109,7 @@ const CommunityDetail = () => {
     })
     .then((res) => console.log(res))
     .catch((error) => console.log(error))
+    setRefe(!refe)
   }
 
   useEffect(() => {
@@ -156,7 +167,7 @@ const CommunityDetail = () => {
           </BtnBox>}
         </div>
         <form onSubmit={createComment} style={{ display: "flex", flexDirection: "column", marginBottom: "20px" }}>
-          <Comment placeholder='댓글을 작성해주세요' value={comment} onChange={changeComment}/>
+          <Comment placeholder='댓글을 작성해주세요' value={comment} onChange={changeComment} maxLength={100}/>
           <CreateBtn>
             <button type="submit" className='btn'>등록</button>
           </CreateBtn>
@@ -165,8 +176,11 @@ const CommunityDetail = () => {
           {commentList.map((ct,idx) => (
             <div className='box1' key={idx}>
               <div className='item1'>
-                <div>{ct["content"]}<span onClick={updateComment}></span></div>
-                <div style={{ fontSize: "20px", cursor: "pointer"}} onClick={() => deleteComment(ct["commentId"])}>🗑</div>
+                <pre>{ct["content"]}</pre>
+                {ct["username"] === name ? 
+                <div style={{ display: "flex", flexDirection: "row"}}>
+                  <CommentSubBtn onClick={() => deleteComment(ct["commentId"])}>삭제</CommentSubBtn>
+                </div> : null}                
               </div>
               <div className='item1' style={{ display: "flex" , flexDirection: "row", alignItems: "center"}}>
                 <img src={ct["profileImg"] === null ? defaultProfile : ct["profileImg"]} alt="프로필 이미지" style={{ width: "30px", height: "30px", borderRadius: "100px", marginRight: "10px"}}/>

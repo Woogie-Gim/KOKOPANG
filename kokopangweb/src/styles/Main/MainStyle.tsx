@@ -4,10 +4,11 @@ const UpBox = styled.div``
 
 const DownBox = styled.div`
     display: flex;
-    width: 65%;
+    width: 90%;
     margin: 0 auto;
     flex-direction: row;
     margin-bottom: 20px;
+    justify-content: center;
 `
 
 const InfoBox = styled.div`
@@ -75,7 +76,7 @@ const Menu = styled.div`
 `
 
 const NoticeHeader = styled.div`
-    width: auto;
+    width: 90%;
     margin: 0 auto;
     font-size: 30px;
     color: white;

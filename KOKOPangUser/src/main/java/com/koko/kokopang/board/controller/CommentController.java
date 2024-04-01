@@ -13,6 +13,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/comment")
+@CrossOrigin(origins = "*", methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE}, maxAge = 6000)
 public class CommentController {
 
     private final CommentService commentService;

@@ -80,16 +80,15 @@ const Rank = () => {
   const currentItems = userList.slice(startIdx, endIdx);
 
   useEffect(() => {
-    axios.get(`${PATH}/user/all`,{
+    axios.get(`${PATH}/rank/all`,{
       headers: {
         Authorization: token,
       }
     })
     .then((res) => {
       console.log(res.data)
-      const sortedFriendsList = res.data.sort((a: any, b: any) => b.rating - a.rating);
-      setUserList(sortedFriendsList)
-      setSaveUserList(sortedFriendsList);
+      setUserList(res.data)
+      setSaveUserList(res.data);
     })
     .catch((error) => console.log(error))
   },[isSearch])
@@ -111,7 +110,9 @@ const Rank = () => {
           </div>
           {currentItems.map((user,idx) => (
             <div key={idx} className='container'>
-              <div className='item'>{idx + 1 + (currentPage - 1)*10}</div>
+              <div className='item'>
+                {user["ranking"] === 1 ? "🥇" : user["ranking"] === 2 ? "🥈" : user["ranking"] === 3 ? "🥉" : user["ranking"]}
+              </div>
               <div className='item'>
                 <img src={user["profileImg"] === null ? defaultProfile : user["profileImg"]} alt='프로필이미지'
                   style={{ width: "45px", height: "45px", borderRadius: "100px" }}
