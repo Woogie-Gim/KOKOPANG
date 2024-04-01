@@ -1,21 +1,49 @@
-import React from "react";
-import { Wrapper } from "../../styles/GameGuide/BasicStyle";
+import React, { useEffect, useState } from "react";
+import { Wrapper, Wrapper1 } from "../../styles/GameGuide/BasicStyle";
+import { Fade } from "react-awesome-reveal";
 
 function Story() {
+  const [isVideo, setIsVideo] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsVideo(false);
+    }, 10000);
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
-    <Wrapper>
-      <p>
-        영일이는 비행기를 타고 제주도로 이동하던 중 폭풍우를 만나 추락사고를
-        당하게 되었다.
-        <br />
-        다행이도 영일이와 다른 승객들은 모두 무사하였다.
-        <br />
-        하지만, 영일이와 승객들이 추락한 곳은 불행히도 무인도인 코코
-        아일랜드였다.
-        <br />
-        과연 영일이와 승객들은 무사히 코코 아일랜드를 탈출할 수 있을까?
-      </p>
-    </Wrapper>
+    <>
+      
+        {isVideo ? <Wrapper1>
+          <div style={{ width: "95%", margin: "0 auto", opacity: "1" }}>
+            <video src="/video/storyVideo.mp4" autoPlay muted playsInline style={{ width: "100%", height: "auto" }} />
+          </div>
+        </Wrapper1> : <Wrapper>
+          <Fade>
+          <p>
+            경비행기를 타고 여행을 하던 주인공과 그의 친구들 하지만 난기류를 만나 경비행기는 이름 모를 섬에 추락하고 만다. 불행히도 조종사는 목숨을 잃었지만 친구들은 살아남았다.
+            <br />
+            <br />
+            하지만 희망이 한 가지 남아 있었는데 공항과 소통할 수 있는 통신 장비었다.
+            <br />
+            <br />
+            하지만 통신 장비는 망가져 있었고 통신 장비를 고칠 수 있는 친구는 있었지만 부품이 없었다.
+            <br />
+            <br />
+            비행기 내의 기본 보급품을 활용하여 섬에서 살아남아 재료를 구해 통신 장비를 고치고 구조 비행기를 불러 살아남아야 한다.
+            <br />
+            <br />
+            야생 속에 어떤 것이 있을 지 모르지만 자원이 비옥한 섬인 것 같다.
+            <br />
+            <br />
+            과연 이 섬에서 작은 사회를 이뤄 나가며 생존 해나갈 수 있을 것인가?
+          </p>
+        </Fade>
+        </Wrapper>
+        }
+      
+    </>
   );
 }
 

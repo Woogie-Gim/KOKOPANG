@@ -12,17 +12,22 @@ import NaviBar from './NaviBar'
 const Main = () => {
   const navigate = useNavigate();
   const [currentSlide, setCurrentSlide] = useState(0);
-  const Notices = [
-    "새로운 섬 탐험: 비밀 지역 발견! 어떤 보물이 기다리고 있을까요?",
-    "밤에는 조심하세요: 야생동물의 위협을 느꼈습니다. 함께 대비해야 합니다.",
-    "식량 부족 경고: 생존을 위해 식량을 모아야 합니다. 함께 사냥을 해봅시다!",
-    "추락 지점 발견: 비행기 파트를 찾았습니다. 비행기를 고치는데 도움이 될 것입니다.",
-    "탈출 계획 준비: 모두 모여서 탈출 계획을 세워봅시다. 함께 논의해요!",
-    "신규 생존자 발견: 새로운 생존자가 합류했습니다. 환영해 주세요!",
-    "비상 신호 송신: 도움을 요청하는 비상 신호를 발견했습니다. 도와줄까요?",
-    "배 고치기 프로젝트 시작: 함께 배를 고치는 프로젝트를 시작합니다.",
-    "낚시 대회 개최: 생존을 위한 낚시 대회를 개최합니다. 상품이 준비되어 있습니다!",
-    "서바이벌 트레이닝: 생존을 위한 트레이닝 수업을 개최합니다. 참여를 환영합니다!"
+  const noticeList = [
+    {
+      "id": "공지",
+      "title": "[공지] 서버 점검 안내 - 2024/04/04",
+      "content": "내일 새벽 2시부터 서버 점검이 진행될 예정입니다. 이에 따라 일시적으로 접속이 불가능할 수 있습니다."
+    },
+    {
+      "id": "공지",
+      "title": "[공지] 패치 노트 - 1.1 업데이트 - 2024/03/29",
+      "content": "이번 업데이트에서는 새로운 지형과 생물이 추가되었습니다. 또한 UI 개선 및 버그 수정이 이루어졌습니다."
+    },
+    {
+      "id": "공지",
+      "title": "[공지] 클라이언트 버그 수정 - 2024/03/16",
+      "content": "최신 클라이언트 버전에서 발견된 버그들을 수정했습니다. 게임 플레이의 안정성이 향상되었습니다."
+    },
   ]
 
   useEffect(() => {
@@ -34,7 +39,7 @@ const Main = () => {
   }, [currentSlide]);
 
   const goToNextSlide = () => {
-    setCurrentSlide((prevSlide) => (prevSlide + 1) % Notices.length);
+    setCurrentSlide((prevSlide) => (prevSlide + 1) % noticeList.length);
   };
   
   return (
@@ -42,18 +47,18 @@ const Main = () => {
       <TokenCheker />
       <NaviBar />
       <UpBox>
-        <div style={{ width: "80%" , margin: "0 auto", display: "flex", flexDirection: "row", marginBottom: "20px"}}>
+        <div style={{ width: "70%" , margin: "0 auto", display: "flex", flexDirection: "row", marginBottom: "20px"}}>
           <div style={{ fontSize: "20px"}}>📢</div>
           <NoticeBox>
             <div style={{
-              transform: `translateY(-${currentSlide * 10}%)`,
+              transform: `translateY(-${currentSlide * 32}%)`,
               transition: "transform 1s ease",
               display: "flex",
               flexDirection: "column",
             }}>
-              {Notices.map((content,idx) => (
-                <div key={idx} style={{ height: "50px", flex: "0 0 auto", cursor:"pointer"}} >
-                  {content}
+              {noticeList.map((item,idx) => (
+                <div key={idx} style={{ height: "50px", flex: "0 0 auto"}} >
+                  <span style={{ cursor:"pointer" }} onClick={() => navigate(`/notice/${item.id}`,{ state: { item } })}>{item.title}</span>
                 </div>
               ))}
             </div>
