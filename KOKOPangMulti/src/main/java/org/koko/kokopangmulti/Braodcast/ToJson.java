@@ -164,6 +164,10 @@ public class ToJson {
         temp.put("x", json.getFloat("x"));
         temp.put("y", json.getFloat("y"));
         temp.put("z", json.getFloat("z"));
+        temp.put("rw", json.getFloat("rw"));
+        temp.put("rx", json.getFloat("rx"));
+        temp.put("ry", json.getFloat("ry"));
+        temp.put("rz", json.getFloat("rz"));
 
         try {
             return objectMapper.writeValueAsString(temp) + '\n';
