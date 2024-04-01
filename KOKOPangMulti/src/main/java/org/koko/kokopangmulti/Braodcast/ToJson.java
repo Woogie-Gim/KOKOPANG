@@ -10,9 +10,29 @@ import org.koko.kokopangmulti.Object.SessionsInChannel;
 import java.util.*;
 
 public class ToJson {
+    private static final ObjectMapper objectMapper = new ObjectMapper();
+
+    public static String chatToJson(String userName, String message) {
+        HashMap<String, String> chatMap = new LinkedHashMap<>();
+
+        chatMap.put("type", "chat");
+        chatMap.put("userName", userName);
+        chatMap.put("message", message);
+
+        String chatJson = null;
+
+        try {
+            chatJson = objectMapper.writeValueAsString(chatMap) + '\n';
+            BroadcastToLobby.broadcastLobby(chatJson).subscribe();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return chatJson;
+    }
+
     // 로비 유저목록
     public static String lobbySessionsToJson() {
-        ObjectMapper objectMapper = new ObjectMapper();
         Map<String, Object> data = new LinkedHashMap<>();
         List<Object> jsonArray = new ArrayList<>();
 
@@ -37,7 +57,6 @@ public class ToJson {
 
     // 채널목록
     public static String channelListToJson() {
-        ObjectMapper objectMapper = new ObjectMapper();
         Map<String, Object> data = new LinkedHashMap<>();
         List<Object> jsonArray = new ArrayList<>();
 
@@ -63,7 +82,6 @@ public class ToJson {
     }
 
     public static String channelSessionListToJSON(Channel channel) {
-        ObjectMapper objectMapper = new ObjectMapper();
         Map<String, Object> data = new LinkedHashMap<>();
         List<Object> jsonArray = new ArrayList<>();
 
@@ -103,7 +121,6 @@ public class ToJson {
     public static String channelInfoToJson(int channelIndex) {
         Channel channel = ChannelList.getChannelInfo(channelIndex);
 
-        ObjectMapper objectMapper = new ObjectMapper();
         Map<String, Object> temp = new LinkedHashMap<>();
         List<Object> list = new ArrayList<>();
         Map<String, Object> data = new LinkedHashMap<>();
@@ -127,7 +144,6 @@ public class ToJson {
     }
 
     public static String loadingToJson(JSONObject json) {
-        ObjectMapper objectMapper = new ObjectMapper();
         HashMap<String, Object> temp = new LinkedHashMap<>();
 
         temp.put("userName", json.getString("userName"));
