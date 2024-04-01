@@ -230,21 +230,7 @@ public class ChannelHandler {
     }
 
     public static void chat(int channelIndex, String userName, String message) {
-        ObjectMapper objectMapper = new ObjectMapper();
-        HashMap<String, String> chatMap = new LinkedHashMap<>();
-
-        chatMap.put("type", "chat");
-        chatMap.put("userName", userName);
-        chatMap.put("message", message);
-
-        String chatJson;
-
-        try {
-            chatJson = objectMapper.writeValueAsString(chatMap) + '\n';
-            BroadcastToChannel.broadcastMessage(channelIndex, chatJson).subscribe();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        BroadcastToChannel.broadcastMessage(channelIndex, chatToJson(userName, message)).subscribe();
     }
 }
 

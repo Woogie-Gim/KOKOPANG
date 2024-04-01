@@ -30,20 +30,6 @@ public class LobbyHandler {
     }
 
     public static void chat(String userName, String message) {
-        ObjectMapper objectMapper = new ObjectMapper();
-        HashMap<String, String> chatMap = new LinkedHashMap<>();
-
-        chatMap.put("type", "chat");
-        chatMap.put("userName", userName);
-        chatMap.put("message", message);
-
-        String chatJson;
-
-        try {
-            chatJson = objectMapper.writeValueAsString(chatMap) + '\n';
-            BroadcastToLobby.broadcastLobby(chatJson).subscribe();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        BroadcastToLobby.broadcastLobby(ToJson.chatToJson(userName, message)).subscribe();
     }
 }
