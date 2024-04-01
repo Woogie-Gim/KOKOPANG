@@ -125,4 +125,19 @@ public class ToJson {
             throw new RuntimeException(e);
         }
     }
+
+    public static String loadingToJson(JSONObject json) {
+        ObjectMapper objectMapper = new ObjectMapper();
+        HashMap<String, Object> temp = new LinkedHashMap<>();
+
+        temp.put("userName", json.getString("userName"));
+        temp.put("isLoading", json.getBoolean("isLoading"));
+
+        try {
+            return objectMapper.writeValueAsString(temp) + '\n';
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 }

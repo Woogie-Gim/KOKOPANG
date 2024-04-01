@@ -1,6 +1,6 @@
 package org.koko.kokopangmulti.serverManagement;
 
-import org.koko.kokopangmulti.Ingame.IngameMsgHandler;
+import org.koko.kokopangmulti.Ingame.InGameMsgHandler;
 import org.koko.kokopangmulti.Lobby.LobbyMsgHandler;
 import org.koko.kokopangmulti.Channel.ChannelMsgHandler;
 import reactor.core.publisher.Mono;
@@ -15,12 +15,13 @@ public class TcpMessageHandler {
      */
     private final LobbyMsgHandler lobbyMsgHandler;
     private final ChannelMsgHandler channelMsgHandler;
-    private final IngameMsgHandler ingameMsgHandler;
+    private final InGameMsgHandler inGameMsgHandler;
 
-    public TcpMessageHandler(LobbyMsgHandler lobbyMsgHandler, ChannelMsgHandler channelMsgHandler, IngameMsgHandler ingameMsgHandler) {
+
+    public TcpMessageHandler(LobbyMsgHandler lobbyMsgHandler, ChannelMsgHandler channelMsgHandler, InGameMsgHandler inGameMsgHandler) {
         this.lobbyMsgHandler = lobbyMsgHandler;
         this.channelMsgHandler = channelMsgHandler;
-        this.ingameMsgHandler = ingameMsgHandler;
+        this.inGameMsgHandler = inGameMsgHandler;
     }
 
     public Mono<Void> handleMessage(NettyInbound in, NettyOutbound out) {
@@ -43,8 +44,11 @@ public class TcpMessageHandler {
                             case "channel" :
                                 channelMsgHandler.filterData(userName, json.getJSONObject("data"));
                                 break;
+                            case "loading" :
+                                inGameMsgHandler.filterData(json.getJSONObject("data"));
+                                break;
                             case "inGame" :
-                                ingameMsgHandler.filterData(json.getJSONObject("data"));
+                                inGameMsgHandler.broadcast(json.getJSONObject("data"));
                                 break;
                         }
 
