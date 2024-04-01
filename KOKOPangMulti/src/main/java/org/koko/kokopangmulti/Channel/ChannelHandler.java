@@ -1,5 +1,6 @@
 package org.koko.kokopangmulti.Channel;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.koko.kokopangmulti.Braodcast.BroadcastToChannel;
 import org.koko.kokopangmulti.Braodcast.BroadcastToLobby;
 import org.koko.kokopangmulti.Braodcast.ToJson;
@@ -11,9 +12,7 @@ import org.koko.kokopangmulti.session.SessionState;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.Map;
+import java.util.*;
 
 import static org.koko.kokopangmulti.Braodcast.BroadcastToChannel.broadcastMessage;
 import static org.koko.kokopangmulti.Braodcast.BroadcastToLobby.broadcastLobby;
@@ -228,6 +227,24 @@ public class ChannelHandler {
 
         // 접속 중인 인원들에게 정보 업데이트
         BroadcastToChannel.broadcastMessage(channelIndex, channelInfoToJson(channelIndex)).subscribe();
+    }
+
+    public static void chat(int channelIndex, String userName, String message) {
+        ObjectMapper objectMapper = new ObjectMapper();
+        HashMap<String, String> chatMap = new LinkedHashMap<>();
+
+        chatMap.put("type", "chat");
+        chatMap.put("userName", userName);
+        chatMap.put("message", message);
+
+        String chatJson;
+
+        try {
+            chatJson = objectMapper.writeValueAsString(chatMap) + '\n';
+            BroadcastToChannel.broadcastMessage(channelIndex, chatJson).subscribe();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
 
