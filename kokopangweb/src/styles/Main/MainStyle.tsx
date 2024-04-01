@@ -4,7 +4,7 @@ const UpBox = styled.div``
 
 const DownBox = styled.div`
     display: flex;
-    width: 90%;
+    width: 70%;
     margin: 0 auto;
     flex-direction: row;
     margin-bottom: 20px;
@@ -12,7 +12,8 @@ const DownBox = styled.div`
 `
 
 const InfoBox = styled.div`
-    width: 800px;
+    flex: 1;
+    flex: 60%;
     height: 600px;
     border: 0;
     border-radius: 10px;

@@ -9,6 +9,7 @@ import SignUp from './routes/SignUp';
 import CommunityDetail from './routes/CommunityDetail';
 import CommunityCreate from './components/Community/CommunityCreate';
 import CommunityUpdate from './components/Community/CommunityUpdate';
+import NoticeDetail from './routes/NoticeDetail';
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
         <Route path='/community/create' element={<CommunityCreate />}></Route>
         <Route path='/community/:id/update' element={<CommunityUpdate />}></Route>
         <Route path='/gameGuide/:name' element={<GameGuide />}></Route>
+        <Route path='/notice/:id' element={<NoticeDetail />}></Route>
       </Routes>
     </BrowserRouter>
   );
