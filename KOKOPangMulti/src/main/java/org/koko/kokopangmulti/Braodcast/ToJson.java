@@ -23,7 +23,6 @@ public class ToJson {
 
         try {
             chatJson = objectMapper.writeValueAsString(chatMap) + '\n';
-            BroadcastToLobby.broadcastLobby(chatJson).subscribe();
         } catch (Exception e) {
             e.printStackTrace();
         }
