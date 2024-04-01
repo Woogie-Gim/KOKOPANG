@@ -19,6 +19,13 @@ public class CreateChannel : MonoBehaviour
     public Toggle isPrivateRoom;    // 비밀방 만들지 토글버튼
 
 
+    private void OnDisable()
+    {
+        gameObject.SetActive(false);
+        InputRoomName.text = "";
+        InputRoomPassword.text = "";
+        isPrivateRoom.isOn = false;
+    }
 
     // 비밀방 체크 확인
     public void ToggleClick()

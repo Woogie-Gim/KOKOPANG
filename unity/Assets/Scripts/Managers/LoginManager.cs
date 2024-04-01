@@ -196,6 +196,10 @@ public class LoginManager : MonoBehaviour
                         //Debug.Log(userProfileRequest.downloadHandler.text);
                         loginUserInfo = JsonUtility.FromJson<User>(userProfileRequest.downloadHandler.text);
 
+                        DataManager.Instance.accessToken = accessToken;
+                        DataManager.Instance.refreshToken = refreshToken;
+                        DataManager.Instance.loginUserInfo = loginUserInfo;
+
                         // 로비 데이터 초기화 호출 -> 로비매니저 awake
                         LobbyManagerScript.LobbyInit();
                         //Debug.Log(userProfile.Id);

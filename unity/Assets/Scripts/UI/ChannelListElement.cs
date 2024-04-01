@@ -68,12 +68,12 @@ public class ChannelListElement : MonoBehaviour
     {
         TCPConnectManagerScript = GameObject.Find("TCPConnectManager").GetComponent<TCPConnectManager>();
 
-        channelText.text = $"{channelIndex} {channelName}   ({cnt}/6)";
+        channelText.text = $"{channelIndex}. {channelName}    ({cnt}/6)";
     }
 
     // 방 리스트에서 버튼 누르면
     public void ChannelListElementClicked()
     {
-        TCPConnectManagerScript.participate(this);
+        TCPConnectManagerScript.selectChannelElement(this);
     }
 }

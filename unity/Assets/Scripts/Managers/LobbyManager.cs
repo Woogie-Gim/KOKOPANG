@@ -42,7 +42,6 @@ public class LobbyManager : MonoBehaviour
         //    Destroy(child);
         //} 
 
-
     }
 
 
@@ -50,10 +49,11 @@ public class LobbyManager : MonoBehaviour
     // 로비 입장 시 데이터 초기화(사용자 정보 등)
     public void LobbyInit()
     {
-        Debug.Log("LobbyInit");
+        //Debug.Log("LobbyInit");
         string name = loginManagerScript.loginUserInfo.Name;
         int id = loginManagerScript.loginUserInfo.UserId;
 
+        // 내정보
         LobbyMyName.text = name + " #" + id;
 
         // TCP연결 시작
@@ -114,7 +114,7 @@ public class LobbyManager : MonoBehaviour
     // 친구 리스트 불러오기
     private void setFriendUsers()
     {
-        Debug.Log("GetFriends");
+        //Debug.Log("GetFriends");
 
         // 현재 친구 유저 데이터 불러오기
         StartCoroutine(getFriendList((Friendship[] userList) =>
