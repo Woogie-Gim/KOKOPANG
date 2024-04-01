@@ -9,13 +9,24 @@ import org.koko.kokopangmulti.Braodcast.ToJson;
 public class InGameMsgHandler {
     static ObjectMapper objectMapper = new ObjectMapper();
 
-    public void filterData(JSONObject data) {
-        int channelIndex = data.getInt("channelIndex");
+//    public void filterData(JSONObject data) {
+//        int channelIndex = data.getInt("channelIndex");
+//
+//
+//
+//        BroadcastToChannel.broadcastMessage(channelIndex, ToJson.loadingToJson(data)).subscribe();
+//    }
 
-        BroadcastToChannel.broadcastMessage(channelIndex, ToJson.loadingToJson(data)).subscribe();
-    }
+    public void filterData(int channelIndex, JSONObject json) {
+        String type = json.getString("type");
 
-    public void broadcast(int channelIndex, JSONObject json) {
-        BroadcastToChannel.broadcastMessage(channelIndex, ToJson.locationToJson(json)).subscribe();
+        switch (type) {
+            case "changePos":
+                BroadcastToChannel.broadcastMessage(channelIndex, ToJson.positionToJson(json)).subscribe();
+                break;
+            case "changeArm":
+                BroadcastToChannel.broadcastMessage(channelIndex, ToJson.equipmentToJson(json)).subscribe();
+                break;
+        }
     }
 }
