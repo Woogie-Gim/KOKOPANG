@@ -5,7 +5,6 @@ import org.json.JSONObject;
 import org.koko.kokopangmulti.session.SessionState;
 
 public class ChannelMsgHandler {
-
     public void filterData(String userName, JSONObject data) throws JSONException {
 
         String type = data.getString("type");

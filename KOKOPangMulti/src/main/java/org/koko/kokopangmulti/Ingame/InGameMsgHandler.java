@@ -15,14 +15,7 @@ public class InGameMsgHandler {
         BroadcastToChannel.broadcastMessage(channelIndex, ToJson.loadingToJson(data)).subscribe();
     }
 
-    public void broadcast(JSONObject json) {
-        String data = null;
-
-        try {
-            data = objectMapper.writeValueAsString(json) + '\n';
-            BroadcastToChannel.broadcastMessage(json.getInt("channelIndex"), data).subscribe();
-        } catch (JsonProcessingException e) {
-            throw new RuntimeException(e);
-        }
+    public void broadcast(int channelIndex, JSONObject json) {
+        BroadcastToChannel.broadcastMessage(channelIndex, ToJson.locationToJson(json)).subscribe();
     }
 }

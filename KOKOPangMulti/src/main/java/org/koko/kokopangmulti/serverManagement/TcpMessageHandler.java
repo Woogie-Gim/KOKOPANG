@@ -25,7 +25,6 @@ public class TcpMessageHandler {
     }
 
     public Mono<Void> handleMessage(NettyInbound in, NettyOutbound out) {
-
         return in.receive()
                 .asString()
                 .flatMap(msg -> {
@@ -35,20 +34,23 @@ public class TcpMessageHandler {
 
                         // JSON객체에서 최상위 값들 파싱(현재 참가 채널 이름 및 하위 데이터)
                         String channelName = json.getString("channel");
-                        String userName = json.getString("userName");
+                        String userName;
 
                         switch(channelName) {
                             case "lobby" :
+                                userName = json.getString("userName");
                                 lobbyMsgHandler.filterData(in, userName, json.getJSONObject("data"));
                                 break;
                             case "channel" :
+                                userName = json.getString("userName");
                                 channelMsgHandler.filterData(userName, json.getJSONObject("data"));
                                 break;
                             case "loading" :
                                 inGameMsgHandler.filterData(json.getJSONObject("data"));
                                 break;
                             case "inGame" :
-                                inGameMsgHandler.broadcast(json.getJSONObject("data"));
+                                int channelIndex = json.getInt("channelIndex");
+                                inGameMsgHandler.broadcast(channelIndex, json.getJSONObject("data"));
                                 break;
                         }
 
