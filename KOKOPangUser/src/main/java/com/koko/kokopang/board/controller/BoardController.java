@@ -12,6 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/board")
+@CrossOrigin(origins = "*", methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE}, maxAge = 6000)
 public class BoardController {
 
     public final BoardService boardService;

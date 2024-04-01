@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 const LoginBox = styled.div`
-  width: auto;
+  width: 450px;
   height: 600px;
   display: flex;
   flex-direction: column;
@@ -73,7 +73,7 @@ const UserBox = styled.div`
 
     .btn {
       text-align: center;
-      font-size: 13px;
+      font-size: 17px;
       padding: 5px;
       color: gray;
       cursor: pointer;
@@ -177,10 +177,12 @@ const FriendsBox = styled.div`
 
   .item1:nth-child(2) {
     flex: 15%;
+    
   }
 
   .item1:nth-child(3) {
     flex: 35%;
+
   }
 
   .item1:nth-child(4) {

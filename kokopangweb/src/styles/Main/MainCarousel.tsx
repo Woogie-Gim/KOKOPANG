@@ -44,4 +44,28 @@ const Indicator = styled.div`
     cursor: pointer;
 `
 
-export {CarouselContainer,SlideContainer,Slide,Image, IndicatorContainer, Indicator}
+const LeftArrow = styled.button`
+  font-size: 40px;
+  position: absolute;
+  top: 45%;
+  left: 3%;
+  z-index: 10;
+  color: ${({ disabled }) => disabled ? 'lightgray' : 'black'};
+  cursor: ${({ disabled }) => disabled ? '' : 'pointer'};
+  background-color: transparent;
+  border: 0;
+`;
+
+const RightArrow = styled.button`
+  font-size: 40px;
+  position: absolute;
+  top: 45%;
+  right: 3%;
+  z-index: 10;
+  color: ${({ disabled }) => disabled ? 'lightgray' : 'black'};
+  cursor: ${({ disabled }) => disabled ? '' : 'pointer'};
+  background-color: transparent;
+  border: 0;
+`;
+
+export {CarouselContainer,SlideContainer,Slide,Image, IndicatorContainer, Indicator, LeftArrow, RightArrow}

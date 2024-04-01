@@ -156,4 +156,20 @@ const CommentBox = styled.div`
   }
 `
 
-export {BoardBox, Title, Content, BtnBox, Comment, CreateBtn, CommentBox}
+const CommentSubBtn = styled.div`
+  width: 50px;
+  height: 25px;
+  padding: 5px;
+  border: 0;
+  border-radius: 5px;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 20px;
+  cursor: pointer;
+  margin-right: 10px; 
+  background-color: #ecebeb;
+`
+
+export {BoardBox, Title, Content, BtnBox, Comment, CreateBtn, CommentBox, CommentSubBtn}

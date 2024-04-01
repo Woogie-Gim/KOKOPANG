@@ -11,4 +11,24 @@ export const Wrapper = styled.div`
   background-color: white;
   opacity: 0.8;
   font-size: 25px;
+  margin-bottom: 50px;
 `;
+
+export const GuideBox = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 50px;
+
+  .title {
+    font-size: 30px;
+    margin-bottom: 20px;
+  }
+
+  .content {
+    width: 500px;
+    height: 400px;
+    margin: 0  auto;
+  }
+
+`

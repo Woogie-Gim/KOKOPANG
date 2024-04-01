@@ -15,6 +15,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/friend")
+@CrossOrigin(origins = "*", methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE}, maxAge = 6000)
 public class FriendshipController {
 
     private final FriendshipService friendshipService;
