@@ -46,11 +46,11 @@ public class TcpMessageHandler {
                                 channelMsgHandler.filterData(userName, json.getJSONObject("data"));
                                 break;
                             case "loading" :
-                                inGameMsgHandler.filterData(json.getJSONObject("data"));
+//                                inGameMsgHandler.filterData(json.getJSONObject("data"));
                                 break;
                             case "inGame" :
                                 int channelIndex = json.getInt("channelIndex");
-                                inGameMsgHandler.broadcast(channelIndex, json.getJSONObject("data"));
+                                inGameMsgHandler.filterData(channelIndex, json.getJSONObject("data"));
                                 break;
                         }
 

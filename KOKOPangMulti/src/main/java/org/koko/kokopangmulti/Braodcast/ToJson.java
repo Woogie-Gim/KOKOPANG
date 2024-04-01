@@ -155,10 +155,10 @@ public class ToJson {
         }
     }
 
-    public static String locationToJson(JSONObject json) {
+    public static String positionToJson(JSONObject json) {
         HashMap<String, Object> temp = new LinkedHashMap<>();
 
-        temp.put("type", "inGame");
+        temp.put("type", "changePos");
         temp.put("userId", json.getInt("userId"));
         temp.put("x", json.getFloat("x"));
         temp.put("y", json.getFloat("y"));
@@ -167,6 +167,21 @@ public class ToJson {
         temp.put("rx", json.getFloat("rx"));
         temp.put("ry", json.getFloat("ry"));
         temp.put("rz", json.getFloat("rz"));
+
+        try {
+            return objectMapper.writeValueAsString(temp) + '\n';
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static String equipmentToJson(JSONObject json) {
+        HashMap<String, Object> temp = new LinkedHashMap<>();
+
+        temp.put("type", "changeArm");
+        temp.put("userId", json.getInt("userId"));
+        temp.put("armType", json.getString("armType"));
+        temp.put("armName", json.getString("armName"));
 
         try {
             return objectMapper.writeValueAsString(temp) + '\n';
