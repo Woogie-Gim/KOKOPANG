@@ -1,13 +1,10 @@
 package org.koko.kokopangmulti.Ingame;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.json.JSONObject;
 import org.koko.kokopangmulti.Braodcast.BroadcastToChannel;
-import org.koko.kokopangmulti.Braodcast.ToJson;
 
 public class InGameMsgHandler {
-    static ObjectMapper objectMapper = new ObjectMapper();
 
 //    public void filterData(JSONObject data) {
 //        int channelIndex = data.getInt("channelIndex");
@@ -27,6 +24,8 @@ public class InGameMsgHandler {
             case "changeArm":
                 BroadcastToChannel.broadcastMessage(channelIndex, ToJson.equipmentToJson(json)).subscribe();
                 break;
+            case "attack":
+                BroadcastToChannel.broadcastMessage(channelIndex, ToJson.attackToJson(json)).subscribe();
         }
     }
 }
