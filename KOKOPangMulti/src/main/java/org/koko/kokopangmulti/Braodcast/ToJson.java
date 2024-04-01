@@ -156,4 +156,19 @@ public class ToJson {
         }
     }
 
+    public static String locationToJson(JSONObject json) {
+        HashMap<String, Object> temp = new LinkedHashMap<>();
+
+        temp.put("type", "inGame");
+        temp.put("userId", json.getInt("userId"));
+        temp.put("x", json.getFloat("x"));
+        temp.put("y", json.getFloat("y"));
+        temp.put("z", json.getFloat("z"));
+
+        try {
+            return objectMapper.writeValueAsString(temp) + '\n';
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

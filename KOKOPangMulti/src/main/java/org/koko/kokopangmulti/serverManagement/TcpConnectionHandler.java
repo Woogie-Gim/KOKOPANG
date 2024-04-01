@@ -55,13 +55,13 @@ public class TcpConnectionHandler implements Consumer<Connection> {
 
                         // 로비에 접속 유저 목록 변동 사항 브로드캐스팅
                         BroadcastToLobby.broadcastLobby(ToJson.lobbySessionsToJson()).subscribe();
-                        log.info("Client remove from Lobby");
+                        log.info("Client leave [channel]: Lobby / [userName]: " + userName);
                         break;
 
                     default:
                         leaveChannel(userName, channelIdx, SessionState.EXCEPTION);
 
-                        log.info("Client remove from Channel");
+                        log.info("Client leave [channel]: " + channelIdx + " / [userName]: " + userName);
                         break;
                 }
             }

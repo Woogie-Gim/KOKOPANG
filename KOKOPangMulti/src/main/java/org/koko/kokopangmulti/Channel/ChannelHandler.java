@@ -1,6 +1,5 @@
 package org.koko.kokopangmulti.Channel;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.koko.kokopangmulti.Braodcast.BroadcastToChannel;
 import org.koko.kokopangmulti.Braodcast.BroadcastToLobby;
 import org.koko.kokopangmulti.Braodcast.ToJson;
@@ -92,6 +91,7 @@ public class ChannelHandler {
 
         // 6) Broadcasting
         // 6-1) channel 내 sessions
+        // 게임중 or 게임 전 두 개 경우의 수 분류해서 브로드캐스팅 필요
         broadcastMessage(channelIndex, channelSessionListToJSON(channel)).subscribe();
 
         // 6-2) lobby 내 sessions : channelList UPDATE
