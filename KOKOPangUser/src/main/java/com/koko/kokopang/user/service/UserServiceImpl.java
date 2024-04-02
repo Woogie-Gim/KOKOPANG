@@ -11,6 +11,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -28,12 +30,35 @@ public class UserServiceImpl implements UserService {
         this.userProfileService = userProfileService;
     }
 
+    private boolean isValidPassword(String password) {
+        // 알파벳 포함 여부를 확인하는 정규 표현식
+        Pattern alphabetPattern = Pattern.compile("[a-zA-Z]");
+        Matcher alphabetMatcher = alphabetPattern.matcher(password);
+
+        // 숫자 포함 여부를 확인하는 정규 표현식
+        Pattern digitPattern = Pattern.compile("[0-9]");
+        Matcher digitMatcher = digitPattern.matcher(password);
+
+        // 특수 문자 포함 여부를 확인하는 정규 표현식
+        Pattern specialCharacterPattern = Pattern.compile("[~`@!#$%^&*+=\\-\\[\\]\\\\';,/{}|\":<>?]");
+        Matcher specialCharacterMatcher = specialCharacterPattern.matcher(password);
+
+        // 비밀번호 길이가 8에서 15 사이인지 확인
+        boolean validLength = (password.length() > 7 && password.length() < 16);
+
+        // 모든 조건을 만족하는지 확인하여 반환
+        return alphabetMatcher.find() && digitMatcher.find() && specialCharacterMatcher.find() && validLength;
+    }
+
     @Override
     public User signup(UserDTO userDTO) {
         String email = userDTO.getEmail();
         String password = userDTO.getPassword();
 
 //        if (!email.contains("@") || email.contains("'")) {
+//            return null;
+//        }
+//        if (!isValidPassword(password)) {
 //            return null;
 //        }
 
