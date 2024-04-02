@@ -1,5 +1,6 @@
 package com.koko.kokopang.user.controller;
 
+import com.koko.kokopang.user.dto.RankUpDTO;
 import com.koko.kokopang.user.dto.UserDTO;
 import com.koko.kokopang.user.model.User;
 import com.koko.kokopang.user.service.UserService;
@@ -86,5 +87,11 @@ public class UserController {
     @GetMapping("/all")
     public ResponseEntity<?> getAllUser() {
         return new ResponseEntity<List<UserDTO>>(userService.getAllUser(), HttpStatus.OK);
+    }
+
+    @PutMapping("/rankup")
+    public ResponseEntity<?> rankUp(@RequestBody List<RankUpDTO> rankUpDTOList) {
+        userService.rankUp(rankUpDTOList);
+        return new ResponseEntity<Void>(HttpStatus.OK);
     }
 }

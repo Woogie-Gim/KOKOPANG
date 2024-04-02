@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { CarouselContainer, SlideContainer, Slide, Image, IndicatorContainer, Indicator, LeftArrow, RightArrow } from '../../styles/Main/MainCarousel';
-import carouselImage1 from "../../assets/myedit_ai_image_0318142911.jpg";
-import carouselImage2 from "../../assets/myedit_ai_image_0318143148.jpg";
-import carouselImage3 from "../../assets/myedit_ai_image_0318143150.jpg";
+import carouselImage3 from "../../assets/MainImg1.png";
+import carouselImage1 from "../../assets/MainImg3.png";
+import carouselImage2 from "../../assets/MainImg2.png";
 
 const MainCarousel = () => {
   const [currentSlide, setCurrentSlide] = useState(0);

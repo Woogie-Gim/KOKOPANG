@@ -4,7 +4,6 @@ import NaviBar from './NaviBar'
 import Tab from '../components/GameGuide/Tab'
 import Story from '../components/GameGuide/Story'
 import Guide from '../components/GameGuide/Guide'
-import Items from '../components/GameGuide/Items'
 
 const GameGuide = () => {
   const now = useParams();
@@ -17,9 +16,6 @@ const GameGuide = () => {
       break;
     case "guide":
       content = <Guide />;
-      break;
-    case "items":
-      content = <Items />;
       break;
   }
 
