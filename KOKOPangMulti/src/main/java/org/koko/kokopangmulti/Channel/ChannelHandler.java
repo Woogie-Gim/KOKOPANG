@@ -21,6 +21,7 @@ import static org.koko.kokopangmulti.Braodcast.ToJson.*;
 
 public class ChannelHandler {
     private static final Logger log = LoggerFactory.getLogger(ChannelHandler.class);
+
     public static void createChannel(String userName, String channelName) {
 
         // 1) Channel 인스턴스 생성
@@ -64,41 +65,45 @@ public class ChannelHandler {
         // 2) channel 참가 인원 확인 : 이미 6명이라면 join 거절
         if (channel.getSessionsInChannel().getCnt() == 6) {
             log.warn("[JOIN REJECTED] ROOM IS FULL");
-            broadcastPrivate(Session.getSessionList().get(userName).getConnection(), "fail");
-            return;
-        }
+            broadcastPrivate(Session.getSessionList().get(userName).getConnection(), "room is full" + '\n').subscribe();
+        } else {
+            // 3) Lobby에서 [userName] 제거
+            int userId = ChannelList.getLobby().getSessionList().get(userName);
+            ChannelList.getLobby().getSessionList().remove(userName);
 
-        // 3) Lobby에서 [userName] 제거
-        int userId = ChannelList.getLobby().getSessionList().get(userName);
-        ChannelList.getLobby().getSessionList().remove(userName);
+            // 3-1) sessionInfo 수정
+            Session.getSessionList().get(userName).setSessionState(channelIndex);
 
-        // 3-1) sessionInfo 수정
-        Session.getSessionList().get(userName).setSessionState(channelIndex);
-
-        // 4) channel 안 [userName]의 idx 탐색
-        for (int i = 0; i < 6; i++) {
-            if (channel.getSessionsInChannel().getIsExisted().get(i) == 0) {
-                channel.getSessionsInChannel().setTrueIsExisted(i); // UPDATE isExisted
-                channel.getSessionsInChannel().plusCnt();           // UPDATE cnt
-                channel.addSession(userName, i);                    // UPDATE nameToIdx, idxToName
-                channel.getSessionList().put(userName, userId);
-                break;
+            // 4) channel 안 [userName]의 idx 탐색
+            for (int i = 0; i < 6; i++) {
+                if (channel.getSessionsInChannel().getIsExisted().get(i) == 0) {
+                    channel.getSessionsInChannel().setTrueIsExisted(i); // UPDATE isExisted
+                    channel.getSessionsInChannel().plusCnt();           // UPDATE cnt
+                    channel.addSession(userName, i);                    // UPDATE nameToIdx, idxToName
+                    channel.getSessionList().put(userName, userId);
+                    break;
+                }
             }
+
+            // 5) LOGGING JOIN
+            log.info("[userName:{}] CHANNEL JOINED, channelName:{}", userName, ChannelList.getChannelInfo(channelIndex).getChannelName());
+
+            // 6) Broadcasting
+            // 6-1) channel 내 sessions
+            // 게임중 or 게임 전 두 개 경우의 수 분류해서 브로드캐스팅 필요
+            broadcastMessage(channelIndex, channelSessionListToJSON(channel)).subscribe();
+
+            // 6-2) lobby 내 sessions : channelList UPDATE
+            broadcastLobby(channelListToJson()).subscribe();
+            // 6-3) lobby 내 sessions : sessionList UPDATE
+            broadcastLobby(lobbySessionsToJson()).subscribe();
         }
+    }
 
-        // 5) LOGGING JOIN
-        log.info("[userName:{}] CHANNEL JOINED, channelName:{}", userName, ChannelList.getChannelInfo(channelIndex).getChannelName());
+    public static void followChannel(String userName, String followName) {
+        int channelIdx = Session.getSessionList().get(userName).getSessionState();
 
-        // 6) Broadcasting
-        // 6-1) channel 내 sessions
-        // 게임중 or 게임 전 두 개 경우의 수 분류해서 브로드캐스팅 필요
-        broadcastMessage(channelIndex, channelSessionListToJSON(channel)).subscribe();
-
-        // 6-2) lobby 내 sessions : channelList UPDATE
-        broadcastLobby(channelListToJson()).subscribe();
-        // 6-3) lobby 내 sessions : sessionList UPDATE
-        broadcastLobby(lobbySessionsToJson()).subscribe();
-
+        joinChannel(followName, channelIdx);
     }
 
     public static void isReady(String userName, int channelIndex) {
@@ -169,7 +174,7 @@ public class ChannelHandler {
 
 
             // 7) 방이 유지되는 경우
-            default :
+            default:
 
                 // 방장이 나간 경우 : 새로운 방장 설정
                 if (idx == 0) {

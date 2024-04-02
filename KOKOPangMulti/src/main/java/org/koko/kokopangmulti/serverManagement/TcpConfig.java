@@ -1,6 +1,5 @@
 package org.koko.kokopangmulti.serverManagement;
 
-import org.koko.kokopangmulti.Ingame.InGameMsgHandler;
 import org.koko.kokopangmulti.Lobby.LobbyMsgHandler;
 import org.koko.kokopangmulti.Channel.ChannelMsgHandler;
 import org.springframework.context.annotation.Bean;
@@ -25,7 +24,7 @@ public class TcpConfig {
 
     @Bean
     public TcpMessageHandler tcpMessageHandler() {
-        return new TcpMessageHandler(new LobbyMsgHandler(), channelMsgHandler(), new InGameMsgHandler());
+        return new TcpMessageHandler(new LobbyMsgHandler(), channelMsgHandler());
     }
 
     @Bean

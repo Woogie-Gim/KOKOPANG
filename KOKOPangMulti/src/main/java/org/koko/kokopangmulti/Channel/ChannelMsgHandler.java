@@ -6,7 +6,7 @@ import org.koko.kokopangmulti.session.SessionState;
 
 public class ChannelMsgHandler {
     public void filterData(String userName, JSONObject data) throws JSONException {
-        
+
         String type = data.getString("type");
         int channelIndex = 0;
 
@@ -19,6 +19,9 @@ public class ChannelMsgHandler {
                 channelIndex = data.getInt("channelIndex");
                 ChannelHandler.joinChannel(userName, channelIndex);
                 break;
+            case "follow":
+                String followName = data.getString("followName");
+                ChannelHandler.followChannel(userName, followName);
             case "ready":
                 channelIndex = data.getInt("channelIndex");
                 ChannelHandler.isReady(userName, channelIndex);

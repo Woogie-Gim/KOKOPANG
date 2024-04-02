@@ -1,9 +1,11 @@
 package org.koko.kokopangmulti.serverManagement;
 
 import org.json.JSONException;
-import org.koko.kokopangmulti.Ingame.InGameMsgHandler;
+import org.koko.kokopangmulti.Braodcast.BroadcastToChannel;
+import org.koko.kokopangmulti.Braodcast.ToJson;
 import org.koko.kokopangmulti.Lobby.LobbyMsgHandler;
 import org.koko.kokopangmulti.Channel.ChannelMsgHandler;
+import org.koko.kokopangmulti.session.Session;
 import reactor.core.publisher.Mono;
 import reactor.netty.NettyInbound;
 import reactor.netty.NettyOutbound;
@@ -16,13 +18,11 @@ public class TcpMessageHandler {
      */
     private final LobbyMsgHandler lobbyMsgHandler;
     private final ChannelMsgHandler channelMsgHandler;
-    private final InGameMsgHandler inGameMsgHandler;
 
 
-    public TcpMessageHandler(LobbyMsgHandler lobbyMsgHandler, ChannelMsgHandler channelMsgHandler, InGameMsgHandler inGameMsgHandler) {
+    public TcpMessageHandler(LobbyMsgHandler lobbyMsgHandler, ChannelMsgHandler channelMsgHandler) {
         this.lobbyMsgHandler = lobbyMsgHandler;
         this.channelMsgHandler = channelMsgHandler;
-        this.inGameMsgHandler = inGameMsgHandler;
     }
 
     public Mono<Void> handleMessage(NettyInbound in, NettyOutbound out) {
@@ -32,6 +32,7 @@ public class TcpMessageHandler {
                     try {
                         // 클라이언트 측에서 송신한 메시지를 JSON객체로 변환
                         JSONObject json = new JSONObject(msg);
+                        System.out.println(msg);
 
                         // JSON객체에서 최상위 값들 파싱(현재 참가 채널 이름 및 하위 데이터)
                         String channelName = json.getString("channel");
@@ -51,7 +52,7 @@ public class TcpMessageHandler {
                                 break;
                             case "inGame" :
                                 int channelIndex = json.getInt("channelIndex");
-                                inGameMsgHandler.filterData(channelIndex, json.getJSONObject("data"));
+                                BroadcastToChannel.broadcastMessage(channelIndex, ToJson.positionToJson(json.getJSONObject("data"))).subscribe();
                                 break;
                         }
 

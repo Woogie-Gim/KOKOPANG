@@ -26,7 +26,6 @@ public class Channel {
         this.channelIdx = channelIdx;
     }
 
-    private static final ObjectMapper objectMapper = new ObjectMapper();
 
     // LOBBY CHANNEL
     public Channel(String channelName) {
@@ -45,9 +44,6 @@ public class Channel {
         this.isOnGame = false;
         this.sessionList = new HashMap<>();
         this.channelIdx = 0;
-    }
-    public Channel() {
-
     }
 
     /*
