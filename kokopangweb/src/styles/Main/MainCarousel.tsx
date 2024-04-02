@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 const CarouselContainer = styled.div`
   position: relative;
-  width: 800px;
+  width: 100%;
   height: 600px;
   overflow: hidden;
   border-radius: 10px;
@@ -10,7 +10,7 @@ const CarouselContainer = styled.div`
 
 const SlideContainer = styled.div`
   display: flex;
-  width: 800px;
+  width: 100%;
   height: 600px;
 `;
 
@@ -21,7 +21,7 @@ const Slide = styled.div`
 `;
 
 const Image = styled.img`
-  width: 800px;
+  width: 100%;
   height: 600px;
 `;
 

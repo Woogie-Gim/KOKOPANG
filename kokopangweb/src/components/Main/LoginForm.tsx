@@ -125,11 +125,11 @@ const LoginForm = () => {
   };
 
   const profileUpload = () => {
-
     if (!profileFile) return;
     // 프로필이미지를 처음 생성한 경우
 
-    else if (user.profileImage === defaultProfile) {
+    else if (user.profileImage === null) {
+      console.log("fqwffqwfqwfqwfqw")
       // formData형식으로 imgInfo에 파일경로 입력
       const formData = new FormData();
       formData.append("imgInfo", profileFile as string);
@@ -162,6 +162,8 @@ const LoginForm = () => {
     }
     // 프로필사진 수정
     else if (avatar !== user.profileImage) {
+      console.log("수정임")
+
       const formData = new FormData();
       // 새로 들어온 프로필 사진 파일
       formData.append("imgInfo", profileFile as string);
@@ -216,9 +218,7 @@ const LoginForm = () => {
           },
         })
         .then((response) => {
-          console.log(user.userId, user.profileImage)
           if (!response.data) return;
-          console.log(response.data,"라라라랄라ㅏ")
           const image = response.data;
           if (image) {
             setAvatar(

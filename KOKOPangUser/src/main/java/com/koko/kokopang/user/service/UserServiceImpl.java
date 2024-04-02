@@ -4,6 +4,7 @@ import com.koko.kokopang.user.dto.UserDTO;
 import com.koko.kokopang.user.model.User;
 import com.koko.kokopang.user.model.UserProfile;
 import com.koko.kokopang.user.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,6 +14,9 @@ import java.util.List;
 
 @Service
 public class UserServiceImpl implements UserService {
+
+    @Value("${file.request.path}")
+    private String fileRequestPath;
 
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -63,7 +67,7 @@ public class UserServiceImpl implements UserService {
         userDTO.setRating(user.getRating());
         UserProfile img = userProfileService.getUserProfile(user.getId());
         if (img != null) {
-            String imgUrl = "http://j10c211.p.ssafy.io:8080/profile/getImg/"
+            String imgUrl = fileRequestPath + "/profile/getImg/"
                     + img.getSaveFolder() + "/" + img.getOriginalName() + "/" + img.getSaveName();
             userDTO.setProfileImg(imgUrl);
         }
@@ -122,7 +126,7 @@ public class UserServiceImpl implements UserService {
             reUser.setRating(user.getRating());
             UserProfile img = userProfileService.getUserProfile(user.getId());
             if (img != null) {
-                String imgUrl = "http://j10c211.p.ssafy.io:8080/profile/getImg/"
+                String imgUrl = fileRequestPath + "/profile/getImg/"
                         + img.getSaveFolder() + "/" + img.getOriginalName() + "/" + img.getSaveName();
                 reUser.setProfileImg(imgUrl);
             }

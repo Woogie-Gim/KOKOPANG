@@ -143,7 +143,7 @@ const CommentBox = styled.div`
     }
 
     .item1:nth-child(1) {
-      width: 90%;
+      width: 100%;
       margin: 0 auto;
       margin-left: 10px;
       font-size: 15px;
