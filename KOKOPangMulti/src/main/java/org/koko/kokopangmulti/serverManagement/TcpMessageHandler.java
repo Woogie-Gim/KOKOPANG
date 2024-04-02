@@ -1,5 +1,6 @@
 package org.koko.kokopangmulti.serverManagement;
 
+import org.json.JSONException;
 import org.koko.kokopangmulti.Ingame.InGameMsgHandler;
 import org.koko.kokopangmulti.Lobby.LobbyMsgHandler;
 import org.koko.kokopangmulti.Channel.ChannelMsgHandler;
@@ -56,11 +57,9 @@ public class TcpMessageHandler {
 
                         return Mono.empty();
 
-                    } catch (Exception e) {
-
-                        e.printStackTrace();
-                        return Mono.error(e); // 오류 발생 시, Mono.error로 오류를 반환
-
+                    } catch (JSONException e) {
+                        System.out.println("error: JSON 파싱에러");
+                        return Mono.empty();
                     }
                 }).then();
     }

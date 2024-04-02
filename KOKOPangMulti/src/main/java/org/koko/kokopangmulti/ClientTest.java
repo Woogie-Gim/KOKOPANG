@@ -30,7 +30,7 @@ public class ClientTest {
 
             System.out.println("[Client] 서버 접속 성공");
 
-            String json = "{\"channel\":\"lobby\",\"userName\":\"test\",\"data\":{\"type\":\"initial\",\"userId\":\"0\"}}";
+            String json = "{\"channel\":\"lobby\",\"userName\":\"test\",\"data\":{\"type\":\"chat\",\"message\":\"message\"}}";
             out.println(json);
 
             String userInput;
