@@ -206,7 +206,7 @@ public class ChannelHandler {
 
         // 8) broadcasting :
         // 8-1) channel 내 sessions : 방이 사라지지 않은 경우
-        if (flag) {
+        if (flag && !channel.getOnGame()) {
             broadcastMessage(channelIndex, channelSessionListToJSON(channel)).subscribe();
         }
         // 8-2) lobby 내 sessions : channelList UPDATE
