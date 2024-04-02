@@ -6,7 +6,7 @@ import org.koko.kokopangmulti.session.SessionState;
 
 public class ChannelMsgHandler {
     public void filterData(String userName, JSONObject data) throws JSONException {
-
+        
         String type = data.getString("type");
         int channelIndex = 0;
 
@@ -31,9 +31,11 @@ public class ChannelMsgHandler {
                 channelIndex = data.getInt("channelIndex");
                 String message = data.getString("message");
                 ChannelHandler.chat(channelIndex, userName, message);
+                break;
             case "start":
                 channelIndex = data.getInt("channelIndex");
                 ChannelHandler.startGame(channelIndex);
+                break;
         }
     }
 
