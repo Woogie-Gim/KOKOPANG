@@ -9,6 +9,7 @@ import com.koko.kokopang.user.model.User;
 import com.koko.kokopang.user.model.UserProfile;
 import com.koko.kokopang.user.repository.FriendshipRepository;
 import com.koko.kokopang.user.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +18,9 @@ import java.util.List;
 
 @Service
 public class FriendshipServiceImpl implements FriendshipService{
+
+    @Value("${file.request.path}")
+    private String fileRequestPath;
 
     private final FriendshipRepository friendshipRepository;
     private final UserRepository userRepository;
@@ -74,7 +78,7 @@ public class FriendshipServiceImpl implements FriendshipService{
             UserProfile friendProfile = userProfileService
                     .getUserProfile(userId == friendship.getFriendId() ? friendship.getUser().getId() : friendship.getFriendId());
             if (friendProfile != null) {
-                friend.setFriendProfileImg("http://j10c211.p.ssafy.io:8080/profile/getImg/" + friendProfile.getSaveFolder() + "/" + friendProfile.getOriginalName() + "/" + friendProfile.getSaveName());
+                friend.setFriendProfileImg(fileRequestPath + "/profile/getImg/" + friendProfile.getSaveFolder() + "/" + friendProfile.getOriginalName() + "/" + friendProfile.getSaveName());
             }
             userFriendsList.add(friend);
         }
