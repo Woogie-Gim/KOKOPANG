@@ -7,15 +7,16 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class Channel {
 
     private String channelName;
-    private HashMap<String, Integer> nameToIdx;
-    private HashMap<Integer, String> idxToName;
+    private ConcurrentHashMap<String, Integer> nameToIdx;
+    private ConcurrentHashMap<Integer, String> idxToName;
     private SessionsInChannel sessionsInChannel;
     private Boolean isOnGame;
-    private HashMap<String, Integer> sessionList;
+    private ConcurrentHashMap<String, Integer> sessionList;
     private int channelIdx;
 
     public int getChannelIdx() {
@@ -30,19 +31,19 @@ public class Channel {
     // LOBBY CHANNEL
     public Channel(String channelName) {
         this.channelName = channelName;
-        this.sessionList = new HashMap<>();
+        this.sessionList = new ConcurrentHashMap<>();
     }
 
     // GAME CHANNEL 생성자
     public Channel(String channelName, String userName) {
         this.channelName = channelName;
-        this.nameToIdx = new HashMap<>();
+        this.nameToIdx = new ConcurrentHashMap<>();
         this.nameToIdx.put(userName, 0);
-        this.idxToName = new HashMap<>();
+        this.idxToName = new ConcurrentHashMap<>();
         this.idxToName.put(0, userName);
         this.sessionsInChannel = new SessionsInChannel();   // cnt=1, isExisted=[1,0,0,0,0,0]
         this.isOnGame = false;
-        this.sessionList = new HashMap<>();
+        this.sessionList = new ConcurrentHashMap<>();
         this.channelIdx = 0;
     }
 
@@ -53,7 +54,7 @@ public class Channel {
         return channelName;
     }
 
-    public HashMap<String, Integer> getNameToIdx() {
+    public ConcurrentHashMap<String, Integer> getNameToIdx() {
         return this.nameToIdx;
     }
 
@@ -66,13 +67,13 @@ public class Channel {
         return this.sessionsInChannel;
     }
 
-    public HashMap<String, Integer> getSessionList() {
+    public ConcurrentHashMap<String, Integer> getSessionList() {
         return this.sessionList;
     }
 
     public int getIdx(String userName) { return this.nameToIdx.get(userName); }
 
-    public HashMap<Integer, String> getIdxToName() {
+    public ConcurrentHashMap<Integer, String> getIdxToName() {
         return idxToName;
     }
 
