@@ -155,5 +155,23 @@ public class ToJson {
         }
     }
 
+    public static String positionToJson(JSONObject json) {
+        HashMap<String, Object> temp = new LinkedHashMap<>();
 
+        temp.put("type", "changePos");
+        temp.put("userId", json.getInt("userId"));
+        temp.put("x", json.getFloat("x"));
+        temp.put("y", json.getFloat("y"));
+        temp.put("z", json.getFloat("z"));
+        temp.put("rw", json.getFloat("rw"));
+        temp.put("rx", json.getFloat("rx"));
+        temp.put("ry", json.getFloat("ry"));
+        temp.put("rz", json.getFloat("rz"));
+
+        try {
+            return objectMapper.writeValueAsString(temp) + '\n';
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
