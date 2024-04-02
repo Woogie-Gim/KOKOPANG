@@ -9,7 +9,7 @@ interface Props {
 function Tab({now}: Props) {
   const navigate = useNavigate();
 
-  const menus = ["스토리", "게임 진행 방법", "아이템"];
+  const menus = ["스토리", "게임 진행 방법"];
   const [status, setStatus] = useState<string | undefined>();
 
   const onClick = (menu: String) => {
@@ -19,9 +19,6 @@ function Tab({now}: Props) {
         break;
       case "게임 진행 방법":
         navigate("/gameGuide/guide");
-        break;
-      case "아이템":
-        navigate("/gameGuide/items");
         break;
     }
   }
@@ -33,9 +30,6 @@ function Tab({now}: Props) {
         break;
       case "guide":
         setStatus("게임 진행 방법");
-        break;
-      case "items":
-        setStatus("아이템")
         break;
       default:
         setStatus(undefined);

@@ -1,5 +1,6 @@
 package com.koko.kokopang.user.service;
 
+import com.koko.kokopang.user.dto.RankUpDTO;
 import com.koko.kokopang.user.dto.UserDTO;
 import com.koko.kokopang.user.model.User;
 import com.koko.kokopang.user.model.UserProfile;
@@ -159,5 +160,18 @@ public class UserServiceImpl implements UserService {
         }
 
         return users;
+    }
+
+    @Override
+    @Transactional
+    public void rankUp(List<RankUpDTO> rankUpDTOList) {
+        for (RankUpDTO rankUpDTO:rankUpDTOList) {
+            User user = userRepository.findById(rankUpDTO.getUserId());
+            if (!rankUpDTO.isEscape()) {
+                user.setRating(user.getRating() - 8);
+            } else {
+                user.setRating(rankUpDTO.getScore());
+            }
+        }
     }
 }

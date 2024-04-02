@@ -1,5 +1,6 @@
 package com.koko.kokopang.user.service;
 
+import com.koko.kokopang.user.dto.RankUpDTO;
 import com.koko.kokopang.user.dto.UserDTO;
 import com.koko.kokopang.user.model.User;
 
@@ -15,4 +16,6 @@ public interface UserService {
     boolean updatePassword(int userId, String password);
 
     List<UserDTO> getAllUser();
+
+    void rankUp(List<RankUpDTO> rankUpDTOList);
 }
