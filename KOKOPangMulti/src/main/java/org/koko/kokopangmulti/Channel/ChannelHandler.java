@@ -167,7 +167,6 @@ public class ChannelHandler {
                 channel = null;
                 // 6-2) channelList에서 channel 제거
                 ChannelList.getChannelList().remove(channelIndex);
-                System.out.println(ChannelList.getChannelList());
                 // 6-3) 방 제거 flag 설정
                 flag = false;
                 break;
