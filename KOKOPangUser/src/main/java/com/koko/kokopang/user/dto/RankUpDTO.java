@@ -9,5 +9,4 @@ public class RankUpDTO {
 
     private int userId;
     private int score;
-    private boolean isEscape; // true 탈출 성공, false 탈출 실패
 }
