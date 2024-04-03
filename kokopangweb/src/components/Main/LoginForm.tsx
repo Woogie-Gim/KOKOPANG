@@ -203,7 +203,7 @@ const LoginForm = () => {
   }
 
   const downloadApp = () => {
-    const fileURL = 'https://drive.google.com/uc?export=download&id=1JIh4kVU99Rk6mmYwzXACibjPNEwhJBnJ';
+    const fileURL = 'https://drive.google.com/file/d/10tuwLzde1wGyeN0qbkNIfiwJY7jgN2Rw/view';
     // 다운로드 링크를 클릭하여 파일을 다운로드합니다.
     window.open(fileURL, '_blank');
   }

@@ -56,12 +56,12 @@ public class UserServiceImpl implements UserService {
         String email = userDTO.getEmail();
         String password = userDTO.getPassword();
 
-//        if (!email.contains("@") || email.contains("'")) {
-//            return null;
-//        }
-//        if (!isValidPassword(password)) {
-//            return null;
-//        }
+        if (!email.contains("@") || email.contains("'")) {
+            return null;
+        }
+        if (!isValidPassword(password)) {
+            return null;
+        }
 
         if (userRepository.existsByEmail(email)) {
             return null;

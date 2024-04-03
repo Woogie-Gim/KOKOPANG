@@ -59,6 +59,7 @@ export default function SignUp() {
     })
     .catch((error) => {
       console.log("회원가입 실패")
+      alert("아이디 또는 비밀번호를 확인해주세요!")
     })
   }
 
@@ -71,7 +72,7 @@ export default function SignUp() {
         <Header>KOKOPang 회원가입</Header>
         <Name value={name} onChange={changeName} placeholder='닉네임' maxLength={4}/>
         <ContentBox>4글자 이하로 설정해주세요</ContentBox>
-        <Email value={email} onChange={changeEmail} placeholder='이메일'/>
+        <Email value={email} onChange={changeEmail} placeholder='이메일' type='email'/>
         <ContentBox>이메일 형식으로 설정해주세요</ContentBox>
         <Password value={password} onChange={changePassword} type='password' placeholder='비밀번호'/>
         <ContentBox>특수문자(~ ! @ # $) 포함 8 ~ 16 글자로 설정해주세요</ContentBox>
