@@ -166,6 +166,6 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public void rankUp(RankUpDTO rankUpDTO) {
         User user = userRepository.findById(rankUpDTO.getUserId());
-        user.setRating(rankUpDTO.getScore());
+        user.setRating(Math.round((float) rankUpDTO.getScore() / 10) + user.getRating());
     }
 }
