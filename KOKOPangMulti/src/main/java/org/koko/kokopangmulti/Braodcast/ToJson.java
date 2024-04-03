@@ -88,23 +88,25 @@ public class ToJson {
         List<Integer> isExisted = sic.getIsExisted();
         int cnt = sic.getCnt();
 
-        for (int i=0; i<6; i++) {
+        for (int i = 0; i < 6; i++) {
 
-            if (isExisted.get(i)==1) {
-                Map<String,Object> temp = new LinkedHashMap<>();
+            if (isExisted.get(i) == 1) {
+                Map<String, Object> temp = new LinkedHashMap<>();
                 String userName = channel.getIdxToName().get(i);
                 temp.put("userName", userName);
                 temp.put("userId", channel.getSessionList().get(userName));
                 temp.put("isReady", sic.getIsReady(i));
                 Boolean isHost = false;
-                if (i==0) { isHost = true; }
+                if (i == 0) {
+                    isHost = true;
+                }
                 temp.put("isHost", isHost);
 
                 jsonArray.add(temp);
                 cnt--;
             }
 
-            if (cnt==0) break;
+            if (cnt == 0) break;
 
         }
         data.put("type", "channelSessionList");
@@ -167,6 +169,33 @@ public class ToJson {
         temp.put("rx", json.getFloat("rx"));
         temp.put("ry", json.getFloat("ry"));
         temp.put("rz", json.getFloat("rz"));
+
+        try {
+            return objectMapper.writeValueAsString(temp) + '\n';
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static String scoreToJson(JSONObject json) {
+        HashMap<String, Object> temp = new LinkedHashMap<>();
+
+        temp.put("type", "score");
+        temp.put("userId", json.getInt("userId"));
+        temp.put("score", json.getInt("score"));
+
+        try {
+            return objectMapper.writeValueAsString(temp) + '\n';
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static String clearToJson(JSONObject data) {
+        HashMap<String, Object> temp = new LinkedHashMap<>();
+
+        temp.put("type", "clear");
+        temp.put("userId", data.getInt("userId"));
 
         try {
             return objectMapper.writeValueAsString(temp) + '\n';

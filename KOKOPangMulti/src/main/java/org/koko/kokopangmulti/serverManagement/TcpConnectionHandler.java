@@ -31,7 +31,6 @@ public class TcpConnectionHandler implements Consumer<Connection> {
              */
             @Override
             public void handlerAdded(ChannelHandlerContext ctx) {
-                System.out.println(Session.getSessionList().keys().toString());
                 // 클라이언트가 연결되었을 때의 처리
                 log.info("Client connected: {}", ctx.channel().remoteAddress());
             }
