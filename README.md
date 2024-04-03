@@ -312,4 +312,4 @@ build 후 docker-compose를 실행하도록 했습니다.
 |----------------------------------------|---------------------------|---------------------------------------|---------------------------|---------------------------|---------------------------|
 | ![김선욱](ReadmeImg/김선욱.png)              | ![강승원](ReadmeImg/강승원.png) | ![이항우](ReadmeImg/이항우.png)             | ![김영일](ReadmeImg/김영일.png) | ![이주현](ReadmeImg/이주현.jpg) | ![장동재](ReadmeImg/장동재.png) |
 | `CLIENT`                               | `CLIENT`                  | `CLIENT` `INFRA`                      | `SERVER`| `SERVER`| `SERVER`|
-| [GITHUB](https://github.com/Woogie-Gim) | [GITHUB](https://github.com/kangseungwon0529)                | [GITHUB](https://github.com/012coding) | [GITHUB]() | [GITHUB](https://github.com/LeeeJooo) | [GITHUB](https://github.com/djjang0925) |
+| [GITHUB](https://github.com/Woogie-Gim) | [GITHUB](https://github.com/kangseungwon0529)                | [GITHUB]() | [GITHUB](https://github.com/012coding) | [GITHUB](https://github.com/LeeeJooo) | [GITHUB](https://github.com/djjang0925) |
