@@ -90,8 +90,8 @@ public class UserController {
     }
 
     @PutMapping("/rankup")
-    public ResponseEntity<?> rankUp(@RequestBody List<RankUpDTO> rankUpDTOList) {
-        userService.rankUp(rankUpDTOList);
+    public ResponseEntity<?> rankUp(@RequestBody RankUpDTO rankUpDTO) {
+        userService.rankUp(rankUpDTO);
         return new ResponseEntity<Void>(HttpStatus.OK);
     }
 }

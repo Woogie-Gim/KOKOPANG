@@ -164,14 +164,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public void rankUp(List<RankUpDTO> rankUpDTOList) {
-        for (RankUpDTO rankUpDTO:rankUpDTOList) {
-            User user = userRepository.findById(rankUpDTO.getUserId());
-            if (!rankUpDTO.isEscape()) {
-                user.setRating(user.getRating() - 8);
-            } else {
-                user.setRating(rankUpDTO.getScore());
-            }
-        }
+    public void rankUp(RankUpDTO rankUpDTO) {
+        User user = userRepository.findById(rankUpDTO.getUserId());
+        user.setRating(rankUpDTO.getScore());
     }
 }

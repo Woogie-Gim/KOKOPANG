@@ -17,5 +17,5 @@ public interface UserService {
 
     List<UserDTO> getAllUser();
 
-    void rankUp(List<RankUpDTO> rankUpDTOList);
+    void rankUp(RankUpDTO rankUpDTO);
 }
