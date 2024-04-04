@@ -21,7 +21,6 @@
 
 # 🌳 KOKOPANG 🌳
 
----
 ![koko](https://img.shields.io/badge/made_by-teamKOKO-pink)
 ![ssafy](https://img.shields.io/badge/with-SSAFY-skyblue)
 ![unity](https://img.shields.io/badge/Unity-2021.3.33f1-white?logo=unity)
@@ -35,7 +34,6 @@
 
 # 1️⃣ Description
 
----
 
 경비행기를 타고 여행을 하던 주인공과 그의 친구들. 하지만 난기류를 만나 경비행기는 이름 모를 섬에 추락하고 만다. 비행기를 조금만 고치면 다시 작동할 수 있을 것 같다. 하지만 이 섬은 20분 후에 가라앉는다. 제한된 시간 내에 재료를 모아 비행기를 수리한 후 섬을 탈출해야 한다.
 
@@ -43,7 +41,6 @@
 
 # 2️⃣ How to play
 
----
 
 ## ① 불시착 비행기 정보 수집
 
@@ -86,7 +83,6 @@
 
 # 3️⃣ Web Page
 
----
 
 | 홈페이지                            | 랭킹 페이지                          |
 |---------------------------------|---------------------------------|
@@ -95,7 +91,6 @@
 
 # 4️⃣ About the project
 
----
 
 ## 🛠 System Architecture 🛠
 
@@ -103,16 +98,16 @@
 
 ## 🛠 Tech Stack 🛠
 
-1. 이슈 관리 : ![Jira](https://img.shields.io/badge/Jira_Software-latest-0052CC?logo=jirasoftware)
-2. 형상 관리 : ![GitLab](https://img.shields.io/badge/GitLab-latest-FC6D26?logo=GitLab)
-3. 커뮤니케이션 : ![Mattermost](https://img.shields.io/badge/Mattermost-latest-0058CC?logo=mattermost) ![Notion](https://img.shields.io/badge/Notion-latest-000000?logo=notion) ![Discord](https://img.shields.io/badge/Discord-latest-5865F2?logo=discord)
+1. 이슈 관리 : ![Jira](https://img.shields.io/badge/Jira_Software-2024.03-0052CC?logo=jirasoftware)
+2. 형상 관리 : ![GitLab](https://img.shields.io/badge/GitLab-2024.03-FC6D26?logo=GitLab)
+3. 커뮤니케이션 : ![Mattermost](https://img.shields.io/badge/Mattermost-2024.03-0058CC?logo=mattermost) ![Notion](https://img.shields.io/badge/Notion-2024.03-000000?logo=notion) ![Discord](https://img.shields.io/badge/Discord-2024.03-5865F2?logo=discord)
 4. 개발 환경
     - Game Engine  : ![Unity](https://img.shields.io/badge/Unity-2021.3.33f1-ffffff?logo=unity)
     - IDE
         - ![IntelliJIDEA](https://img.shields.io/badge/IntelliJ_IDEA-2323.3.2-ffffff?logo=intellijidea)
         - ![VisualStudio](https://img.shields.io/badge/Visual_Studio-2022-5C2D91?logo=visualstudio)
-    - Database : ![MySQL](https://img.shields.io/badge/MySQL-Latest-4479A1?logo=mysql) ![Redis](https://img.shields.io/badge/Redis-Latest-003B57?logo=redis)
-    - Server : ![Amazon EC2](https://img.shields.io/badge/Amozon_EC2-Latest-FF9900?logo=amazonec2) ![Ubuntu](https://img.shields.io/badge/Ubuntu-20.04.6_LTS-E95420?logo=ubuntu)
+    - Database : ![MySQL](https://img.shields.io/badge/MySQL-2024.03-4479A1?logo=mysql) ![Redis](https://img.shields.io/badge/Redis-2024.03-003B57?logo=redis)
+    - Server : ![Amazon EC2](https://img.shields.io/badge/Amozon_EC2-2024.03-FF9900?logo=amazonec2) ![Ubuntu](https://img.shields.io/badge/Ubuntu-20.04.6_LTS-E95420?logo=ubuntu)
 
 ### 📃 상세 사용
 
@@ -233,7 +228,7 @@
 
 # 6️⃣ Asynchronous TCP Server
 
----
+
 
 ## 📌 구현 내용
 
@@ -245,7 +240,7 @@
 
 
 | 메서드 | 설명 |
-        | --- | --- |
+| --- | --- |
 | handlerAdded | client와 최초로 연결되었을 경우|
 | handlerRemoved | client와의 연결이 끊겼을 경우 |
 | exceptionCaught | 예외 처리|
@@ -257,10 +252,10 @@
         - 기준 key : “channel”
         - 분기 value : “lobby”, “channel”, “ingame”
 
-      | lobby | 1) lobby에 있는 session 목록 관리 <br> 2) 생성된 게임 channel 목록 관리 <br>  3) lobby 안 client 간 채팅                      |
-           | --- |-----------------------------------------------------------------------------------------------------------|
-           | channel | 1) 해당 channel에 참가한 session 목록 관리  <br> 2) ready 상태 관리  <br>  3) client 간 채팅  <br>  4) 게임 시작 여부 관리 |
-           | ingame | channel 내 session 간 broadcasting   <br>  1) 게임 중  <br>  - 좌표  <br>  2) 게임 종료 후  <br> - 게임 clear 여부  <br> - score |
+| lobby | 1) lobby에 있는 session 목록 관리 <br> 2) 생성된 게임 channel 목록 관리 <br>  3) lobby 안 client 간 채팅                      |
+| --- |-----------------------------------------------------------------------------------------------------------|
+| channel | 1) 해당 channel에 참가한 session 목록 관리  <br> 2) ready 상태 관리  <br>  3) client 간 채팅  <br>  4) 게임 시작 여부 관리 |
+| ingame | channel 내 session 간 broadcasting   <br>  1) 게임 중  <br>  - 좌표  <br>  2) 게임 종료 후  <br> - 게임 clear 여부  <br> - score |
 
 ## 📌 CLIENT-SERVER 데이터 흐름
 
