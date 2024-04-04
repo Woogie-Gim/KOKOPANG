@@ -29,8 +29,6 @@
 
 ![Main](ReadmeImg/Main.png)
 
-<center> 게임 소개  영상 </center>
-
 
 # 1️⃣ Description
 
@@ -78,7 +76,7 @@
 
 | 탈출 성공                       | 탈출 실패                           |
 |-----------------------------|---------------------------------|
-| ![아웃트로](ReadmeImg/아웃트로.gif) | ![탈출실패.gif](ReadmeImg/탈출실패.gif) |
+| ![아웃트로](ReadmeImg/Outro.gif) | ![탈출실패.gif](ReadmeImg/탈출실패.gif) |
 
 
 # 3️⃣ Web Page
@@ -239,7 +237,7 @@
     - 사용자 정의 ChannelHandlerAdapter
 
 
-| 메서드 | 설명 |
+| Method | Description |
 | --- | --- |
 | handlerAdded | client와 최초로 연결되었을 경우|
 | handlerRemoved | client와의 연결이 끊겼을 경우 |
@@ -252,8 +250,9 @@
         - 기준 key : “channel”
         - 분기 value : “lobby”, “channel”, “ingame”
 
-| lobby | 1) lobby에 있는 session 목록 관리 <br> 2) 생성된 게임 channel 목록 관리 <br>  3) lobby 안 client 간 채팅                      |
+|Channel|Description|
 | --- |-----------------------------------------------------------------------------------------------------------|
+| lobby | 1) lobby에 있는 session 목록 관리 <br> 2) 생성된 게임 channel 목록 관리 <br>  3) lobby 안 client 간 채팅                      |
 | channel | 1) 해당 channel에 참가한 session 목록 관리  <br> 2) ready 상태 관리  <br>  3) client 간 채팅  <br>  4) 게임 시작 여부 관리 |
 | ingame | channel 내 session 간 broadcasting   <br>  1) 게임 중  <br>  - 좌표  <br>  2) 게임 종료 후  <br> - 게임 clear 여부  <br> - score |
 
