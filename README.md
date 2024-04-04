@@ -1,23 +1,23 @@
 # README.md
 
 ### 목차
-[1️⃣ Description](#1-description)
+[1️⃣ Description](#1️⃣-description)
 
-[2️⃣ How to play](#2-how-to-play)
+[2️⃣ How to play](#2️⃣-how-to-play)
 
-[3️⃣ Web Page](#3-web-page)
+[3️⃣ Web Page](#3️⃣-web-page)
 
-[4️⃣ About the Project](#4-about-the-project)
+[4️⃣ About the Project](#4️⃣-about-the-project)
 
-[5️⃣  Unity Game Project](#5-unity-game-project)
+[5️⃣  Unity Game Project](#5️⃣-unity-game-project)
 
-[6️⃣ Asynchronous TCP Server](#6-real-time-server)
+[6️⃣ Asynchronous TCP Server](#6️⃣-asynchronous-tcp-server)
 
-[7️⃣ Data Server](#7-data-server)
+[7️⃣ Data Server](#7️⃣-data-server)
 
-[8️⃣ 배포](#8-배포)
+[8️⃣ 배포](#8️⃣-배포)
 
-[9️⃣ About Team KOKO](#9-about-team-koko)
+[9️⃣ About Team KOKO](#9️⃣-about-team-koko)
 
 # 🌳 KOKOPANG 🌳
 
