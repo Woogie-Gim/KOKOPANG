@@ -23,11 +23,13 @@ public class FriendshipServiceImpl implements FriendshipService{
     private String fileRequestPath;
 
     private final FriendshipRepository friendshipRepository;
+    private final UserService userService;
     private final UserRepository userRepository;
     private final UserProfileService userProfileService;
 
-    public FriendshipServiceImpl(FriendshipRepository friendshipRepository, UserRepository userRepository, UserProfileService userProfileService) {
+    public FriendshipServiceImpl(FriendshipRepository friendshipRepository, UserService userService, UserRepository userRepository, UserProfileService userProfileService) {
         this.friendshipRepository = friendshipRepository;
+        this.userService = userService;
         this.userRepository = userRepository;
         this.userProfileService = userProfileService;
     }
@@ -69,12 +71,15 @@ public class FriendshipServiceImpl implements FriendshipService{
         for (Friendship friendship : friendslist) {
             FriendshipDTO friend = new FriendshipDTO();
 
+            User user = userRepository.findById(userId);
+            User user1 = userRepository.findById(friendship.getFriendId());
+
             friend.setUserId(userId);
             friend.setFriendId(userId == friendship.getFriendId() ? friendship.getUser().getId() : friendship.getFriendId());
             friend.setFriendName(userId == friendship.getFriendId() ? userRepository.findById(friendship.getUser().getId()).getName() : userRepository.findById(friendship.getFriendId()).getName());
             friend.setIsWaiting(friendship.getIsWaiting());
             friend.setIsFrom(userId != friendship.getFriendId());
-            friend.setFriendRating(friendship.getFriendRating());
+            friend.setFriendRating(userId == friendship.getFriendId() ? user.getRating():user1.getRating());
             UserProfile friendProfile = userProfileService
                     .getUserProfile(userId == friendship.getFriendId() ? friendship.getUser().getId() : friendship.getFriendId());
             if (friendProfile != null) {
