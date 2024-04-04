@@ -79,7 +79,7 @@ public class FriendshipServiceImpl implements FriendshipService{
             friend.setFriendName(userId == friendship.getFriendId() ? userRepository.findById(friendship.getUser().getId()).getName() : userRepository.findById(friendship.getFriendId()).getName());
             friend.setIsWaiting(friendship.getIsWaiting());
             friend.setIsFrom(userId != friendship.getFriendId());
-            friend.setFriendRating(userId == friendship.getFriendId() ? user.getRating():user1.getRating());
+            friend.setFriendRating(userId == friendship.getFriendId() ? user1.getRating() : user.getRating());
             UserProfile friendProfile = userProfileService
                     .getUserProfile(userId == friendship.getFriendId() ? friendship.getUser().getId() : friendship.getFriendId());
             if (friendProfile != null) {
