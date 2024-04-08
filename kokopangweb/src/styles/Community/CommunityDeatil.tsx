@@ -3,13 +3,15 @@ import styled from "styled-components";
 const BoardBox = styled.div`
   width: 70%;
   height: auto;
-  background-color: whitesmoke;
+  background-color: rgba(255, 255, 255, 0.95);
   border: 3px solid lightgray;
-  border-radius: 5px;
+  border-radius: 10px;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
   margin-bottom: 50px;
+  opacity: 0.8;
+  box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.3);
 
   .box {
     width: 100%;
@@ -33,7 +35,14 @@ const BoardBox = styled.div`
     }
 
     .item:nth-child(2) {
-      flex: 90%;
+      flex: 70%;
+    }
+
+    .item:nth-child(3) {
+      flex: 20%;
+      font-size: 16px;
+      text-align: end;
+      margin-right: 20px;
     }
   }
 `
@@ -71,7 +80,6 @@ const BtnBox = styled.div`
   .btn {
     width: 80px;
     height: 40px;
-    padding: 5px;
     border: 0;
     border-radius: 5px;
     text-align: center;
@@ -80,7 +88,12 @@ const BtnBox = styled.div`
     align-items: center;
     font-size: 20px;
     cursor: pointer;
-    margin-right: 10px; 
+    margin-right: 10px;
+    background-color: whitesmoke;
+    &:hover {
+      background-color: #324b90;
+      color: white;
+    } 
   }
 `
 
@@ -119,6 +132,10 @@ const CreateBtn = styled.div`
     font-size: 20px;
     cursor: pointer;
     margin-right: 10px; 
+    &:hover {
+      background-color: #324b90;
+      color: white;
+    }
   }
 `
 
@@ -170,6 +187,10 @@ const CommentSubBtn = styled.div`
   cursor: pointer;
   margin-right: 10px; 
   background-color: #ecebeb;
+  &:hover {
+      background-color: #324b90;
+      color: white;
+    }
 `
 
 export {BoardBox, Title, Content, BtnBox, Comment, CreateBtn, CommentBox, CommentSubBtn}

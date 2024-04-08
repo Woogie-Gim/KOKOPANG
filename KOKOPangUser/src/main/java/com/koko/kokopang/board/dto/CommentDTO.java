@@ -14,4 +14,6 @@ public class CommentDTO {
     private String userEmail;
     private String content;
     private int boardId;
+    private String created;
+    private String modified;
 }

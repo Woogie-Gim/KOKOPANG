@@ -11,4 +11,6 @@ public class CommentListDTO {
     private String username;
     private String content;
     private String profileImg;
+    private String created;
+    private String modified;
 }

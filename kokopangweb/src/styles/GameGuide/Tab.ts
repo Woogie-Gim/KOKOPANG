@@ -9,7 +9,7 @@ export const Nav = styled.div`
   margin-bottom: 0;
   border-radius: 10px;
   opacity: 0.8;
-  background-color: white;
+  background-color: whitesmoke;
   box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.3)
 `;
 
