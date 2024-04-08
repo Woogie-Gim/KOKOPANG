@@ -16,9 +16,9 @@ public class JWTUtil {
     private Key key;
 
     private static final String BEARER_TYPE = "Bearer";
-    private final long accessTokenValidTime = Duration.ofMinutes(60).toMillis(); // 만료 시간 1시간
+    private final long accessTokenValidTime = Duration.ofDays(7).toMillis(); // 만료 시간 7일
 
-    private final long refreshTokenValidTime = Duration.ofDays(1).toMillis(); // 만료 시간 1일
+    private final long refreshTokenValidTime = Duration.ofDays(7).toMillis(); // 만료 시간 7일
 
     public JWTUtil(@Value("${spring.jwt.secret}") String secret) {
 

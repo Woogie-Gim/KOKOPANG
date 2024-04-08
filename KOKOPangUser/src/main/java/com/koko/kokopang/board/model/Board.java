@@ -1,6 +1,5 @@
 package com.koko.kokopang.board.model;
 
-import com.koko.kokopang.board.dto.BaseTimeEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -10,7 +9,7 @@ import lombok.ToString;
 @Setter
 @Entity
 @ToString
-public class Board extends BaseTimeEntity {
+public class Board{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,4 +18,6 @@ public class Board extends BaseTimeEntity {
     private String userEmail;
     private String title;
     private String content;
+    private String created;
+    private String modified;
 }

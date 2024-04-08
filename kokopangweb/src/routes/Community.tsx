@@ -25,7 +25,7 @@ const Comunity = () => {
       }))
     );
 
-  const ITEMS_PER_PAGE = 10;
+  const ITEMS_PER_PAGE = 8;
   const PAGINATION_NUMBERS = 5;
 
   const [currentPage, setCurrentPage] = useState(1);

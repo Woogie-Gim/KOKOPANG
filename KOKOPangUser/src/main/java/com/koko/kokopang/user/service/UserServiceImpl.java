@@ -6,6 +6,7 @@ import com.koko.kokopang.user.model.User;
 import com.koko.kokopang.user.model.UserProfile;
 import com.koko.kokopang.user.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -52,19 +53,24 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User signup(UserDTO userDTO) {
+    public String signup(UserDTO userDTO) {
         String email = userDTO.getEmail();
         String password = userDTO.getPassword();
+        String name = userDTO.getName();
 
         if (!email.contains("@") || email.contains("'")) {
-            return null;
+            return "emailerr";
         }
         if (!isValidPassword(password)) {
-            return null;
+            return "pwderr";
         }
 
         if (userRepository.existsByEmail(email)) {
-            return null;
+            return "emailconf";
+        }
+
+        if (userRepository.existsByName(name)) {
+            return "nameconf";
         }
 
         User newUser = new User();
@@ -74,7 +80,7 @@ public class UserServiceImpl implements UserService {
         newUser.setRating(1000);
         userRepository.save(newUser);
 
-        return newUser;
+        return "success";
     }
 
     @Override
@@ -91,6 +97,7 @@ public class UserServiceImpl implements UserService {
         userDTO.setName(user.getName());
         userDTO.setEmail(user.getEmail());
         userDTO.setRating(user.getRating());
+        userDTO.setPlayTime(user.getPlayTime());
         UserProfile img = userProfileService.getUserProfile(user.getId());
         if (img != null) {
             String imgUrl = fileRequestPath + "/profile/getImg/"
@@ -113,6 +120,30 @@ public class UserServiceImpl implements UserService {
         userProfile.setName(user.getName());
 
         return userProfile;
+    }
+
+    @Override
+    public UserDTO getUserByName(String name) {
+        User user = userRepository.findByName(name);
+        UserDTO userDTO = new UserDTO();
+
+        if (user == null) {
+            System.out.println("User not exist");
+            return null;
+        }
+
+        userDTO.setUserId(user.getId());
+        userDTO.setName(user.getName());
+        userDTO.setEmail(user.getEmail());
+        userDTO.setRating(user.getRating());
+        userDTO.setPlayTime(user.getPlayTime());
+        UserProfile img = userProfileService.getUserProfile(user.getId());
+        if (img != null) {
+            String imgUrl = fileRequestPath + "/profile/getImg/"
+                    + img.getSaveFolder() + "/" + img.getOriginalName() + "/" + img.getSaveName();
+            userDTO.setProfileImg(imgUrl);
+        }
+        return userDTO;
     }
 
     @Override
@@ -150,6 +181,7 @@ public class UserServiceImpl implements UserService {
             reUser.setName(user.getName());
             reUser.setEmail(user.getEmail());
             reUser.setRating(user.getRating());
+            reUser.setPlayTime(user.getPlayTime());
             UserProfile img = userProfileService.getUserProfile(user.getId());
             if (img != null) {
                 String imgUrl = fileRequestPath + "/profile/getImg/"

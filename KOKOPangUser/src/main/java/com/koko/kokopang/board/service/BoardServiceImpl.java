@@ -10,6 +10,8 @@ import com.koko.kokopang.user.service.UserService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -33,7 +35,11 @@ public class BoardServiceImpl implements BoardService{
         newBoard.setUserEmail(board.getUserEmail());
         newBoard.setTitle(board.getTitle());
         newBoard.setContent(board.getContent());
-
+        LocalDate currentDate = LocalDate.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yy-MM-dd");
+        String formattedDate = currentDate.format(formatter);
+        newBoard.setCreated(formattedDate);
+        newBoard.setModified(formattedDate);
         boardRepository.save(newBoard);
     }
 
@@ -45,7 +51,8 @@ public class BoardServiceImpl implements BoardService{
         boardDTO.setTitle(board.getTitle());
         boardDTO.setContent(board.getContent());
         boardDTO.setBoardId(board.getId());
-
+        boardDTO.setCreated(board.getCreated());
+        boardDTO.setModified(board.getModified());
         UserDTO user = userService.getProfile(board.getUserEmail());
         boardDTO.setProfileImg(user.getProfileImg());
         boardDTO.setName(user.getName());
@@ -82,6 +89,10 @@ public class BoardServiceImpl implements BoardService{
 
         getBoard.setTitle(board.getTitle());
         getBoard.setContent(board.getContent());
+        LocalDate currentDate = LocalDate.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yy-MM-dd");
+        String formattedDate = currentDate.format(formatter);
+        getBoard.setModified(formattedDate);
     }
 
     @Override

@@ -3,14 +3,15 @@ import styled from "styled-components";
 const BoardBox = styled.div`
   width: 70%;
   height: auto;
-  background-color: whitesmoke;
+  background-color: rgba(255, 255, 255, 0.8);
   border: 3px solid lightgray;
-  border-radius: 5px;
+  border-radius: 10px;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
   margin-bottom: 50px;
   padding: 10px;
+  box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.3);
 
   .box {
     width: 100%;

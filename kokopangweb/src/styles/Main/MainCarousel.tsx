@@ -6,6 +6,7 @@ const CarouselContainer = styled.div`
   height: 600px;
   overflow: hidden;
   border-radius: 10px;
+  box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.3);
 `;
 
 const SlideContainer = styled.div`
@@ -50,7 +51,7 @@ const LeftArrow = styled.button`
   top: 45%;
   left: 3%;
   z-index: 10;
-  color: ${({ disabled }) => disabled ? 'lightgray' : 'black'};
+  color: ${({ disabled }) => disabled ? 'lightgray' : 'white'};
   cursor: ${({ disabled }) => disabled ? '' : 'pointer'};
   background-color: transparent;
   border: 0;
@@ -62,7 +63,7 @@ const RightArrow = styled.button`
   top: 45%;
   right: 3%;
   z-index: 10;
-  color: ${({ disabled }) => disabled ? 'lightgray' : 'black'};
+  color: ${({ disabled }) => disabled ? 'lightgray' : 'white'};
   cursor: ${({ disabled }) => disabled ? '' : 'pointer'};
   background-color: transparent;
   border: 0;

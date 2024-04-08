@@ -25,4 +25,5 @@ public class User {
     private String role;
     private String gender;
     private int rating;
+    private int playTime;
 }

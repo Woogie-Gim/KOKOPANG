@@ -9,12 +9,14 @@ const LoginBox = styled.div`
   margin-left: 10px;
   border: 0;
   border-radius: 10px;
-  background-color: whitesmoke;
+  background-color: rgba(255, 255, 255, 0.8);
+  box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.3);
 `;
 
 const UserLogin = styled.input`
-  width: 98.3%;
+  width: 95%;
   height: 40px;
+  padding-left: 10px;
   padding-top: 5px;
   padding-bottom: 5px;
   margin: 5px auto;
@@ -22,7 +24,7 @@ const UserLogin = styled.input`
   border-radius: 10px;
 
   &:focus {
-    outline-color: pink;
+    outline-color: #1B799E;
   }
 `;
 
@@ -34,9 +36,15 @@ const LoginButton = styled.input`
   margin: 10px auto;
   border: 1px solid lightgray;
   border-radius: 10px;
-  background-color: pink;
+  background-color: #1B799E;
+  color: whitesmoke;
   cursor: pointer;
   font-size: 20px;
+  transition: 0.2s;
+  &:hover {
+    transition: 0.2s;
+    background-color: #004CAD;
+  }
 `;
 
 const SignUpBtn = styled.input`
@@ -47,10 +55,16 @@ const SignUpBtn = styled.input`
   margin: 0 auto;
   border: 1px solid lightgray;
   border-radius: 10px;
-  background-color: #f8a2b0;
+  background-color: #1B799E;
+  color: whitesmoke;
   cursor: pointer;
   font-size: 20px;
   text-align: center;
+  transition: 0.2s;
+  &:hover {
+    transition: 0.2s;
+    background-color: #004CAD;
+  }
 `;
 
 const UserBox = styled.div`

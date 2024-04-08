@@ -8,8 +8,7 @@ export const Wrapper = styled.div`
   border-radius: 10px;
   padding: 3%;
   box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.3);
-  background-color: white;
-  opacity: 0.8;
+  background-color: rgba(255, 255, 255, 0.8);
   font-size: 25px;
   margin-bottom: 50px;
 
@@ -23,7 +22,7 @@ export const Wrapper1 = styled.div`
   border-radius: 10px;
   padding: 3%;
   box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.3);
-  background-color: white;
+  background-color: rgba(255, 255, 255, 0.8);
   font-size: 25px;
   margin-bottom: 50px;
 `;

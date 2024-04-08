@@ -3,19 +3,20 @@ import styled from "styled-components";
 const NoticeBox = styled.div`
   width: 70%;
   height: auto;
-  background-color: whitesmoke;
+  background-color: rgba(255, 255, 255, 0.8);
   border: 3px solid lightgray;
-  border-radius: 5px;
+  border-radius: 10px;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
   margin-bottom: 50px;
+  box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.3);
 
   .container2 {
     padding: 10px;
     display: flex;
     flex-direction: row;
-    background-color: lightgray;
+    background-color: rgba(211, 211, 211, 0.5);
     border-bottom: 1px solid gray;
     text-align: center;
     padding: 20px;

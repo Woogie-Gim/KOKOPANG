@@ -18,7 +18,7 @@ function App() {
         <Route path='/' element={<Main />}></Route>
         <Route path='/notice' element={<Notice />}></Route>
         <Route path='/community' element={<Community />}></Route>
-        <Route path='/rank' element={<Rank />}></Route>
+        <Route path='/rank/:name' element={<Rank />}></Route>
         <Route path='/signup' element={<SignUp />}></Route>
         <Route path='/community/:id' element={<CommunityDetail />}></Route>
         <Route path='/community/create' element={<CommunityCreate />}></Route>

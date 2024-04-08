@@ -27,15 +27,9 @@ public class UserController {
      * @return 성공 또는 실패 메세지
      */
     @PostMapping("/signup")
-    public ResponseEntity<?> signup(@RequestBody UserDTO userDTO) {
+    public String signup(@RequestBody UserDTO userDTO) {
         System.out.println(userDTO);
-        User myUser = userService.signup(userDTO);
-
-        if (myUser == null) {
-            return new ResponseEntity<String>("회원가입 실패", HttpStatus.CONFLICT); // 409 에러
-        }
-
-        return new ResponseEntity<String>("회원가입성공", HttpStatus.OK);
+        return userService.signup(userDTO);
     }
 
     /**
@@ -93,5 +87,11 @@ public class UserController {
     public ResponseEntity<?> rankUp(@RequestBody RankUpDTO rankUpDTO) {
         userService.rankUp(rankUpDTO);
         return new ResponseEntity<Void>(HttpStatus.OK);
+    }
+
+    @GetMapping("/nameread")
+    public ResponseEntity<?> getUserByName(@RequestParam String name) {
+        UserDTO userDTO = userService.getUserByName(name);
+        return new ResponseEntity<UserDTO>(userDTO, HttpStatus.OK);
     }
 }

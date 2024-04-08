@@ -13,7 +13,7 @@ const NaviBar = () => {
           <img src={logo} alt="로고" onClick={() => navigate("/")}></img>
         </LogoBox>
         <Menu onClick={() => navigate("/notice")}>공지사항</Menu>
-        <Menu onClick={() => navigate("/rank")}>랭킹</Menu>
+        <Menu onClick={() => navigate("/rank/rating")}>랭킹</Menu>
         <Menu onClick={() => navigate("/community")}>커뮤니티</Menu>
         <Menu onClick={() => navigate("/gameGuide/story")}>게임 가이드</Menu>
       </MenuBox>
