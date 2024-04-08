@@ -1,6 +1,5 @@
 package com.koko.kokopang.board.model;
 
-import com.koko.kokopang.board.dto.BaseTimeEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -10,7 +9,7 @@ import org.hibernate.annotations.OnDeleteAction;
 @Entity
 @Getter
 @Setter
-public class Comment extends BaseTimeEntity {
+public class Comment{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,4 +21,6 @@ public class Comment extends BaseTimeEntity {
     @JoinColumn(name = "boardId",referencedColumnName = "id")
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Board board;
+    private String created;
+    private String modified;
 }

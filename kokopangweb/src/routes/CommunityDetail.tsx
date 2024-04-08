@@ -13,6 +13,7 @@ interface Board {
   name: string;
   title: string;
   content: string;
+  modified:string;
 }
 
 const CommunityDetail = () => {
@@ -151,6 +152,7 @@ const CommunityDetail = () => {
             <img src={boardInfo?.profileImg === null ? defaultProfile : boardInfo?.profileImg} alt="프로필 이미지" style={{ width: "30px", height: "30px", borderRadius: "100px", marginRight: "10px"}}/>
             <div>{boardInfo?.name}</div>
           </div>
+          <div className='item'>작성일 : {boardInfo?.modified === null ? "" : boardInfo?.modified.substr(0,10)}</div>
         </div>
         <Content>
           <pre className='font'>{boardInfo?.content}</pre>
@@ -173,7 +175,7 @@ const CommunityDetail = () => {
           </CreateBtn>
         </form>
         <CommentBox>
-          {commentList.map((ct,idx) => (
+          {commentList.map((ct : any, idx) => (
             <div className='box1' key={idx}>
               <div className='item1'>
                 <pre>{ct["content"]}</pre>
@@ -184,7 +186,8 @@ const CommunityDetail = () => {
               </div>
               <div className='item1' style={{ display: "flex" , flexDirection: "row", alignItems: "center"}}>
                 <img src={ct["profileImg"] === null ? defaultProfile : ct["profileImg"]} alt="프로필 이미지" style={{ width: "30px", height: "30px", borderRadius: "100px", marginRight: "10px"}}/>
-                <div>{ct["username"]}</div>
+                <div onClick={() => navigate(`/profile/${ct["name"]}`)}>{ct["username"]}</div>
+                <div style={{ marginLeft:"20px", fontSize: "16px"}}>{ct["modified"].substr(0,10)}</div>
               </div>
             </div>
           ))}
@@ -194,4 +197,4 @@ const CommunityDetail = () => {
   )
 }
 
-export default CommunityDetail
+export default CommunityDetail;

@@ -7,11 +7,13 @@ import com.koko.kokopang.user.model.User;
 import java.util.List;
 
 public interface UserService {
-    User signup(UserDTO userDTO);
+    String signup(UserDTO userDTO);
 
     UserDTO getProfile(String email);
 
     User updateProfile(User user);
+
+    UserDTO getUserByName(String name);
 
     boolean updatePassword(int userId, String password);
 

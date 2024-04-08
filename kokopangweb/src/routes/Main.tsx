@@ -55,6 +55,7 @@ const Main = () => {
               transition: "transform 1s ease",
               display: "flex",
               flexDirection: "column",
+              textShadow: "4px 4px 4px rgba(0, 0, 0, 0.3)"
             }}>
               {noticeList.map((item,idx) => (
                 <div key={idx} style={{ height: "50px", flex: "0 0 auto"}} >

@@ -45,4 +45,27 @@ public class RankController {
 
         return new ResponseEntity<List<RankDTO>>(rankList, HttpStatus.OK);
     }
+
+    @GetMapping("/time")
+    public ResponseEntity<?> getTimeRank() {
+        List<UserDTO> userList = userService.getAllUser();
+        userList.sort(Comparator.comparing(UserDTO::getPlayTime));
+
+        List<RankDTO> rankList = new ArrayList<>();
+
+        int index = 1;
+        for (UserDTO userDTO : userList) {
+            RankDTO rankDTO = new RankDTO();
+            rankDTO.setRanking(index);
+            rankDTO.setName(userDTO.getName());
+            rankDTO.setProfileImg(userDTO.getProfileImg());
+            int time = userDTO.getPlayTime();
+            rankDTO.setPlayTime((time/60) + "분 " + (time%60) + "초");
+            rankList.add(rankDTO);
+
+            index++;
+        }
+
+        return new ResponseEntity<List<RankDTO>>(rankList, HttpStatus.OK);
+    }
 }

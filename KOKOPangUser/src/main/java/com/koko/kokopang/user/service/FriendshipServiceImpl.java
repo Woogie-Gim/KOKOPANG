@@ -71,15 +71,14 @@ public class FriendshipServiceImpl implements FriendshipService{
         for (Friendship friendship : friendslist) {
             FriendshipDTO friend = new FriendshipDTO();
 
-            User user = userRepository.findById(userId);
-            User user1 = userRepository.findById(friendship.getFriendId());
+            User user = userRepository.findById(userId == friendship.getFriendId() ? friendship.getUser().getId() : friendship.getFriendId());
 
             friend.setUserId(userId);
             friend.setFriendId(userId == friendship.getFriendId() ? friendship.getUser().getId() : friendship.getFriendId());
             friend.setFriendName(userId == friendship.getFriendId() ? userRepository.findById(friendship.getUser().getId()).getName() : userRepository.findById(friendship.getFriendId()).getName());
             friend.setIsWaiting(friendship.getIsWaiting());
             friend.setIsFrom(userId != friendship.getFriendId());
-            friend.setFriendRating(userId == friendship.getFriendId() ? user1.getRating():user.getRating());
+            friend.setFriendRating(user.getRating());
             UserProfile friendProfile = userProfileService
                     .getUserProfile(userId == friendship.getFriendId() ? friendship.getUser().getId() : friendship.getFriendId());
             if (friendProfile != null) {

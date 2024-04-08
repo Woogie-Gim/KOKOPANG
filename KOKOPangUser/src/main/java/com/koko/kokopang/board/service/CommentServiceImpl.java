@@ -13,6 +13,8 @@ import com.koko.kokopang.user.service.UserService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,11 +37,16 @@ public class CommentServiceImpl implements CommentService{
     public void createComment(CommentDTO commentDTO) {
         Comment newComment = new Comment();
 
+        LocalDate currentDate = LocalDate.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yy-MM-dd");
+        String formattedDate = currentDate.format(formatter);
+
         Board board = boardRepository.findBoardById(commentDTO.getBoardId());
         newComment.setBoard(board);
         newComment.setContent(commentDTO.getContent());
         newComment.setUserEmail(commentDTO.getUserEmail());
-
+        newComment.setCreated(formattedDate);
+        newComment.setModified(formattedDate);
         commentRepository.save(newComment);
     }
 
@@ -55,6 +62,8 @@ public class CommentServiceImpl implements CommentService{
 
             c.setCommentId(comment.getId());
             c.setContent(comment.getContent());
+            c.setCreated(comment.getCreated());
+            c.setModified(comment.getModified());
             UserDTO user = userService.getProfile(comment.getUserEmail());
             c.setUsername(user.getName());
             c.setProfileImg(user.getProfileImg());

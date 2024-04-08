@@ -11,4 +11,5 @@ public class RankDTO {
     private String profileImg;
     private String name;
     private int rating;
+    private String playTime;
 }

@@ -13,4 +13,5 @@ public class UserDTO {
     private String name;
     private String profileImg;
     private int rating;
+    private int playTime;
 }
