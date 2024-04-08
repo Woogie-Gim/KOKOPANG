@@ -26,9 +26,13 @@ public class ArmsControl : CloseWeaponController
                 {
                     TryAttack();
                 }
-                else
+                else if(QuickSlotController.quickSlots[QuickSlotController.selectedSlot].item.itemType == Item.ItemType.Used)
                 {
                     TryEating();
+                }
+                else
+                {
+                    TryAttack();
                 }
             }
         }
@@ -44,11 +48,15 @@ public class ArmsControl : CloseWeaponController
     {
         if (Input.GetButtonDown("Fire2"))
         {
+            //if(QuickSlotController.quickSlots[QuickSlotController.selectedSlot].item.itemType == Item.ItemType.Used)
+            //{
+            //}
+
             Score.score += 2;
-            armsaudioSource.clip = eatSound;
             armsaudioSource.Play();
             currentArms.anim.SetTrigger("Eat");
             theQuickSlotController.EatItem();
+            armsaudioSource.clip = eatSound;
         }
     }
 

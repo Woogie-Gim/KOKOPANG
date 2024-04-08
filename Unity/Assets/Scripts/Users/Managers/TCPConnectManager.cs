@@ -24,13 +24,18 @@ public class TCPConnectManager : MonoBehaviour
     public ChannelManager channelManagerScript;
 
     [Header("Chat")]
+    //public GameObject IngameChatUI;   // 인게임 채팅
     public TMP_Text MessageElement;   // 채팅 메시지
     public GameObject LobbyChattingList; // 로비 채팅 리스트
     public GameObject ChannelChattingList; // 채널 채팅 리스트
+    public GameObject InGameChattingList; // 인게임 채팅 content
     public TMP_InputField LobbyChat;  // 로비 입력 메시지
     public TMP_InputField ChannelChat;  // 채널 입력 메시지
+    public TMP_InputField InGameChat;  // 인게임 채팅 InputText
     public Button LobbyChatSendBtn;     // 로비 메시지 전송버튼
     public Button ChannelChatSendBtn;   // 채널 메시지 전송 버튼
+    private bool isInGameChatUICloseRunning = false;
+
 
     [Header("Channel")]
     public GameObject ScrollViewChannelList;    // 채널 리스트
@@ -74,6 +79,9 @@ public class TCPConnectManager : MonoBehaviour
             Instance.ChannelChat = ChannelChat;
             Instance.LobbyChatSendBtn = LobbyChatSendBtn;
             Instance.ChannelChatSendBtn = ChannelChatSendBtn;
+            //Instance.IngameChatUI = IngameChatUI;
+            Instance.InGameChattingList = InGameChattingList;
+            Instance.InGameChat = InGameChat;
             Instance.ScrollViewChannelList = ScrollViewChannelList;
             Instance.ChannelListElement = ChannelListElement;
             Destroy(gameObject);
@@ -82,8 +90,8 @@ public class TCPConnectManager : MonoBehaviour
         // 리스너 붙이기
         Instance.LobbyChatSendBtn.onClick.RemoveAllListeners();
         Instance.ChannelChatSendBtn.onClick.RemoveAllListeners();
-        Instance.LobbyChatSendBtn.onClick.AddListener(Instance.MessageSendBtnClicked);
-        Instance.ChannelChatSendBtn.onClick.AddListener(Instance.MessageSendBtnClicked);
+        Instance.LobbyChatSendBtn.onClick.AddListener(() => Instance.MessageSendBtnClicked(LobbyChat));
+        Instance.ChannelChatSendBtn.onClick.AddListener(() => Instance.MessageSendBtnClicked(ChannelChat));
 
         // 만약 로그인 데이터가 있다면 로비매니저 켜기
         if(DataManager.Instance.loginUserInfo.UserId != 0)
@@ -111,6 +119,8 @@ public class TCPConnectManager : MonoBehaviour
         ResultManager.isResultManager = false;
         // 채팅내역 지우기
         clearChat();
+
+        DataManager.Instance.gameDataClear();
 
         // tcp연결 관련
         if (_tcpClient != null)
@@ -147,8 +157,64 @@ public class TCPConnectManager : MonoBehaviour
         // 채팅 입력 엔터
         if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter))
         {
-             MessageSendBtnClicked();
+            // 로그인 씬에서 엔터
+            if(SceneManager.GetActiveScene().name == "Login")
+            {
+                // 로비인 경우
+                if(LobbyScene.activeSelf)
+                {
+                    MessageSendBtnClicked(LobbyChat);
+                }
+                // 채널인 경우
+                else if(ChannelScene.activeSelf)
+                {
+                    MessageSendBtnClicked(ChannelChat);
+                }
+            }
+            // 인게임에서 엔터
+            else if(SceneManager.GetActiveScene().name == "MainScene")
+            {
+                // 채팅 입력창 꺼져있으면
+                if(!InGameChat.gameObject.activeSelf)
+                {
+                    // 채팅 입력창 켜고 포커스 옮기기
+                    InGameChat.gameObject.SetActive(true);
+                    InGameChattingList.SetActive(true);
+                    InGameChat.Select();
+                    InGameChat.ActivateInputField();
+                }
+                // 채팅 입력창 켜져있으면
+                else if(InGameChat.gameObject.activeSelf)
+                {
+                    // 채팅 입력 아무것도 없으면 끄기
+                    if(InGameChat.text == "")
+                    {
+                        InGameChat.gameObject.SetActive(false);
+                        if(!isInGameChatUICloseRunning)
+                        {
+                            StartCoroutine(closeInGameChat(5));
+                        }
+                    }
+                    // 입력된거 있으면 채팅 보내기
+                    else
+                    {
+                        MessageSendBtnClicked(InGameChat);
+                    }
+                }
+            }
         }
+    }
+
+    // 5초 후 채팅 리스트 닫기
+    IEnumerator closeInGameChat(float time)
+    {
+        isInGameChatUICloseRunning = true;
+
+        yield return new WaitForSeconds(time);
+
+        InGameChattingList.SetActive(false);
+
+        isInGameChatUICloseRunning = false;
     }
 
     // 요청 분배하기
@@ -161,7 +227,22 @@ public class TCPConnectManager : MonoBehaviour
 
         if (type == "chat")  // 채팅 메시지
         {
-            showMessage(response, LobbyScene.activeSelf);
+            Debug.Log(response);
+            if(SceneManager.GetActiveScene().name == "Login")
+            {
+                if(LobbyScene.activeSelf)
+                {
+                    showMessage(response, LobbyChattingList);
+                }
+                else if(ChannelScene.activeSelf)
+                {
+                    showMessage(response, ChannelChattingList);
+                }
+            }
+            else if(SceneManager.GetActiveScene().name == "MainScene")
+            {
+                showMessage(response, InGameChattingList);
+            }
         }
         else if (type == "channelList")  // 전체 생성된 방 목록
         {
@@ -324,20 +405,22 @@ public class TCPConnectManager : MonoBehaviour
 
     // ============================= 채팅 관련 =============================
     // 메시지 전송 버튼 클릭 시
-    public void MessageSendBtnClicked()
+    public void MessageSendBtnClicked(TMP_InputField inputField)
     {
         Debug.Log("메시지 전송");
-        // 로비 채팅인 경우
-        if(LobbyScene.activeSelf)
+
+        string message = inputField.text;
+
+        if (message == "")
         {
-            string message = LobbyChat.text;
+            return;
+        }
 
-            if (message == "")
-            {
-                return;
-            }
-
-            string json = "{" +
+        string json;
+        // 로비 채팅인 경우
+        if (SceneManager.GetActiveScene().name == "Login" && LobbyScene.activeSelf)
+        {
+            json = "{" +
                 "\"channel\":\"lobby\"," +
                 $"\"userName\":\"{loginUserInfo.Name}\"," +
                 "\"data\":{" +
@@ -345,24 +428,11 @@ public class TCPConnectManager : MonoBehaviour
                     "\"message\":" + "\"" + message + "\"" +
                 "}" +
             "}";
-
-            LobbyChat.text = "";
-
-            SendMessageToServer(json);
-            LobbyChat.Select();
-            LobbyChat.ActivateInputField();
         }
         // 채널 채팅인 경우
         else
         {
-            string message = ChannelChat.text;
-
-            if (message == "")
-            {
-                return;
-            }
-
-            string json = "{" +
+            json = "{" +
                 "\"channel\":\"channel\"," +
                 $"\"userName\":\"{DataManager.Instance.loginUserInfo.Name}\"," +
                 "\"data\":{" +
@@ -371,106 +441,69 @@ public class TCPConnectManager : MonoBehaviour
                     "\"message\":" + "\"" + message + "\"" +
                 "}" +
             "}";
-
-            ChannelChat.text = "";
-
-            SendMessageToServer(json);
-            ChannelChat.Select();
-            ChannelChat.ActivateInputField();
         }
+
+        inputField.text = "";
+        SendMessageToServer(json);
+        inputField.Select();
+        inputField.ActivateInputField();
     }
 
 
     // 메시지 들어왔을 때
     // TODO: 메시지 오브젝트 풀링 적용하기
-    public void showMessage(string message, bool isLobby)
+    public void showMessage(string message, GameObject ChatScrollView)
     {
-        if(isLobby)
+        if(InGameChattingList != null)
         {
-            // 붙일 부모 오브젝트
-            Transform content = LobbyChattingList.transform.Find("Viewport/Content");
-
-            ChatMessage chatMessage = JsonUtility.FromJson<ChatMessage>(message);
-
-            // 내가 보낸 메시지 표시하기
-            string me = "";
-            if (chatMessage.UserName == DataManager.Instance.loginUserInfo.Name)
-            {
-                me = "(나)";
-            }
-            
-            TMP_Text temp1 = Instantiate(MessageElement);
-            //temp1.text = chatMessage.UserName + ": " + chatMessage.Message;
-            temp1.text = $"{chatMessage.UserName} {me} : {chatMessage.Message}";
-            temp1.transform.SetParent(content, false);
-
-            
-
-            // 20개 넘어가면 채팅 위에서부터 지우기
-            // TODO: 오브젝트 풀링
-            if(content.childCount >= 20)
-            {
-                Destroy(content.GetChild(1).gameObject);
-            }
+            InGameChattingList.SetActive(true);
         }
-        else
+        // 붙일 부모 오브젝트
+        Transform content = ChatScrollView.transform.Find("Viewport/Content");
+
+        ChatMessage chatMessage = JsonUtility.FromJson<ChatMessage>(message);
+
+        // 내가 보낸 메시지 표시하기
+        string me = "";
+        if (chatMessage.UserName == DataManager.Instance.loginUserInfo.Name)
         {
-            // 붙일 부모 오브젝트
-            Transform content = ChannelChattingList.transform.Find("Viewport/Content");
-
-            ChatMessage chatMessage = JsonUtility.FromJson<ChatMessage>(message);
-
-            // 내가 보낸 메시지 표시하기
-            string me = "";
-            if (chatMessage.UserName == DataManager.Instance.loginUserInfo.Name)
-            {
-                me = "(나)";
-            }
-
-            TMP_Text temp1 = Instantiate(MessageElement);
-            temp1.text = $"{chatMessage.UserName} {me} : {chatMessage.Message}";
-            temp1.transform.SetParent(content, false);
-
-            // 20개 넘어가면 채팅 위에서부터 지우기
-            // TODO: 오브젝트 풀링
-            if (content.childCount >= 20)
-            {
-                Destroy(content.GetChild(1).gameObject);
-            }
+            me = "(나)";
         }
 
-        StartCoroutine(ScrollToBottom(isLobby));
+        TMP_Text temp1 = Instantiate(MessageElement);
+        //temp1.text = chatMessage.UserName + ": " + chatMessage.Message;
+        temp1.text = $"{chatMessage.UserName} {me} : {chatMessage.Message}";
+        temp1.transform.SetParent(content, false);
+
+
+
+        // 20개 넘어가면 채팅 위에서부터 지우기
+        // TODO: 오브젝트 풀링
+        if (content.childCount >= 20)
+        {
+            Destroy(content.GetChild(1).gameObject);
+        }
+
+        StartCoroutine(ScrollToBottom(ChatScrollView));
+        if((InGameChattingList != null) && (!isInGameChatUICloseRunning))
+        {
+            StartCoroutine(closeInGameChat(5));
+        }
     }
 
     // 스크롤 맨 아래로 내리기
-    IEnumerator ScrollToBottom(bool isLobby)
+    IEnumerator ScrollToBottom(GameObject ChatScrollView)
     {
-        if(isLobby)
-        {
-            // 다음 프레임 기다림
-            yield return null;
+        // 다음 프레임 기다림
+        yield return null;
 
-            Transform content = LobbyChattingList.transform.Find("Viewport/Content");
+        Transform content = ChatScrollView.transform.Find("Viewport/Content");
 
-            // Layout Group을 강제로 즉시 업데이트
-            LayoutRebuilder.ForceRebuildLayoutImmediate((RectTransform)content);
+        // Layout Group을 강제로 즉시 업데이트
+        LayoutRebuilder.ForceRebuildLayoutImmediate((RectTransform)content);
 
-            // 스크롤 맨 아래로 내림
-            LobbyChattingList.GetComponent<ScrollRect>().verticalNormalizedPosition = 0f;
-        }
-        else
-        {
-            // 다음 프레임 기다림
-            yield return null;
-
-            Transform content = ChannelChattingList.transform.Find("Viewport/Content");
-
-            // Layout Group을 강제로 즉시 업데이트
-            LayoutRebuilder.ForceRebuildLayoutImmediate((RectTransform)content);
-
-            // 스크롤 맨 아래로 내림
-            ChannelChattingList.GetComponent<ScrollRect>().verticalNormalizedPosition = 0f;
-        }
+        // 스크롤 맨 아래로 내림
+        ChatScrollView.GetComponent<ScrollRect>().verticalNormalizedPosition = 0f;
     }
 
     // 채팅내역 지우기
@@ -633,6 +666,7 @@ public class TCPConnectManager : MonoBehaviour
         "}";
 
         //Debug.Log(json);
+        
 
         SendMessageToServer(json);
 
@@ -649,6 +683,7 @@ public class TCPConnectManager : MonoBehaviour
 
         LobbyScene.SetActive(false);
         ChannelScene.SetActive(true);
+        SelectedChannel = null;
         //channelManagerScript.gameObject.SetActive(true);
     }
 
@@ -784,7 +819,7 @@ public class TCPConnectManager : MonoBehaviour
             return;
         }
 
-        for(int i = 0; i < DataManager.Instance.cnt; i++)
+        for(int i = 0; i < DataManager.Instance.players.Count; i++)
         {
             // 들어온 포지션의 userId의 인덱스 찾기
             if((DataManager.Instance.players != null) && (pos.userId == DataManager.Instance.sessionList[i].UserId))

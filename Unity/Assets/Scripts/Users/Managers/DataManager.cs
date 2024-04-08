@@ -90,4 +90,17 @@ public class DataManager : MonoBehaviour
         score = null;
         //weaponManagerScript.Clear();
     }
+
+    public void gameDataClear()
+    {
+        channelIndex = -1;
+        channelName = "";
+        cnt = -1;
+        isOnGame = false;
+        sessionList.Clear();
+        clearUserId = -1;
+        myIdx = -1;
+        players.Clear();
+        score = null;
+    }
 }

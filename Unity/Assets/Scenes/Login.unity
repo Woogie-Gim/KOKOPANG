@@ -5326,7 +5326,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &366083119
 RectTransform:
   m_ObjectHideFlags: 0
@@ -15895,6 +15895,9 @@ MonoBehaviour:
   ChannelChat: {fileID: 1786573238}
   LobbyChatSendBtn: {fileID: 607211343}
   ChannelChatSendBtn: {fileID: 808948404}
+  ChatUI: {fileID: 0}
+  InGameChatContent: {fileID: 0}
+  InGameChatInputText: {fileID: 0}
   ScrollViewChannelList: {fileID: 821409374}
   ChannelListElement: {fileID: 5327499375038420882, guid: 0d2a83ac6b781a54f98445f33bcf52b5, type: 3}
   SelectedChannel: {fileID: 0}

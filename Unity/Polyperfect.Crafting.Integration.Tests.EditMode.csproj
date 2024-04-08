@@ -10,7 +10,7 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{113C491C-66C4-5F9C-6B58-F1E7593FE0B8}</ProjectGuid>
+    <ProjectGuid>{878706A7-9E6F-14F3-2690-C781D2D655FD}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>Polyperfect.Crafting.Integration.Tests.EditMode</AssemblyName>
@@ -55,7 +55,7 @@
     <UnityVersion>2021.3.33f1</UnityVersion>
   </PropertyGroup>
   <ItemGroup>
-    <Analyzer Include="C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\Extensions\Microsoft\Visual Studio Tools for Unity\Analyzers\Microsoft.Unity.Analyzers.dll" />
+    <Analyzer Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\Extensions\Microsoft\Visual Studio Tools for Unity\Analyzers\Microsoft.Unity.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Store Asset\polyperfect\Crafting System\- Code\Integration\Tests\EditMode\CollectionTests.cs" />
@@ -403,10 +403,6 @@
     </Reference>
     <Reference Include="UnityEditor.Graphs">
       <HintPath>C:\Program Files\Unity\Hub\Editor\2021.3.33f1\Editor\Data\Managed\UnityEditor.Graphs.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="UnityEditor.WebGL.Extensions">
-      <HintPath>C:\Program Files\Unity\Hub\Editor\2021.3.33f1\Editor\Data\PlaybackEngines\WebGLSupport\UnityEditor.WebGL.Extensions.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEditor.Android.Extensions">
@@ -960,15 +956,15 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="Polyperfect.Crafting.Framework.csproj">
-      <Project>{D6045496-2FD6-F515-592D-6307B2F83CF6}</Project>
+      <Project>{D52707F7-12BF-E26B-6518-1B49C00315EA}</Project>
       <Name>Polyperfect.Crafting.Framework</Name>
     </ProjectReference>
     <ProjectReference Include="Polyperfect.Crafting.Integration.csproj">
-      <Project>{06952926-3E4E-77C1-02A5-C7E33382001F}</Project>
+      <Project>{4D786832-FA56-1B02-2A3A-3F4631BAA64B}</Project>
       <Name>Polyperfect.Crafting.Integration</Name>
     </ProjectReference>
     <ProjectReference Include="Polyperfect.Common.csproj">
-      <Project>{DF9AFD71-51F3-AEA1-948C-6C0783C39DDC}</Project>
+      <Project>{CF0EF240-C3AE-3535-F842-04423004DD46}</Project>
       <Name>Polyperfect.Common</Name>
     </ProjectReference>
   </ItemGroup>

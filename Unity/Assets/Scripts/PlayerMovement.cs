@@ -112,10 +112,14 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
-        if (!FixTab.fixtabActivated)
+        if (!TCPConnectManager.Instance.InGameChat.gameObject.activeSelf)
         {
-            Movement();
+            if (!FixTab.fixtabActivated)
+            {
+                Movement();
+            }
         }
+
         if (!Inventory.inventoryActivated && !CraftManual.isActivated && !FixTab.fixtabActivated && !MenuController.isMenu && !ResultManager.isResultManager)
         {
             MouseLook();
@@ -186,18 +190,21 @@ public class PlayerMovement : MonoBehaviour
     //Playing footstep sound when controller moves and grounded
     private void FixedUpdate()
     {
-        if (_characterController.isGrounded && (_horizontalMovement != 0 || _verticalMovement != 0))
+        if (!TCPConnectManager.Instance.InGameChat.gameObject.activeSelf)
         {
-            float currentFootstepRate = (_isRunning ? runningFootstepRate : footstepRate);
-
-            if (_nextFootstep >= 100f)
+            if (_characterController.isGrounded && (_horizontalMovement != 0 || _verticalMovement != 0))
             {
+                float currentFootstepRate = (_isRunning ? runningFootstepRate : footstepRate);
+
+                if (_nextFootstep >= 100f)
                 {
-                    PlayFootstep();
-                    _nextFootstep = 0;
+                    {
+                        PlayFootstep();
+                        _nextFootstep = 0;
+                    }
                 }
+                _nextFootstep += (currentFootstepRate * walkSpeed);
             }
-            _nextFootstep += (currentFootstepRate * walkSpeed);
         }
     }
 

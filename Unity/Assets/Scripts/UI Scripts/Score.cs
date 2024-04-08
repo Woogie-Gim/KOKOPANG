@@ -24,6 +24,11 @@ public class Score : MonoBehaviour
         }
     }
 
+    private void OnDisable()
+    {
+        score = 0;
+    }
+
     // Update is called once per frame
     void Update()
     {
