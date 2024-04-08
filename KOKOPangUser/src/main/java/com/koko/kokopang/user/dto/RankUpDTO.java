@@ -9,4 +9,5 @@ public class RankUpDTO {
 
     private int userId;
     private int score;
+    private int playTime;
 }
