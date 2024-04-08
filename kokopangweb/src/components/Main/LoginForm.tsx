@@ -43,12 +43,13 @@ const LoginForm = () => {
       }))
     );
 
-  const { setUser, name, setProfileImage } =
+  const { setUser, name, setProfileImage,email } =
     useUserStore(
       useShallow((state) => ({
         setUser: state.setUser,
         name: state.name,
-        setProfileImage: state.setProfileImage
+        setProfileImage: state.setProfileImage,
+        email: state.email
       }))
     )
 
@@ -209,45 +210,52 @@ const LoginForm = () => {
   }
 
   useEffect(() => {
-    if (isLogin) {
-      axios
-        .get(`${PATH}/profile/read`, {
-          params: { userId: user.userId },
-          headers: {
-            Authorization: token,
-          },
-        })
-        .then((response) => {
-          if (!response.data) return;
-          const image = response.data;
-          if (image) {
-            setAvatar(
-              `${PATH}/profile/getImg/${image.saveFolder}/${image.originalName}/${image.saveName}`
-            );
-            user.setProfileImage(
-              `${PATH}/profile/getImg/${image.saveFolder}/${image.originalName}/${image.saveName}`
-            );
-            setOldProfile({
-              id: image.id,
-              userId: image.userId,
-              saveFolder: image.saveFolder,
-              originalName: image.originalName,
-              saveName: image.saveName,
-            });
-          }
-        })
-        .catch((error) => console.log(error));
-
-      axios.get(`${PATH}/friend/list?userId=${user.userId}`, {
+    axios
+      .get(`${PATH}/profile/read`, {
+        params: { userId: user.userId },
         headers: {
           Authorization: token,
         },
       })
-        .then((res) => {
-          const sortedFriendsList = res.data.sort((a: any, b: any) => b.friendRating - a.friendRating);
-          user.setFriendsList(sortedFriendsList.slice(0, 10));
-        })
-        ;
+      .then((response) => {
+        if (!response.data) return;
+        const image = response.data;
+        if (image) {
+          setAvatar(`${PATH}/profile/getImg/${image.saveFolder}/${image.originalName}/${image.saveName}`);
+          user.setProfileImage(`${PATH}/profile/getImg/${image.saveFolder}/${image.originalName}/${image.saveName}`);
+          setOldProfile({
+            id: image.id,
+            userId: image.userId,
+            saveFolder: image.saveFolder,
+            originalName: image.originalName,
+            saveName: image.saveName,
+          });
+        }
+      })
+      .catch((error) => console.log(error));
+
+    axios
+      .get(`${PATH}/friend/list?userId=${user.userId}`, {
+        headers: {
+          Authorization: token,
+        },
+      })
+      .then((res) => {
+        const sortedFriendsList = res.data.sort((a: any, b: any) => b.friendRating - a.friendRating);
+        user.setFriendsList(sortedFriendsList.slice(0, 10));
+      });
+    
+    if (isLogin) {
+      axios.get(`${PATH}/user/profile?email=${email}`,{
+        headers: {
+          Authorization: token,
+        },
+      })
+      .then((res) => {
+        console.log(res.data)
+        setUser(res.data)
+      })
+      .catch((error) => console.log(error))
     }
   }, [refRef]);
 

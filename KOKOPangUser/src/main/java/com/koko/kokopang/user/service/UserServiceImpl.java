@@ -78,6 +78,7 @@ public class UserServiceImpl implements UserService {
         newUser.setPassword(bCryptPasswordEncoder.encode(password));
         newUser.setName(userDTO.getName());
         newUser.setRating(1000);
+        newUser.setPlayTime(1200);
         userRepository.save(newUser);
 
         return "success";
@@ -199,5 +200,6 @@ public class UserServiceImpl implements UserService {
     public void rankUp(RankUpDTO rankUpDTO) {
         User user = userRepository.findById(rankUpDTO.getUserId());
         user.setRating(Math.round((float) rankUpDTO.getScore() / 10) + user.getRating());
+        user.setPlayTime(rankUpDTO.getPlayTime());
     }
 }
