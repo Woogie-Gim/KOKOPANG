@@ -1,0 +1,57 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp", "Assembly-CSharp.csproj", "{fcabb00f-6d94-3316-8070-49dd687763d9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Polyperfect.Crafting.Placement", "Polyperfect.Crafting.Placement.csproj", "{a585e412-4f1c-76c9-8945-e60db9e01071}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Polyperfect.Crafting.Integration", "Polyperfect.Crafting.Integration.csproj", "{26299506-4e3e-c177-02a5-c7e33382001f}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Polyperfect.Common", "Polyperfect.Common.csproj", "{71fd9adf-f351-a1ae-948c-6c0783c39ddc}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Polyperfect.Crafting.Demo", "Polyperfect.Crafting.Demo.csproj", "{090c047a-19a5-5801-b9bd-09035717b242}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Polyperfect.Crafting.Framework", "Polyperfect.Crafting.Framework.csproj", "{965404d6-d62f-15f5-592d-6307b2f83cf6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Polyperfect.Crafting.Integration.Tests.EditMode", "Polyperfect.Crafting.Integration.Tests.EditMode.csproj", "{1c493c11-c466-9c5f-6b58-f1e7593fe0b8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Polyperfect.Crafting.Editor", "Polyperfect.Crafting.Editor.csproj", "{8ca33150-717b-7964-15ca-93c46a29f3b3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Polyperfect.Common.Editor", "Polyperfect.Common.Editor.csproj", "{50f4467e-a500-9208-a312-6a6005c8de0f}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Polyperfect.Crafting.Framework.Tests", "Polyperfect.Crafting.Framework.Tests.csproj", "{20c1798f-137e-223a-a279-d09eccc21e64}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Polyperfect.Crafting.Integration.Tests.PlayMode", "Polyperfect.Crafting.Integration.Tests.PlayMode.csproj", "{e0fee138-3ba4-9899-a48e-3dab0c7296e9}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{fcabb00f-6d94-3316-8070-49dd687763d9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{fcabb00f-6d94-3316-8070-49dd687763d9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{a585e412-4f1c-76c9-8945-e60db9e01071}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{a585e412-4f1c-76c9-8945-e60db9e01071}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{26299506-4e3e-c177-02a5-c7e33382001f}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{26299506-4e3e-c177-02a5-c7e33382001f}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{71fd9adf-f351-a1ae-948c-6c0783c39ddc}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{71fd9adf-f351-a1ae-948c-6c0783c39ddc}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{090c047a-19a5-5801-b9bd-09035717b242}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{090c047a-19a5-5801-b9bd-09035717b242}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{965404d6-d62f-15f5-592d-6307b2f83cf6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{965404d6-d62f-15f5-592d-6307b2f83cf6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1c493c11-c466-9c5f-6b58-f1e7593fe0b8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1c493c11-c466-9c5f-6b58-f1e7593fe0b8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8ca33150-717b-7964-15ca-93c46a29f3b3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8ca33150-717b-7964-15ca-93c46a29f3b3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{50f4467e-a500-9208-a312-6a6005c8de0f}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{50f4467e-a500-9208-a312-6a6005c8de0f}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{20c1798f-137e-223a-a279-d09eccc21e64}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{20c1798f-137e-223a-a279-d09eccc21e64}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{e0fee138-3ba4-9899-a48e-3dab0c7296e9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{e0fee138-3ba4-9899-a48e-3dab0c7296e9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
